@@ -1,3 +1,5 @@
+"use client";
+
 import Reveal from "./Reveal";
 
 export default function SectionHeading({ eyebrow, title, subtitle, align = "center" }) {
