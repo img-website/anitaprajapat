@@ -61,7 +61,7 @@ export default function BentoHighlights({ settings = {} }) {
                 )}
                 <div className={styles.featureText}>
                   <span className="chip"><Sparkles size={15} /> Live Devotional Experience</span>
-                  <h3>{featuredTitle}</h3>
+                  <p className={styles.featureTitle}>{featuredTitle}</p>
                 </div>
               </>
             )}
@@ -82,7 +82,7 @@ export default function BentoHighlights({ settings = {} }) {
             variants={item}
           >
             <span className={styles.bookIcon}><Mic2 size={26} /></span>
-            <h3>Book for your Jagran</h3>
+            <p className={styles.bookTitle}>Book for your Jagran</p>
             <span className={styles.arrow}><WhatsappIcon size={16} /> Chat on WhatsApp <ArrowRight size={16} /></span>
           </motion.a>
 
@@ -120,7 +120,7 @@ export default function BentoHighlights({ settings = {} }) {
           {/* Fill right-side gap */}
           <motion.a href="/about" className={`${styles.tile} ${styles.story}`} variants={item}>
             <span className="chip"><Sparkles size={14} /> Artist Journey</span>
-            <h3>Traditional roots, modern stage presence</h3>
+            <p className={styles.storyTitle}>Traditional roots, modern stage presence</p>
             <p>Explore Anita Prajapat’s story, live journey and devotional milestones.</p>
             <span className={styles.storyLink}>Read full story <ArrowRight size={15} /></span>
           </motion.a>

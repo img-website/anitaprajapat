@@ -192,7 +192,7 @@ export default async function HomePage() {
               {media.map((m) => (
                 <Reveal key={m._id} variant="up" className={s.mediaItem}>
                   <span className={s.outlet}>{m.outlet || m.type}</span>
-                  <h4>{m.title}</h4>
+                  <h3>{m.title}</h3>
                   {(m.externalUrl || m.embedUrl) && (
                     <a href={m.externalUrl || m.embedUrl} target="_blank" rel="noopener noreferrer">
                       Read coverage →

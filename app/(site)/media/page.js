@@ -41,7 +41,7 @@ export default async function MediaPage() {
               {items.map((m) => (
                 <Reveal key={m._id} variant="up" className={s.mediaItem}>
                   <span className={s.outlet}>{m.outlet || m.type}</span>
-                  <h4>{m.title}</h4>
+                  <h3>{m.title}</h3>
                   {m.excerpt && <p style={{ fontSize: "0.88rem" }}>{m.excerpt}</p>}
                   <small style={{ color: "var(--text-muted)" }}>
                     {formatDate(m.publishedAt || m.createdAt)}
