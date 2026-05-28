@@ -97,7 +97,13 @@
   &:hover { background: rgba(255, 138, 133, 0.15); }
 }
 
-.body { display: flex; flex-direction: column; min-width: 0; }
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  --admin-topbar-offset: 72px;
+  @include down("sm") { --admin-topbar-offset: 60px; }
+}
 
 .topbar {
   @include flex(row, space-between, center, 1rem);

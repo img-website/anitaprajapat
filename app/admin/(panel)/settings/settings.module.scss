@@ -4,7 +4,11 @@
   @include flex(row, space-between, center, 1rem);
   margin-bottom: 1.5rem;
   position: sticky;
-  top: 0;
+  top: var(--admin-topbar-offset, 72px);
+  z-index: 6;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(6px);
+  padding: 0.45rem 0;
   @include down("sm") {
     margin-bottom: 0.9rem;
     gap: 0.55rem;

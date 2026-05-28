@@ -66,9 +66,16 @@
 // Heavier glass for sticky/floating chrome (navbar, tab bar).
 @mixin glass-strong {
   background: var(--glass-strong);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(170%);
+  backdrop-filter: blur(30px) saturate(170%);
   border: 1px solid var(--glass-border);
+  background-clip: padding-box;
+
+  // Safari/WebKit specific tuning for more consistent frosted effect.
+  @supports (-webkit-touch-callout: none) {
+    -webkit-backdrop-filter: blur(34px) saturate(185%);
+    backdrop-filter: blur(34px) saturate(185%);
+  }
 }
 
 @mixin gold-text {

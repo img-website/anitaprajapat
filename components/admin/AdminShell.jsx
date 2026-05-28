@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react";
 import { adminNav } from "@/lib/siteConfig";
 import styles from "./AdminShell.module.scss";
 
-export default function AdminShell({ user, logo, children }) {
+export default function AdminShell({ logo, children }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -71,10 +71,6 @@ export default function AdminShell({ user, logo, children }) {
             <Link href="/" target="_blank" className={styles.mobileLogo} aria-label="View site">
               <Image src={logoSrc} alt="Site logo" width={30} height={30} unoptimized />
             </Link>
-            <div className={styles.user}>
-              <span>{user?.name || user?.email}</span>
-              <span className={styles.role}>{user?.role}</span>
-            </div>
           </div>
         </header>
         <main className={styles.content}>{children}</main>
