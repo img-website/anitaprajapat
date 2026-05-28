@@ -34,7 +34,6 @@ export default function GalleryGrid({ items = [] }) {
                 width={600}
                 height={600}
                 sizes="(max-width: 48rem) 50vw, 25vw"
-                unoptimized={src.startsWith("http")}
               />
               {isVideo && <span className={styles.play}>▶</span>}
               {item.title && <span className={styles.caption}>{item.title}</span>}
@@ -67,7 +66,6 @@ export default function GalleryGrid({ items = [] }) {
                   alt={active.title || "Gallery media"}
                   width={1280}
                   height={853}
-                  unoptimized
                 />
               )}
             </div>

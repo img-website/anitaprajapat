@@ -1,7 +1,9 @@
 import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import "@/styles/globals.scss";
 import { siteConfig } from "@/lib/siteConfig";
 import Providers from "@/components/providers/Providers";
+import { getSettings } from "@/services/content";
 
 // Display: Bricolage Grotesque (expressive, modern). Body: Plus Jakarta Sans.
 const heading = Bricolage_Grotesque({
@@ -18,38 +20,58 @@ const body = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-export const metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
-  authors: [{ name: siteConfig.name }],
-  creator: siteConfig.name,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
-};
+export async function generateMetadata() {
+  const settings = await getSettings();
+  const siteName = settings?.siteName || siteConfig.name;
+  const tagline = settings?.tagline || siteConfig.tagline;
+  const seo = settings?.seo || {};
+  const description = seo.defaultDescription || siteConfig.description;
+  const ogImage = seo.ogImage || siteConfig.ogImage;
+  const gscVerification = seo.gscVerification || undefined;
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${siteName} — ${tagline}`,
+      template: `%s | ${siteName}`,
+    },
+    description,
+    keywords: seo.keywords?.length ? seo.keywords : siteConfig.keywords,
+    authors: [{ name: siteName }],
+    creator: siteName,
+    alternates: {
+      canonical: "/",
+      languages: {
+        "en-IN": "/",
+        en: "/",
+        "x-default": "/",
+      },
+    },
+    verification: {
+      google: gscVerification,
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_IN",
+      url: siteConfig.url,
+      siteName,
+      title: `${siteName} — ${tagline}`,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${siteName} — ${tagline}`,
+      description,
+      images: [ogImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+  };
+}
 
 export const viewport = {
   themeColor: [
@@ -69,7 +91,10 @@ const themeInit = `
 }catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 `;
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const settings = await getSettings();
+  const gaMeasurementId = settings?.seo?.gaMeasurementId || "";
+
   return (
     <html
       lang="en"
@@ -82,6 +107,20 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body>
+        {gaMeasurementId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaMeasurementId}');`}
+            </Script>
+          </>
+        )}
         <Providers>{children}</Providers>
       </body>
     </html>

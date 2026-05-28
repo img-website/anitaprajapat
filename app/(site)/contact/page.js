@@ -1,4 +1,4 @@
-import { buildMetadata, breadcrumbSchema, personSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, personSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getSettings } from "@/services/content";
 import { siteConfig } from "@/lib/siteConfig";
 import PageHeader from "@/components/ui/PageHeader";
@@ -8,12 +8,16 @@ import styles from "./contact.module.scss";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = buildMetadata({
-  title: "Contact & Booking — Anita Prajapat",
-  description:
-    "Book Anita Prajapat for live Jagran and devotional events. Contact manager Jitendra Kumar Bijarnia via phone, WhatsApp or email.",
-  path: "/contact",
-});
+export async function generateMetadata() {
+  const settings = await getSettings();
+  return buildMetadata({
+    title: "Contact & Booking — Anita Prajapat",
+    description:
+      "Book Anita Prajapat for live Jagran and devotional events. Contact manager Jitendra Kumar Bijarnia via phone, WhatsApp or email.",
+    path: "/contact",
+    defaults: seoDefaultsFromSettings(settings),
+  });
+}
 
 export default async function ContactPage() {
   const settings = await getSettings();

@@ -24,7 +24,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal, { StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
 import EventCard from "@/components/cards/EventCard";
 import JsonLd from "@/components/seo/JsonLd";
-import { personSchema, musicGroupSchema } from "@/lib/seo";
+import { personSchema, musicGroupSchema, organizationSchema, websiteSchema } from "@/lib/seo";
 import s from "@/components/home/home.module.scss";
 
 // Always render with fresh CMS data.
@@ -53,7 +53,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd data={[personSchema(), musicGroupSchema()]} />
+      <JsonLd data={[personSchema(), musicGroupSchema(), organizationSchema(), websiteSchema()]} />
 
       <Hero banner={banners[0]} settings={settings} />
 
@@ -76,7 +76,6 @@ export default async function HomePage() {
                 alt={siteConfig.name}
                 fill
                 sizes="(max-width: 48rem) 100vw, 50vw"
-                unoptimized
               />
               <span className={s.badge2}>
                 <strong>{settings.counters?.stageShows || siteConfig.stageShows}</strong>
@@ -215,7 +214,7 @@ export default async function HomePage() {
               {sponsors.map((sp) =>
                 sp.logo?.url ? (
                   <a key={sp._id} href={sp.website || "#"} target="_blank" rel="noopener noreferrer">
-                    <Image src={sp.logo.url} alt={sp.name} width={140} height={54} unoptimized />
+                    <Image src={sp.logo.url} alt={sp.name} width={140} height={54} />
                   </a>
                 ) : (
                   <span key={sp._id} className="badge">{sp.name}</span>

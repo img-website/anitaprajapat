@@ -196,6 +196,10 @@ export function getEventBySlug(slug) {
   return safe(() => Event.findOne({ slug }).lean(), null);
 }
 
+export function getMediaBySlug(slug) {
+  return safe(() => MediaCoverage.findOne({ slug, isActive: true }).lean(), null);
+}
+
 export function listBhajans({ q, category, page = 1, limit = 12 } = {}) {
   return safe(async () => {
     const filter = { status: "published" };

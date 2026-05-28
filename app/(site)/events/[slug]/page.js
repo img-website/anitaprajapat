@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getEventBySlug } from "@/services/content";
-import { buildMetadata, eventSchema, breadcrumbSchema } from "@/lib/seo";
+import { getEventBySlug, getSettings } from "@/services/content";
+import { buildMetadata, eventSchema, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { formatDate } from "@/utils/helpers";
 import { siteConfig } from "@/lib/siteConfig";
 import PageHeader from "@/components/ui/PageHeader";
@@ -14,14 +14,17 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const settings = await getSettings();
+  const defaults = seoDefaultsFromSettings(settings);
   const ev = await getEventBySlug(slug);
-  if (!ev) return buildMetadata({ title: "Event not found", path: `/events/${slug}`, noindex: true });
+  if (!ev) return buildMetadata({ title: "Event not found", path: `/events/${slug}`, noindex: true, defaults });
   return buildMetadata({
     title: ev.seo?.metaTitle || `${ev.title} — ${ev.city || ""}`.trim(),
     description: ev.seo?.metaDescription || ev.description,
     path: `/events/${ev.slug}`,
     image: ev.coverImage?.url,
     type: "article",
+    defaults,
   });
 }
 
@@ -60,7 +63,7 @@ export default async function EventSinglePage({ params }) {
             <div className={styles.main}>
               {ev.coverImage?.url && (
                 <div className={styles.cover}>
-                  <Image src={ev.coverImage.url} alt={ev.title} fill sizes="66vw" unoptimized />
+                  <Image src={ev.coverImage.url} alt={ev.title} fill sizes="66vw" />
                 </div>
               )}
               {ev.description && <p className={styles.desc}>{ev.description}</p>}

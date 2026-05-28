@@ -47,7 +47,7 @@ export default function BentoHighlights({ settings = {} }) {
               />
             ) : (
               <>
-                <Image src={poster} alt={featuredTitle} fill sizes="50vw" unoptimized />
+                <Image src={poster} alt={featuredTitle} fill sizes="50vw" />
                 {embed && (
                   <button
                     className={styles.playBtn}
@@ -113,7 +113,7 @@ export default function BentoHighlights({ settings = {} }) {
 
           {/* Portrait */}
           <motion.div className={`${styles.tile} ${styles.portrait}`} variants={item}>
-            <Image src="/images/g4.jpg" alt={siteConfig.name} fill sizes="25vw" unoptimized />
+            <Image src="/images/g4.jpg" alt={siteConfig.name} fill sizes="25vw" />
             <span className={styles.portraitTag}>{siteConfig.city}</span>
           </motion.div>
 

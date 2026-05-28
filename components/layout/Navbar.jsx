@@ -37,7 +37,7 @@ export default function Navbar({ logo, whatsapp }) {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.brand} aria-label={siteConfig.name}>
-          <Image src={logoSrc} alt={siteConfig.name} width={48} height={48} priority unoptimized />
+          <Image src={logoSrc} alt={siteConfig.name} width={48} height={48} priority />
         </Link>
 
         <nav className={styles.desktopNav} aria-label="Primary">

@@ -1,17 +1,21 @@
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
-import { getGalleryPreview } from "@/services/content";
+import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { getGalleryPreview, getSettings } from "@/services/content";
 import PageHeader from "@/components/ui/PageHeader";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import JsonLd from "@/components/seo/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = buildMetadata({
-  title: "Gallery — Photos, Reels & Stage Moments | Anita Prajapat",
-  description:
-    "Photos, videos, reels and live stage moments of Rajasthani devotional singer Anita Prajapat.",
-  path: "/gallery",
-});
+export async function generateMetadata() {
+  const settings = await getSettings();
+  return buildMetadata({
+    title: "Gallery — Photos, Reels & Stage Moments | Anita Prajapat",
+    description:
+      "Photos, videos, reels and live stage moments of Rajasthani devotional singer Anita Prajapat.",
+    path: "/gallery",
+    defaults: seoDefaultsFromSettings(settings),
+  });
+}
 
 export default async function GalleryPage() {
   const items = await getGalleryPreview(60);

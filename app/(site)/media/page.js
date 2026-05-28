@@ -1,5 +1,5 @@
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
-import { getMediaCoverage } from "@/services/content";
+import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { getMediaCoverage, getSettings } from "@/services/content";
 import { formatDate } from "@/utils/helpers";
 import PageHeader from "@/components/ui/PageHeader";
 import Reveal from "@/components/ui/Reveal";
@@ -8,12 +8,16 @@ import s from "@/components/home/home.module.scss";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = buildMetadata({
-  title: "Media Coverage & Press — Anita Prajapat",
-  description:
-    "News, interviews, articles and press coverage featuring Rajasthani devotional singer Anita Prajapat.",
-  path: "/media",
-});
+export async function generateMetadata() {
+  const settings = await getSettings();
+  return buildMetadata({
+    title: "Media Coverage & Press — Anita Prajapat",
+    description:
+      "News, interviews, articles and press coverage featuring Rajasthani devotional singer Anita Prajapat.",
+    path: "/media",
+    defaults: seoDefaultsFromSettings(settings),
+  });
+}
 
 export default async function MediaPage() {
   const items = await getMediaCoverage(60);

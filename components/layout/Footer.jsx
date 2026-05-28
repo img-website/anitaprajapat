@@ -16,7 +16,7 @@ export default function Footer({ settings = {} }) {
       <div className={`container ${styles.grid}`}>
         <div className={styles.brandCol}>
           <div className={styles.brandTop}>
-            <Image src={settings.logo || "/logo.png"} alt={siteConfig.name} width={52} height={52} unoptimized />
+            <Image src={settings.logo || "/logo.png"} alt={siteConfig.name} width={52} height={52} />
             <h3 className="gold-text">{settings.siteName || siteConfig.name}</h3>
           </div>
           <p>{siteConfig.description}</p>

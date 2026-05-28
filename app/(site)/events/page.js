@@ -1,5 +1,5 @@
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
-import { listEvents } from "@/services/content";
+import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { getSettings, listEvents } from "@/services/content";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
 import EventCard from "@/components/cards/EventCard";
@@ -10,12 +10,16 @@ import s from "@/components/home/home.module.scss";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = buildMetadata({
-  title: "Events & Live Jagran — Anita Prajapat",
-  description:
-    "Upcoming and past live Jagran events & devotional concerts by Anita Prajapat across Rajasthan and India. Book her for your event.",
-  path: "/events",
-});
+export async function generateMetadata() {
+  const settings = await getSettings();
+  return buildMetadata({
+    title: "Events & Live Jagran — Anita Prajapat",
+    description:
+      "Upcoming and past live Jagran events & devotional concerts by Anita Prajapat across Rajasthan and India. Book her for your event.",
+    path: "/events",
+    defaults: seoDefaultsFromSettings(settings),
+  });
+}
 
 export default async function EventsPage() {
   const [upcoming, past] = await Promise.all([

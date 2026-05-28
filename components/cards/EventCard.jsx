@@ -13,7 +13,6 @@ export default function EventCard({ event }) {
           alt={event.coverImage?.alt || event.title}
           fill
           sizes="(max-width: 48rem) 100vw, 33vw"
-          unoptimized={img.startsWith("http")}
         />
         {d && (
           <span className={styles.dateBadge}>
