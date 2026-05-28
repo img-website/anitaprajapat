@@ -9,6 +9,11 @@
   padding-top: calc(#{$header-height} + 1rem);
   padding-bottom: 4rem;
   overflow: hidden;
+  @include down("sm") {
+    min-height: auto;
+    padding-top: calc(#{$header-height} + 0.25rem);
+    padding-bottom: 2rem;
+  }
 }
 
 .grid {
@@ -22,6 +27,7 @@
     text-align: center;
     gap: 2.5rem;
   }
+  @include down("sm") { gap: 1.2rem; }
 }
 
 .copy {
@@ -45,6 +51,7 @@
     margin-top: 0.4rem;
     letter-spacing: -0.01em;
   }
+  @include down("sm") { margin-top: 0.7rem; }
 }
 
 .lead {
@@ -52,12 +59,18 @@
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   max-width: 52ch;
   @include down("lg") { margin-inline: auto; }
+  @include down("sm") {
+    margin: 0.9rem 0 1.1rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
 }
 
 .cta {
   @include flex(row, flex-start, center, 1rem);
   flex-wrap: wrap;
   @include down("lg") { justify-content: center; }
+  @include down("sm") { gap: 0.5rem; }
 }
 
 .stats {
@@ -71,6 +84,11 @@
   box-shadow: var(--shadow-soft);
   @include down("lg") { justify-self: center; }
   @include down("sm") { grid-template-columns: repeat(3, 1fr); gap: 0.8rem; width: 100%; }
+  @include down("sm") {
+    margin-top: 1rem;
+    padding: 0.72rem 0.82rem;
+    border-radius: 14px;
+  }
   div strong {
     display: block;
     font-family: $font-heading;
@@ -92,6 +110,7 @@
   width: min(100%, 520px);
   justify-self: center;
   @include down("lg") { order: 1; width: min(82%, 420px); }
+  @include down("sm") { width: min(74%, 300px); }
 }
 
 .photo {
@@ -142,6 +161,10 @@
   box-shadow: var(--shadow-soft);
   animation: float 6s ease-in-out infinite;
   svg { color: var(--magenta); }
+  @include down("sm") {
+    padding: 0.46rem 0.72rem;
+    font-size: 0.72rem;
+  }
 }
 .badgeTop { top: 4%; right: -2%; }
 .badgeBottom { bottom: 6%; left: -4%; animation-delay: 1.2s; }
@@ -152,6 +175,7 @@
   overflow: hidden;
   -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
           mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  @include down("sm") { margin-top: 1rem; }
 }
 .track {
   display: inline-flex;
@@ -159,12 +183,21 @@
   white-space: nowrap;
   animation: marquee 26s linear infinite;
   span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     font-family: $font-heading;
     font-weight: 700;
     font-size: clamp(1.3rem, 3vw, 2rem);
     color: transparent;
     -webkit-text-stroke: 1px color-mix(in srgb, var(--magenta) 45%, transparent);
-    em { -webkit-text-stroke: 0; color: var(--gold); font-style: normal; }
+    em {
+      -webkit-text-stroke: 0;
+      color: var(--gold);
+      font-style: normal;
+      display: inline-block;
+      transform: translateY(-1px);
+    }
   }
 }
 

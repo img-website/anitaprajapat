@@ -28,6 +28,7 @@ export default function ResourceManager({ config }) {
   const [form, setForm] = useState({});
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -47,6 +48,8 @@ export default function ResourceManager({ config }) {
 
   const openNew = () => {
     setForm({ ...defaults });
+    setFieldErrors({});
+    setError("");
     setEditing("new");
   };
 
@@ -59,13 +62,35 @@ export default function ResourceManager({ config }) {
       }
     });
     setForm(f);
+    setFieldErrors({});
+    setError("");
     setEditing(item._id);
   };
 
   const setField = (name, value) => setForm((f) => ({ ...f, [name]: value }));
 
+  const validateForm = () => {
+    const nextErrors = {};
+    for (const fl of fields) {
+      if (!fl.required) continue;
+      const value = form[fl.name];
+      if (fl.type === "boolean") continue;
+      if (fl.type === "image") {
+        const imageUrl = typeof value === "string" ? value : value?.url;
+        if (!imageUrl) nextErrors[fl.name] = `${fl.label} is required`;
+        continue;
+      }
+      if (value === undefined || value === null || String(value).trim() === "") {
+        nextErrors[fl.name] = `${fl.label} is required`;
+      }
+    }
+    setFieldErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
   const save = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setSaving(true);
     setError("");
     try {
@@ -87,6 +112,7 @@ export default function ResourceManager({ config }) {
       } else {
         await api.put(`/${resource}/${editing}`, payload);
       }
+      setFieldErrors({});
       setEditing(null);
       await load();
     } catch (e2) {
@@ -116,7 +142,11 @@ export default function ResourceManager({ config }) {
       {error && <p style={{ color: "#ff8a85" }}>{error}</p>}
 
       {loading ? (
-        <p style={{ color: "var(--text-muted)" }}>Loading…</p>
+        <div className={styles.loadingSkeleton} aria-label={`Loading ${label.toLowerCase()} list`}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className={styles.loadingRow} />
+          ))}
+        </div>
       ) : items.length === 0 ? (
         <p style={{ color: "var(--text-muted)" }}>No {label.toLowerCase()}s yet. Create one.</p>
       ) : (
@@ -162,6 +192,9 @@ export default function ResourceManager({ config }) {
                 <div key={fl.name} className={`adm-field ${fl.full ? styles.full : ""}`}>
                   <label htmlFor={fl.name}>{fl.label}{fl.required ? " *" : ""}</label>
                   <FieldInput field={fl} value={form[fl.name]} onChange={(v) => setField(fl.name, v)} />
+                  {fieldErrors[fl.name] && (
+                    <small className={styles.error}>{fieldErrors[fl.name]}</small>
+                  )}
                 </div>
               ))}
             </div>

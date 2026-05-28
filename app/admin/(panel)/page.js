@@ -33,25 +33,45 @@ export default function AdminDashboard() {
       {error && <p style={{ color: "#ff8a85" }}>{error}</p>}
 
       <div className={styles.grid}>
-        {cards.map((c) => (
-          <Link key={c.key} href={c.href} className={styles.stat}>
-            <span className={styles.num}>{stats ? stats.counts?.[c.key] ?? 0 : "—"}</span>
-            <span className={styles.label}>{c.label}</span>
-          </Link>
-        ))}
+        {stats
+          ? cards.map((c) => (
+              <Link key={c.key} href={c.href} className={styles.stat}>
+                <span className={styles.num}>{stats.counts?.[c.key] ?? 0}</span>
+                <span className={styles.label}>{c.label}</span>
+              </Link>
+            ))
+          : cards.map((c) => (
+              <div key={c.key} className={`${styles.stat} ${styles.statSkeleton}`} aria-hidden>
+                <span className={styles.skNum} />
+                <span className={styles.skLabel} />
+              </div>
+            ))}
       </div>
 
-      <div className={styles.note}>
-        🎬 Bhajan videos are pulled automatically from YouTube (popular, latest
-        &amp; playlists) — no manual video entry needed.
-      </div>
+      {stats ? (
+        <div className={styles.note}>
+          🎬 Bhajan videos are pulled automatically from YouTube (popular, latest
+          &amp; playlists) — no manual video entry needed.
+        </div>
+      ) : (
+        <div className={`${styles.note} ${styles.noteSkeleton}`} aria-hidden />
+      )}
 
-      <div className={styles.quick}>
-        <Link href="/admin/events" className="adm-btn primary">+ Add Event</Link>
-        <Link href="/admin/gallery" className="adm-btn">+ Add Photo</Link>
-        <Link href="/admin/banners" className="adm-btn">+ Banner</Link>
-        <Link href="/admin/settings" className="adm-btn">Site Settings</Link>
-      </div>
+      {stats ? (
+        <div className={styles.quick}>
+          <Link href="/admin/events" className="adm-btn primary">+ Add Event</Link>
+          <Link href="/admin/gallery" className="adm-btn">+ Add Photo</Link>
+          <Link href="/admin/banners" className="adm-btn">+ Banner</Link>
+          <Link href="/admin/settings" className="adm-btn">Site Settings</Link>
+        </div>
+      ) : (
+        <div className={styles.quick} aria-hidden>
+          <div className={styles.quickSk} />
+          <div className={styles.quickSk} />
+          <div className={styles.quickSk} />
+          <div className={styles.quickSk} />
+        </div>
+      )}
     </div>
   );
 }

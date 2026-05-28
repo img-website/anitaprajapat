@@ -52,7 +52,32 @@
   padding: 2rem 0;
 }
 
+.skeletonGrid {
+  @include grid(3, 1.6rem);
+  margin-top: 1.2rem;
+  @include down("lg") { grid-template-columns: repeat(2, 1fr); }
+  @include down("sm") { grid-template-columns: 1fr; }
+}
+
+.skeletonCard {
+  height: 280px;
+  border-radius: $radius;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--surface) 85%, transparent) 25%,
+    color-mix(in srgb, var(--border) 70%, transparent) 50%,
+    color-mix(in srgb, var(--surface) 85%, transparent) 75%
+  );
+  background-size: 220% 100%;
+  animation: siteShimmer 1.2s ease-in-out infinite;
+}
+
 .more {
   text-align: center;
   margin-top: 2.5rem;
+}
+
+@keyframes siteShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }

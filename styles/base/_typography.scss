@@ -21,6 +21,14 @@ h2 { font-size: clamp(1.9rem, 4.5vw, 3.2rem); }
 h3 { font-size: clamp(1.35rem, 3vw, 2rem); }
 h4 { font-size: clamp(1.05rem, 2vw, 1.3rem); }
 
+@include down("sm") {
+  body { font-size: 0.88rem; line-height: 1.52; }
+  h1 { font-size: clamp(1.75rem, 8.2vw, 2.15rem); line-height: 1.03; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.26rem, 6vw, 1.62rem); line-height: 1.08; letter-spacing: -0.018em; }
+  h3 { font-size: clamp(1.02rem, 4.8vw, 1.2rem); line-height: 1.14; }
+  h4 { font-size: 0.95rem; line-height: 1.2; }
+}
+
 p { color: var(--text-muted); }
 
 ::selection {

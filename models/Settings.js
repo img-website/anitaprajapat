@@ -35,6 +35,7 @@ const settingsSchema = new mongoose.Schema(
       facebookFollowers: { type: String, default: "" },
       stageShows: { type: String, default: "4389+" },
     },
+    countersLastSyncedAt: { type: Date },
 
     theme: {
       primary: { type: String, default: "#b71c1c" }, // deep red

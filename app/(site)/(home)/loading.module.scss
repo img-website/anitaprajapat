@@ -1,0 +1,148 @@
+@use "abstracts" as *;
+
+.page {
+  min-height: 100vh;
+  padding-top: var(--header-pad, 76px);
+}
+
+.section {
+  padding: clamp(2.2rem, 5vw, 4rem) 0;
+}
+
+.alt {
+  background: var(--bg-2);
+  border-block: 1px solid var(--border);
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  @include down("lg") { grid-template-columns: 1fr; }
+}
+
+.line,
+.chip,
+.btn,
+.stat,
+.photo,
+.card,
+.gallery,
+.quote,
+.logo {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  border: 1px solid var(--border);
+}
+
+.line::after,
+.chip::after,
+.btn::after,
+.stat::after,
+.photo::after,
+.card::after,
+.gallery::after,
+.quote::after,
+.logo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    color-mix(in srgb, var(--gold) 18%, transparent) 50%,
+    transparent 80%
+  );
+  animation: wave 1.25s ease-in-out infinite;
+}
+
+.chip { width: 45%; height: 28px; border-radius: 999px; margin-bottom: 1rem; }
+.h1a { width: 72%; height: 44px; border-radius: 10px; margin-bottom: 0.7rem; }
+.h1b { width: 54%; height: 44px; border-radius: 10px; margin-bottom: 1rem; }
+.p1 { width: 100%; height: 16px; border-radius: 8px; margin-bottom: 0.6rem; }
+.p2 { width: 93%; height: 16px; border-radius: 8px; margin-bottom: 0.6rem; }
+.p3 { width: 70%; height: 16px; border-radius: 8px; margin-bottom: 1.2rem; }
+.btnRow { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+.btn { width: 170px; height: 44px; border-radius: 999px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+.stat { height: 82px; border-radius: 14px; }
+.photo { width: min(520px, 100%); aspect-ratio: 1/1; border-radius: 50%; justify-self: center; }
+
+.head {
+  width: 260px;
+  height: 34px;
+  border-radius: 10px;
+  margin: 0 auto 1.2rem;
+}
+
+.grid3 {
+  @include grid(3, 1rem);
+  @include down("md") { grid-template-columns: 1fr; }
+}
+.grid4 {
+  @include grid(4, 1rem);
+  @include down("lg") { grid-template-columns: repeat(2, 1fr); }
+  @include down("sm") { grid-template-columns: 1fr; }
+}
+.card { height: 170px; border-radius: 14px; }
+.counter { height: 130px; border-radius: 14px; }
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  @include down("md") { grid-template-columns: 1fr; }
+}
+.aboutMedia { height: 420px; border-radius: 18px; }
+.aboutCopy .line { height: 14px; border-radius: 8px; margin-bottom: 0.6rem; }
+.aboutCopy .line:nth-child(1) { width: 35%; height: 20px; margin-bottom: 0.9rem; }
+.aboutCopy .line:nth-child(2) { width: 80%; height: 36px; margin-bottom: 1rem; }
+.aboutCopy .line:nth-child(3) { width: 100%; }
+.aboutCopy .line:nth-child(4) { width: 92%; }
+.aboutCopy .line:nth-child(5) { width: 84%; margin-bottom: 1rem; }
+.aboutCopy .line:nth-child(6),
+.aboutCopy .line:nth-child(7),
+.aboutCopy .line:nth-child(8) { width: 88%; }
+.aboutCopy .btn { margin-top: 0.8rem; }
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+  @include down("md") { grid-template-columns: repeat(2, 1fr); }
+}
+.gallery {
+  height: 180px;
+  border-radius: 12px;
+}
+
+.quote {
+  max-width: 860px;
+  height: 260px;
+  border-radius: 18px;
+  margin: 0 auto;
+}
+
+.cta {
+  height: 260px;
+  border-radius: 22px;
+}
+
+.sponsors {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.logo {
+  width: 140px;
+  height: 54px;
+  border-radius: 999px;
+}
+
+@keyframes wave {
+  100% { transform: translateX(100%); }
+}

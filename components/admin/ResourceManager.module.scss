@@ -12,6 +12,24 @@
   overflow-x: auto;
 }
 
+.loadingSkeleton {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.loadingRow {
+  height: 52px;
+  border-radius: $radius-sm;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--surface) 85%, transparent) 25%,
+    color-mix(in srgb, var(--border) 70%, transparent) 50%,
+    color-mix(in srgb, var(--surface) 85%, transparent) 75%
+  );
+  background-size: 220% 100%;
+  animation: admTableShimmer 1.2s ease-in-out infinite;
+}
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -50,9 +68,21 @@
 
 .full { grid-column: 1 / -1; }
 
+.error {
+  display: block;
+  margin-top: 0.35rem;
+  color: #ff8a85;
+  font-size: 0.78rem;
+}
+
 .modalFoot {
   @include flex(row, flex-end, center, 0.8rem);
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
+}
+
+@keyframes admTableShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }

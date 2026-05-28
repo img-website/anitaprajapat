@@ -28,6 +28,18 @@
     &:focus { border-color: var(--magenta); outline: none; }
   }
   textarea { resize: vertical; min-height: 90px; }
+  @include down("sm") {
+    margin-bottom: 0.75rem;
+    font-size: 0.76rem;
+    input,
+    textarea,
+    select {
+      padding: 0.58rem 0.72rem;
+      border-radius: 10px;
+      font-size: 0.86rem;
+    }
+    textarea { min-height: 82px; }
+  }
 }
 
 .adm-table {
@@ -41,6 +53,10 @@
   }
   th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
   tr:hover td { background: var(--surface); }
+  @include down("sm") {
+    font-size: 0.8rem;
+    th, td { padding: 0.62rem 0.58rem; }
+  }
 }
 
 .adm-btn {
@@ -63,4 +79,9 @@
     box-shadow: 0 8px 22px color-mix(in srgb, var(--magenta) 30%, transparent);
   }
   &.danger { color: #ff8a85; border-color: rgba(255, 138, 133, 0.4); }
+  @include down("sm") {
+    padding: 0.48rem 0.72rem;
+    border-radius: 10px;
+    font-size: 0.78rem;
+  }
 }

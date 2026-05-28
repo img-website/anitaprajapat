@@ -9,15 +9,26 @@
   background: radial-gradient(circle at 50% -10%, rgba(212, 175, 55, 0.16), transparent 55%),
     var(--bg-2);
   border-bottom: 1px solid var(--border);
+  @include down("sm") {
+    padding-top: calc(#{$header-height} + 0.6rem);
+    padding-bottom: 1.2rem;
+  }
 }
 
 .title {
   margin-top: 0.5rem;
+  @include down("sm") { margin-top: 0.35rem; }
 }
 
 .subtitle {
   margin: 1rem auto 0;
   max-width: 60ch;
+  @include down("sm") {
+    margin-top: 0.7rem;
+    font-size: 0.94rem;
+    line-height: 1.5;
+    max-width: 34ch;
+  }
 }
 
 .crumbs {
@@ -27,4 +38,10 @@
   margin-bottom: 1rem;
   a:hover { color: var(--magenta); }
   .sep { margin: 0 0.4rem; opacity: 0.5; }
+  @include down("sm") {
+    margin-bottom: 0.6rem;
+    font-size: 0.74rem;
+    gap: 0.2rem;
+    .sep { margin: 0 0.22rem; }
+  }
 }

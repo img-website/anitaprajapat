@@ -328,6 +328,35 @@ body::before {
   body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
 }
 
+@include down("sm") {
+  .container {
+    width: min(1180px, calc(100% - 0.9rem));
+  }
+  .btn {
+    padding: 0.66rem 1rem;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    svg { width: 16px; height: 16px; }
+  }
+  .btn-lg {
+    padding: 0.76rem 1.06rem;
+    font-size: 0.86rem;
+    border-radius: 13px;
+  }
+  .chip {
+    padding: 0.35rem 0.75rem 0.35rem 0.62rem;
+    font-size: 0.66rem;
+  }
+  .section-head {
+    margin-bottom: 1.05rem;
+    p { margin-top: 0.5rem; }
+  }
+  .badge {
+    padding: 0.22rem 0.58rem;
+    font-size: 0.61rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

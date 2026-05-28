@@ -90,7 +90,13 @@ export default function BhajanExplorer({ initialItems = [], categories = [] }) {
         </div>
       )}
 
-      {loading && <p className={styles.loading}>Loading…</p>}
+      {loading && (
+        <div className={styles.skeletonGrid} aria-label="Loading bhajans">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className={styles.skeletonCard} />
+          ))}
+        </div>
+      )}
 
       {pagination?.hasMore && !loading && (
         <div className={styles.more}>

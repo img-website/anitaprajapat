@@ -5,6 +5,11 @@
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
+  @include down("sm") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .stat {
@@ -18,6 +23,57 @@
   &:hover { border-color: var(--magenta); transform: translateY(-3px); }
   .num { font-family: $font-heading; font-size: 2rem; color: var(--magenta); }
   .label { font-size: 0.85rem; color: var(--text-muted); }
+  @include down("sm") {
+    padding: 0.78rem;
+    border-radius: 12px;
+    .num { font-size: 1.35rem; }
+    .label { font-size: 0.74rem; line-height: 1.2; }
+  }
+}
+
+.statSkeleton {
+  pointer-events: none;
+  .num, .label { display: none; }
+}
+
+.skNum,
+.skLabel,
+.noteSkeleton,
+.quickSk {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  border: 1px solid var(--border);
+}
+
+.skNum::after,
+.skLabel::after,
+.noteSkeleton::after,
+.quickSk::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    color-mix(in srgb, var(--gold) 18%, transparent) 50%,
+    transparent 80%
+  );
+  animation: admWave 1.2s ease-in-out infinite;
+}
+
+.skNum {
+  width: 42%;
+  height: 36px;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.skLabel {
+  width: 76%;
+  height: 12px;
+  border-radius: 999px;
 }
 
 .panel {
@@ -36,9 +92,31 @@
   font-size: 0.9rem;
   color: var(--text);
   border-left: 3px solid var(--magenta);
+  @include down("sm") {
+    padding: 0.72rem 0.82rem;
+    font-size: 0.78rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.noteSkeleton {
+  height: 72px;
+  border-radius: $radius;
+  margin-bottom: 1.5rem;
 }
 
 .quick {
   @include flex(row, flex-start, center, 0.8rem);
   flex-wrap: wrap;
+  @include down("sm") { gap: 0.45rem; }
+}
+
+.quickSk {
+  width: 132px;
+  height: 38px;
+  border-radius: 999px;
+}
+
+@keyframes admWave {
+  100% { transform: translateX(100%); }
 }
