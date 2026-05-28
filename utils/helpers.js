@@ -26,6 +26,16 @@ export function youtubeEmbed(url) {
   return id ? `https://www.youtube.com/embed/${id}` : null;
 }
 
+/** Canonical watch URL — preserves /shorts/ links when present. */
+export function youtubeWatchUrl(url = "") {
+  const id = youtubeId(url);
+  if (!id) return null;
+  if (/youtube\.com\/shorts\//i.test(url)) {
+    return `https://www.youtube.com/shorts/${id}`;
+  }
+  return `https://www.youtube.com/watch?v=${id}`;
+}
+
 export function formatDate(date, opts = {}) {
   if (!date) return "";
   return new Date(date).toLocaleDateString("en-IN", {

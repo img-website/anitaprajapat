@@ -25,9 +25,32 @@ const settingsSchema = new mongoose.Schema(
       pinterest: { type: String, default: "" },
     },
 
-    // Featured hero video (shown in the homepage highlight card).
+    // Featured hero video (shown in the homepage bento highlight card).
     featuredVideo: { type: String, default: "" },
-    featuredVideoTitle: { type: String, default: "Bhakti that fills the stage" },
+    featuredVideoTitle: { type: String, default: "" },
+
+    // Homepage bento grid — all tiles editable from admin.
+    bento: {
+      featureChip: { type: String, default: "Live Devotional Experience" },
+      statLabel: { type: String, default: "Stage shows & live jagrans" },
+      bookTitle: { type: String, default: "Book for your Jagran" },
+      bookCta: { type: String, default: "Chat on WhatsApp" },
+      repertoireLabel: { type: String, default: "Repertoire" },
+      repertoireItems: { type: [String], default: [] },
+      youtubeTitle: { type: String, default: "Watch on YouTube" },
+      youtubeSubtitle: { type: String, default: "New bhajans every week" },
+      portraitImage: { type: String, default: "" },
+      portraitTag: { type: String, default: "Jaipur" },
+      storyChip: { type: String, default: "Artist Journey" },
+      storyTitle: { type: String, default: "Traditional roots, modern stage presence" },
+      storyDescription: {
+        type: String,
+        default:
+          "Explore Anita Prajapat's story, live journey and devotional milestones.",
+      },
+      storyLinkLabel: { type: String, default: "Read full story" },
+      storyHref: { type: String, default: "/about" },
+    },
 
     counters: {
       youtubeSubscribers: { type: String, default: "" },

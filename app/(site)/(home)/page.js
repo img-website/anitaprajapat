@@ -10,7 +10,7 @@ import {
   getSponsors,
   getMediaCoverage,
 } from "@/services/content";
-import { getYouTubeVideos } from "@/services/youtube";
+import { getYouTubeVideos, getYouTubeVideoMeta } from "@/services/youtube";
 import { ArrowRight, Phone } from "lucide-react";
 import { WhatsappIcon } from "@/components/ui/BrandIcons";
 import MusicNotes from "@/components/ui/MusicNotes";
@@ -31,8 +31,8 @@ import s from "@/components/home/home.module.scss";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  const settings = await getSettings();
   const [
-    settings,
     banners,
     events,
     testimonials,
@@ -40,8 +40,8 @@ export default async function HomePage() {
     sponsors,
     media,
     videos,
+    featuredVideo,
   ] = await Promise.all([
-    getSettings(),
     getHeroBanners(),
     getUpcomingEvents(3),
     getTestimonials(),
@@ -49,6 +49,7 @@ export default async function HomePage() {
     getSponsors(),
     getMediaCoverage(3),
     getYouTubeVideos(),
+    settings?.featuredVideo ? getYouTubeVideoMeta(settings.featuredVideo) : null,
   ]);
 
   return (
@@ -57,7 +58,7 @@ export default async function HomePage() {
 
       <Hero banner={banners[0]} settings={settings} />
 
-      <BentoHighlights settings={settings} />
+      <BentoHighlights settings={settings} featuredVideo={featuredVideo} />
 
       {/* All bhajan videos come live from YouTube (popular · latest · playlists) */}
       <VideoShowcase

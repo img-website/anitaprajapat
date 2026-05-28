@@ -1,5 +1,6 @@
 import "server-only";
 import { siteConfig } from "@/lib/siteConfig";
+import { youtubeId, youtubeThumb, youtubeWatchUrl } from "@/utils/helpers";
 
 /**
  * YouTube integration.
@@ -243,3 +244,66 @@ export async function getYouTubeData() {
 
 // Back-compat alias
 export const getYouTubeVideos = getYouTubeData;
+
+/** Parse ISO 8601 duration (PT4M13S) → { seconds, label: "4:13" }. */
+function parseIsoDuration(iso = "") {
+  const m = String(iso).match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return { seconds: 0, label: "" };
+  const h = parseInt(m[1] || "0", 10);
+  const min = parseInt(m[2] || "0", 10);
+  const sec = parseInt(m[3] || "0", 10);
+  const seconds = h * 3600 + min * 60 + sec;
+  if (!seconds) return { seconds: 0, label: "" };
+  if (h > 0) {
+    return {
+      seconds,
+      label: `${h}:${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`,
+    };
+  }
+  return { seconds, label: `${min}:${String(sec).padStart(2, "0")}` };
+}
+
+let videoMetaCache = new Map();
+
+/**
+ * Fetch title, thumbnail & duration for a single YouTube URL (Data API when keyed).
+ * Falls back to static thumbnail + watch URL without duration.
+ */
+export async function getYouTubeVideoMeta(url = "") {
+  const id = youtubeId(url);
+  if (!id) return null;
+
+  const watchUrl = youtubeWatchUrl(url) || `https://www.youtube.com/watch?v=${id}`;
+  const fallback = {
+    id,
+    title: "",
+    thumbnail: youtubeThumb(url) || `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    duration: "",
+    url: watchUrl,
+  };
+
+  const cached = videoMetaCache.get(id);
+  if (cached && Date.now() - cached.at < TTL) return cached.data;
+
+  if (!KEY) {
+    return fallback;
+  }
+
+  try {
+    const data = await jget(`${API}/videos?part=snippet,contentDetails&id=${id}&key=${KEY}`);
+    const item = data.items?.[0];
+    if (!item) return fallback;
+    const { label } = parseIsoDuration(item.contentDetails?.duration);
+    const result = {
+      id,
+      title: item.snippet?.title || "",
+      thumbnail: thumb(item.snippet?.thumbnails, id),
+      duration: label,
+      url: watchUrl,
+    };
+    videoMetaCache.set(id, { at: Date.now(), data: result });
+    return result;
+  } catch {
+    return fallback;
+  }
+}

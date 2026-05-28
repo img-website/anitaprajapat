@@ -3,7 +3,24 @@
 import { useEffect, useState } from "react";
 import api from "@/services/apiClient";
 import ImageUploader from "@/components/admin/ImageUploader";
+import { mergeBento } from "@/lib/bentoDefaults";
+import { youtubeId } from "@/utils/helpers";
 import styles from "./settings.module.scss";
+
+const FIELD_LABELS = {
+  siteName: "Site Name",
+  phone: "Phone",
+  whatsapp: "WhatsApp",
+  email: "Email",
+  featuredVideo: "YouTube Video URL",
+  "bento.storyHref": "Story link URL",
+  "bento.portraitImage": "Portrait image URL",
+  "social.youtube": "YouTube",
+  "social.instagram": "Instagram",
+  "social.facebook": "Facebook",
+  "social.pinterest": "Pinterest",
+  "seo.ogImage": "OG Image URL",
+};
 
 export default function SettingsPage() {
   const [s, setS] = useState(null);
@@ -13,7 +30,9 @@ export default function SettingsPage() {
   const [syncReport, setSyncReport] = useState(null);
 
   useEffect(() => {
-    api.get("/settings").then((res) => setS(res.data)).catch((e) => setStatus(e.message));
+    api.get("/settings")
+      .then((res) => setS({ ...res.data, bento: mergeBento(res.data) }))
+      .catch((e) => setStatus(e.message));
   }, []);
 
   const set = (path, value) => {
@@ -38,7 +57,8 @@ export default function SettingsPage() {
 
   const save = async (e) => {
     e.preventDefault();
-    const nextErrors = validateSettings(s);
+    const payload = sanitizeSettings(s);
+    const nextErrors = validateSettings(payload);
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors);
       setStatus("Please fix validation errors.");
@@ -47,7 +67,8 @@ export default function SettingsPage() {
     setErrors({});
     setStatus("saving");
     try {
-      await api.put("/settings", s);
+      await api.put("/settings", payload);
+      setS(payload);
       setStatus("saved");
       setTimeout(() => setStatus(""), 2500);
     } catch (e2) {
@@ -60,7 +81,7 @@ export default function SettingsPage() {
     setStatus("");
     try {
       const res = await api.post("/admin/social-sync");
-      setS(res.data);
+      setS({ ...res.data, bento: mergeBento(res.data) });
       setSyncReport(res.report || null);
       setStatus("Social counters synced.");
     } catch (e2) {
@@ -90,6 +111,19 @@ export default function SettingsPage() {
         </button>
       </div>
 
+      {Object.keys(errors).length > 0 && (
+        <div className={styles.errorBox} role="alert">
+          <strong>Please fix these fields:</strong>
+          <ul>
+            {Object.entries(errors).map(([key, msg]) => (
+              <li key={key}>
+                {FIELD_LABELS[key] || key}: {msg}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <section className={styles.card}>
         <h2>Branding</h2>
         <div className={styles.grid}>
@@ -113,19 +147,126 @@ export default function SettingsPage() {
       </section>
 
       <section className={styles.card}>
-        <h2>Featured Video</h2>
+        <h2>Featured Video (Bento)</h2>
+        <p style={{ color: "var(--text-muted)", marginBottom: "0.75rem", fontSize: "0.9rem" }}>
+          Paste a YouTube link — thumbnail, duration & title load automatically on the site.
+          Leave title blank to use the YouTube video name.
+        </p>
         <div className={styles.grid}>
           <Field
-            label="Featured YouTube URL (homepage highlight card)"
+            label="YouTube Video URL"
             value={s.featuredVideo}
             error={errors.featuredVideo}
             onChange={(v) => set("featuredVideo", v)}
           />
           <Field
-            label="Featured Video Title"
+            label="Custom Title (optional override)"
             value={s.featuredVideoTitle}
             onChange={(v) => set("featuredVideoTitle", v)}
           />
+        </div>
+      </section>
+
+      <section className={styles.card}>
+        <h2>Bento Section</h2>
+        <p style={{ color: "var(--text-muted)", marginBottom: "0.75rem", fontSize: "0.9rem" }}>
+          Homepage grid below the hero — all tiles editable here.
+        </p>
+        <div className={styles.grid}>
+          <Field
+            label="Video chip label"
+            value={s.bento?.featureChip}
+            onChange={(v) => set("bento.featureChip", v)}
+          />
+          <Field
+            label="Shows stat label"
+            value={s.bento?.statLabel}
+            onChange={(v) => set("bento.statLabel", v)}
+          />
+          <Field
+            label="Book tile title"
+            value={s.bento?.bookTitle}
+            onChange={(v) => set("bento.bookTitle", v)}
+          />
+          <Field
+            label="Book tile CTA text"
+            value={s.bento?.bookCta}
+            onChange={(v) => set("bento.bookCta", v)}
+          />
+          <Field
+            label="Repertoire label"
+            value={s.bento?.repertoireLabel}
+            onChange={(v) => set("bento.repertoireLabel", v)}
+          />
+          <Field
+            label="YouTube tile title"
+            value={s.bento?.youtubeTitle}
+            onChange={(v) => set("bento.youtubeTitle", v)}
+          />
+          <Field
+            label="YouTube tile subtitle"
+            value={s.bento?.youtubeSubtitle}
+            onChange={(v) => set("bento.youtubeSubtitle", v)}
+          />
+          <Field
+            label="Portrait location tag"
+            value={s.bento?.portraitTag}
+            onChange={(v) => set("bento.portraitTag", v)}
+          />
+          <Field
+            label="Story chip"
+            value={s.bento?.storyChip}
+            onChange={(v) => set("bento.storyChip", v)}
+          />
+          <Field
+            label="Story title"
+            value={s.bento?.storyTitle}
+            onChange={(v) => set("bento.storyTitle", v)}
+          />
+          <Field
+            label="Story link label"
+            value={s.bento?.storyLinkLabel}
+            onChange={(v) => set("bento.storyLinkLabel", v)}
+          />
+          <Field
+            label="Story link URL"
+            value={s.bento?.storyHref}
+            error={errors["bento.storyHref"]}
+            onChange={(v) => set("bento.storyHref", v)}
+          />
+        </div>
+        <label className="adm-field">
+          Repertoire items (one per line)
+          <textarea
+            value={(s.bento?.repertoireItems || []).join("\n")}
+            onChange={(e) =>
+              set(
+                "bento.repertoireItems",
+                e.target.value
+                  .split("\n")
+                  .map((line) => line.trim())
+                  .filter(Boolean)
+              )
+            }
+          />
+        </label>
+        <label className="adm-field">
+          Story description
+          <textarea
+            value={s.bento?.storyDescription || ""}
+            onChange={(e) => set("bento.storyDescription", e.target.value)}
+          />
+        </label>
+        <div className="adm-field">
+          <label>Portrait image (bento tile)</label>
+          <ImageUploader
+            value={s.bento?.portraitImage ? { url: s.bento.portraitImage } : null}
+            onChange={(media) => set("bento.portraitImage", media?.url || "")}
+            folder="bento"
+          />
+          {errors["bento.portraitImage"] && (
+            <small style={{ color: "#ff8a85" }}>{errors["bento.portraitImage"]}</small>
+          )}
         </div>
       </section>
 
@@ -203,6 +344,9 @@ export default function SettingsPage() {
               onChange={(media) => set("seo.ogImage", media?.url || "")}
               folder="seo"
             />
+            {errors["seo.ogImage"] && (
+              <small style={{ color: "#ff8a85" }}>{errors["seo.ogImage"]}</small>
+            )}
           </div>
           <Field label="Google Verification" value={s.seo?.gscVerification} onChange={(v) => set("seo.gscVerification", v)} />
           <Field label="GA Measurement ID" value={s.seo?.gaMeasurementId} onChange={(v) => set("seo.gaMeasurementId", v)} />
@@ -238,8 +382,15 @@ function validateSettings(settings) {
   if (settings?.whatsapp && !/^\d{8,15}$/.test(String(settings.whatsapp).trim())) {
     errors.whatsapp = "WhatsApp must be digits only (8-15)";
   }
+
+  const featured = settings?.featuredVideo?.trim();
+  if (featured && !youtubeId(featured)) {
+    errors.featuredVideo = "Enter a valid YouTube link (youtube.com or youtu.be)";
+  }
+
+  // Portrait & OG image are optional — invalid/partial URLs are cleared on save, not blocked.
   const optionalUrlPaths = [
-    "featuredVideo",
+    "bento.storyHref",
     "social.youtube",
     "social.instagram",
     "social.facebook",
@@ -247,20 +398,13 @@ function validateSettings(settings) {
   ];
   for (const path of optionalUrlPaths) {
     const value = getPath(settings, path);
-    if (value && !isValidUrl(value)) errors[path] = "Enter a valid URL";
-  }
-  const optionalCountPaths = [
-    "counters.youtubeSubscribers",
-    "counters.instagramFollowers",
-    "counters.facebookFollowers",
-    "counters.stageShows",
-  ];
-  for (const path of optionalCountPaths) {
-    const value = getPath(settings, path);
-    if (value && !/^[\d,+ ]+$/.test(String(value).trim())) {
-      errors[path] = "Use only numbers, comma, plus";
+    if (!value || !String(value).trim()) continue;
+    if (path === "bento.storyHref" && String(value).startsWith("/")) continue;
+    if (!isValidHttpUrl(value)) {
+      errors[path] = "Enter a complete https:// URL or upload the image";
     }
   }
+
   return errors;
 }
 
@@ -268,9 +412,32 @@ function getPath(obj, path) {
   return path.split(".").reduce((acc, key) => acc?.[key], obj);
 }
 
-function isValidUrl(value) {
+function setPath(obj, path, value) {
+  const keys = path.split(".");
+  let cur = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    cur[keys[i]] = cur[keys[i]] || {};
+    cur = cur[keys[i]];
+  }
+  cur[keys.at(-1)] = value;
+}
+
+/** Drop half-typed image URLs so they never block saving other settings. */
+function sanitizeSettings(settings) {
+  const next = structuredClone(settings);
+  for (const path of ["bento.portraitImage", "seo.ogImage"]) {
+    const value = getPath(next, path);
+    if (value && !isValidHttpUrl(value)) setPath(next, path, "");
+  }
+  return next;
+}
+
+function isValidHttpUrl(value) {
   try {
-    new URL(value);
+    const u = new URL(String(value).trim());
+    if (u.protocol !== "http:" && u.protocol !== "https:") return false;
+    // Reject obvious half-typed hosts (e.g. "https://res.cloudinary.c")
+    if (!u.hostname.includes(".")) return false;
     return true;
   } catch {
     return false;

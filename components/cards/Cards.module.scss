@@ -82,6 +82,11 @@
   flex-wrap: wrap;
 }
 
+// Event cover — square 1:1 banner
+.eventThumb {
+  aspect-ratio: 1 / 1;
+}
+
 // Event-specific
 .dateBadge {
   position: absolute;

@@ -1,37 +1,22 @@
-"use client";
-
-import { useState } from "react";
-import { youtubeId, youtubeThumb } from "@/utils/helpers";
+import { youtubeId, youtubeThumb, youtubeWatchUrl } from "@/utils/helpers";
 import styles from "./YouTubeEmbed.module.scss";
 
-// Lazy YouTube facade: loads the iframe only after click (better LCP/perf).
-export default function YouTubeEmbed({ url, title = "YouTube video" }) {
-  const [active, setActive] = useState(false);
+/** Thumbnail card that opens the video on YouTube in a new tab. */
+export default function YouTubeEmbed({ url, title = "YouTube video", aspect = "16/9" }) {
   const id = youtubeId(url);
-  if (!id) return null;
-
-  if (active) {
-    return (
-      <div className={styles.wrap}>
-        <iframe
-          src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-        />
-      </div>
-    );
-  }
+  const href = youtubeWatchUrl(url);
+  if (!id || !href) return null;
 
   return (
-    <button
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={styles.facade}
-      onClick={() => setActive(true)}
-      style={{ backgroundImage: `url(${youtubeThumb(id)})` }}
-      aria-label={`Play ${title}`}
+      style={{ backgroundImage: `url(${youtubeThumb(id)})`, aspectRatio: aspect }}
+      aria-label={`Watch ${title} on YouTube`}
     >
       <span className={styles.play}>▶</span>
-    </button>
+    </a>
   );
 }

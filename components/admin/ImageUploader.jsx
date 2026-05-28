@@ -44,8 +44,12 @@ export default function ImageUploader({ value, onChange, folder = "anitaprajapat
       <input
         type="text"
         placeholder="…or paste image URL"
-        value={value?.url || ""}
-        onChange={(e) => onChange({ ...(value || {}), url: e.target.value })}
+        defaultValue={value?.url || ""}
+        key={value?.url || "empty"}
+        onBlur={(e) => {
+          const url = e.target.value.trim();
+          onChange(url ? { ...(value || {}), url } : null);
+        }}
         style={{ marginTop: 6 }}
       />
       {busy && <small style={{ color: "var(--gold)" }}>Uploading…</small>}

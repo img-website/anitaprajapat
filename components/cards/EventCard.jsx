@@ -7,7 +7,7 @@ export default function EventCard({ event }) {
   const d = event.date ? new Date(event.date) : null;
   return (
     <article className={styles.card}>
-      <Link href={`/events/${event.slug}`} className={styles.thumb}>
+      <Link href={`/events/${event.slug}`} className={`${styles.thumb} ${styles.eventThumb}`}>
         <Image
           src={img}
           alt={event.coverImage?.alt || event.title}

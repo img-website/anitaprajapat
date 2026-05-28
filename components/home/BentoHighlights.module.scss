@@ -24,12 +24,39 @@
   }
 }
 
-// Feature image — spans 2x2
+// Feature video — spans 2x2
 .feature {
+  --play-size: 2.85rem;
   grid-column: span 2;
   grid-row: span 2;
   padding: 0;
   img { object-fit: cover; }
+  @include down("sm") {
+    --play-size: 2.35rem;
+  }
+  .featureLink {
+    position: absolute;
+    inset: 0;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .duration {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.55rem;
+    border-radius: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(0.25rem);
+  }
   .featureText {
     position: absolute;
     inset: auto 0 0 0;
@@ -48,55 +75,56 @@
   }
 }
 
-.featureFrame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-// Animated play button with expanding sonar waves.
+// Play + waves share one center point (top-left of feature tile).
 .playBtn {
   position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 5.25rem;
-  height: 5.25rem;
+  top: 0.85rem;
+  left: 0.85rem;
+  width: var(--play-size);
+  height: var(--play-size);
   z-index: 2;
-  display: grid;
-  place-items: center;
+  pointer-events: none;
 }
-.playCore {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: 50%;
-  color: #fff;
-  padding-left: 0.25rem;
-  background: var(--magenta);
-  box-shadow: 0 0.625rem 1.875rem -0.25rem color-mix(in srgb, var(--magenta) 70%, transparent);
-  transition: transform 0.25s $ease;
-}
-.playBtn:hover .playCore { transform: scale(1.08); }
+.playCore,
 .wave {
   position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 4.5rem;
-  height: 4.5rem;
+  top: 50%;
+  left: 50%;
+  width: var(--play-size);
+  height: var(--play-size);
   border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.playCore {
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  padding-left: 0.15rem;
+  background: var(--magenta);
+  box-shadow: 0 0.4rem 1.1rem -0.2rem color-mix(in srgb, var(--magenta) 70%, transparent);
+  transition: transform 0.25s $ease;
+}
+.featureLink:hover .playCore {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.wave {
+  z-index: 1;
   background: color-mix(in srgb, var(--magenta) 55%, transparent);
   animation: sonar 2.2s ease-out infinite;
 }
-.wave:nth-child(2) { animation-delay: 1.1s; }
+.wave:nth-child(2) { animation-delay: 0.73s; }
+.wave:nth-child(3) { animation-delay: 1.46s; }
 
 @keyframes sonar {
-  0% { transform: scale(1); opacity: 0.7; }
-  100% { transform: scale(2.4); opacity: 0; }
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.15);
+    opacity: 0;
+  }
 }
 
 .stat {

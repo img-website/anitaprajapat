@@ -1,48 +1,61 @@
 @use "abstracts" as *;
 
-.wrap,
 .facade {
   position: relative;
+  display: grid;
+  place-items: center;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: $radius;
   overflow: hidden;
   border: 0.0625rem solid var(--border);
-}
-
-.wrap iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.facade {
   background-size: cover;
   background-position: center;
-  display: grid;
-  place-items: center;
   cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.25s $ease;
+
   &::after {
     content: "";
     position: absolute;
     inset: 0;
     background: rgba(13, 10, 9, 0.35);
+    transition: background 0.25s;
   }
+
+  &:hover {
+    transform: scale(1.01);
+    &::after {
+      background: rgba(13, 10, 9, 0.25);
+    }
+    .play {
+      transform: scale(1.06);
+    }
+  }
+
   .play {
     position: relative;
     z-index: 1;
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50%;
     display: grid;
     place-items: center;
-    font-size: 1.6rem;
+    font-size: 0.85rem;
+    padding-left: 0.12rem;
     color: #fff;
     background: rgba(183, 28, 28, 0.9);
-    box-shadow: 0 0 0 0.625rem rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.1);
     transition: transform 0.25s $ease;
   }
-  &:hover .play {
-    transform: scale(1.08);
+
+  @include down("sm") {
+    .play {
+      width: 2rem;
+      height: 2rem;
+      font-size: 0.6rem;
+      padding-left: 0.08rem;
+      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.08);
+    }
   }
 }
