@@ -19,9 +19,9 @@ export default function VideoShowcase({
   popular = [],
   latest = [],
   playlists = [],
-  heading = "Watch Bhajans on YouTube",
+  heading = "Watch Sanwariya Seth & Khatu Shyam Bhajans",
   eyebrow = "From the Channel",
-  subtitle = "Fresh devotional uploads, all-time favourites & curated playlists — straight from YouTube.",
+  subtitle = "Fresh Sanwariya Seth, Khatu Shyam & Mataji bhajan uploads, all-time favourites & curated playlists — straight from YouTube.",
   hideHeading = false,
 }) {
   const tabsRef = useRef(null);

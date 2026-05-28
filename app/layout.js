@@ -28,11 +28,12 @@ export async function generateMetadata() {
   const description = seo.defaultDescription || siteConfig.description;
   const ogImage = seo.ogImage || siteConfig.ogImage;
   const gscVerification = seo.gscVerification || undefined;
+  const defaultTitle = seo.defaultTitle?.trim() || `${siteName} — ${tagline}`;
 
   return {
     metadataBase: new URL(siteConfig.url),
     title: {
-      default: `${siteName} — ${tagline}`,
+      default: defaultTitle,
       template: `%s | ${siteName}`,
     },
     description,
@@ -55,9 +56,9 @@ export async function generateMetadata() {
       locale: "en_IN",
       url: siteConfig.url,
       siteName,
-      title: `${siteName} — ${tagline}`,
+      title: defaultTitle,
       description,
-      images: [{ url: ogImage, width: 1200, height: 630 }],
+      images: [{ url: ogImage, width: siteConfig.ogImageWidth, height: siteConfig.ogImageHeight }],
     },
     twitter: {
       card: "summary_large_image",

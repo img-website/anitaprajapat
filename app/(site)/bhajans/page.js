@@ -1,6 +1,9 @@
 import { buildMetadata, musicGroupSchema, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getYouTubeData } from "@/services/youtube";
 import { getSettings } from "@/services/content";
+import { siteConfig } from "@/lib/siteConfig";
+import { youtubeSubscribeUrl } from "@/utils/helpers";
+import { YoutubeIcon } from "@/components/ui/BrandIcons";
 import PageHeader from "@/components/ui/PageHeader";
 import VideoShowcase from "@/components/home/VideoShowcase";
 import JsonLd from "@/components/seo/JsonLd";
@@ -10,16 +13,17 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Bhajans — Khatu Shyam, Mataji & Rajasthani Devotional Songs",
+    title: "Bhajans — Sanwariya Seth, Khatu Shyam & Mataji Devotional Songs",
     description:
-      "Watch Anita Prajapat's devotional bhajans — Khatu Shyam, Mataji, Marwadi & Rajasthani bhajans. Popular, latest and curated playlists, live from YouTube.",
+      "Watch Anita Prajapat's devotional bhajans — Sanwariya Seth, Khatu Shyam, Mataji, Marwadi & Rajasthani bhajans. Popular, latest and curated playlists, live from YouTube. Subscribe for new uploads every week.",
     path: "/bhajans",
     defaults: seoDefaultsFromSettings(settings),
   });
 }
 
 export default async function BhajansPage() {
-  const videos = await getYouTubeData();
+  const [videos, settings] = await Promise.all([getYouTubeData(), getSettings()]);
+  const subscribe = youtubeSubscribeUrl(settings?.social?.youtube || siteConfig.social.youtube);
 
   return (
     <>
@@ -27,7 +31,7 @@ export default async function BhajansPage() {
       <PageHeader
         eyebrow="Devotional Music"
         title="Bhajans"
-        subtitle="Popular, latest & curated playlists — streaming live from the official YouTube channel."
+        subtitle="Sanwariya Seth, Khatu Shyam & Mataji bhajans — popular, latest & curated playlists, streaming live from the official YouTube channel."
         crumbs={[{ name: "Bhajans" }]}
       />
       <VideoShowcase
@@ -36,6 +40,18 @@ export default async function BhajansPage() {
         playlists={videos.playlists}
         hideHeading
       />
+      <section className="section" style={{ textAlign: "center" }}>
+        <div className="container-narrow">
+          <h2 style={{ marginBottom: "0.5rem" }}>Never miss a new bhajan</h2>
+          <p style={{ color: "var(--text-muted)", marginBottom: "1.25rem" }}>
+            Subscribe to Anita Prajapat on YouTube for fresh Sanwariya Seth &amp; Khatu Shyam
+            bhajans and live Jagran videos every week.
+          </p>
+          <a href={subscribe} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg shine">
+            <YoutubeIcon size={20} /> Subscribe on YouTube
+          </a>
+        </div>
+      </section>
     </>
   );
 }

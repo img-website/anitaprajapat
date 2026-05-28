@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { brandMap, WhatsappIcon } from "@/components/ui/BrandIcons";
+import { youtubeSubscribeUrl } from "@/utils/helpers";
 import styles from "./FloatingBar.module.scss";
 
 export default function FloatingBar({ settings = {} }) {
   const [showTop, setShowTop] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const social = { ...siteConfig.social, ...(settings.social || {}) };
+  if (social.youtube) social.youtube = youtubeSubscribeUrl(social.youtube);
   const whatsapp = settings.whatsapp || siteConfig.whatsapp;
 
   useEffect(() => {

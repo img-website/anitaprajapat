@@ -3,13 +3,22 @@ import Image from "next/image";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/siteConfig";
 import { brandMap, WhatsappIcon } from "@/components/ui/BrandIcons";
+import { youtubeSubscribeUrl } from "@/utils/helpers";
 import styles from "./Footer.module.scss";
 
 export default function Footer({ settings = {} }) {
   const social = { ...siteConfig.social, ...(settings.social || {}) };
+  if (social.youtube) social.youtube = youtubeSubscribeUrl(social.youtube);
   const phone = settings.phone || siteConfig.phone;
   const email = settings.email || siteConfig.email;
   const year = new Date().getFullYear();
+
+  const socialTitles = {
+    youtube: "Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans",
+    instagram: "Follow Anita Prajapat on Instagram",
+    facebook: "Follow Anita Prajapat on Facebook",
+    pinterest: "Follow Anita Prajapat on Pinterest",
+  };
 
   return (
     <footer className={styles.footer}>

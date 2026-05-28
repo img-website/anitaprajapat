@@ -11,6 +11,9 @@ const settingsSchema = new mongoose.Schema(
     tagline: { type: String, default: "Rajasthani Devotional Singer" },
     logo: { type: String, default: "" },
     favicon: { type: String, default: "" },
+    // Artist portrait shown on the Home "About" section and the About page
+    // (separate from the small brand logo used in navbar/footer).
+    artistImage: { type: String, default: "" },
 
     phone: { type: String, default: "8302598435" },
     whatsapp: { type: String, default: "918302598435" },

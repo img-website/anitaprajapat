@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/siteConfig";
+import { youtubeSubscribeUrl } from "@/utils/helpers";
 import { ArrowRight, Star, Mic2 } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { YoutubeIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
@@ -13,9 +14,10 @@ export default function Hero({ banner, settings = {} }) {
   const subtitle = banner?.subtitle || siteConfig.tagline;
   const description =
     banner?.description ||
-    "Khatu Shyam · Mataji · Marwadi bhajan & live Jagran — devotion brought to life on stage across India.";
+    "Sanwariya Seth · Khatu Shyam · Mataji bhajan & live Jagran — devotion brought to life on stage across India.";
   const img = banner?.image?.url || "/images/hero.jpg";
   const youtube = settings.social?.youtube || siteConfig.social.youtube;
+  const subscribe = youtubeSubscribeUrl(youtube);
   const whatsapp = settings.whatsapp || siteConfig.whatsapp;
 
   const ease = [0.22, 1, 0.36, 1];
@@ -59,8 +61,8 @@ export default function Hero({ banner, settings = {} }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.32, ease }}
           >
-            <a href={youtube} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg shine">
-              <YoutubeIcon size={20} /> Subscribe
+            <a href={subscribe} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg shine">
+              <YoutubeIcon size={20} /> Subscribe on YouTube
             </a>
             <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg">
               <WhatsappIcon size={18} /> Book for Jagran <ArrowRight size={18} />

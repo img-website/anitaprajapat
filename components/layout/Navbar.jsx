@@ -36,8 +36,15 @@ export default function Navbar({ logo, whatsapp }) {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={`container ${styles.inner}`}>
-        <Link href="/" className={styles.brand} aria-label={siteConfig.name}>
-          <Image src={logoSrc} alt={siteConfig.name} width={48} height={48} priority />
+        <Link href="/" className={styles.brand} aria-label={siteConfig.name} title={`${siteConfig.name} — ${siteConfig.tagline}`}>
+          <Image
+            src={logoSrc}
+            alt={`${siteConfig.name} logo — Sanwariya Seth & Khatu Shyam Bhajan Singer`}
+            title={`${siteConfig.name} — ${siteConfig.tagline}`}
+            width={48}
+            height={48}
+            priority
+          />
         </Link>
 
         <nav className={styles.desktopNav} aria-label="Primary">
@@ -45,7 +52,13 @@ export default function Navbar({ logo, whatsapp }) {
             const active =
               item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
-              <Link key={item.href} href={item.href} className={active ? styles.active : ""}>
+              <Link
+                key={item.href}
+                href={item.href}
+                title={item.title || item.label}
+                aria-current={active ? "page" : undefined}
+                className={active ? styles.active : ""}
+              >
                 {item.label}
               </Link>
             );
@@ -58,6 +71,7 @@ export default function Navbar({ logo, whatsapp }) {
             href={`https://wa.me/${wa}`}
             target="_blank"
             rel="noopener noreferrer"
+            title="Book Anita Prajapat for Jagran on WhatsApp"
             className={`btn btn-primary ${styles.bookBtn}`}
           >
             <CalendarHeart size={17} /> Book Now
@@ -92,7 +106,7 @@ export default function Navbar({ logo, whatsapp }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.04 * i }}
                 >
-                  <Link href={item.href}>{item.label}</Link>
+                  <Link href={item.href} title={item.title || item.label}>{item.label}</Link>
                 </motion.div>
               ))}
             </nav>
@@ -100,6 +114,7 @@ export default function Navbar({ logo, whatsapp }) {
               href={`https://wa.me/${wa}`}
               target="_blank"
               rel="noopener noreferrer"
+              title="Book Anita Prajapat for Jagran on WhatsApp"
               className="btn btn-gold btn-lg"
             >
               <WhatsappIcon size={18} /> Book on WhatsApp

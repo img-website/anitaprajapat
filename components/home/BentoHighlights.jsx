@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Sparkles, Mic2, ArrowRight, Play, Clock } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
+import { youtubeSubscribeUrl } from "@/utils/helpers";
 import { mergeBento } from "@/lib/bentoDefaults";
 import { YoutubeIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
 import styles from "./BentoHighlights.module.scss";
@@ -17,6 +18,7 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
   const bento = mergeBento(settings);
   const whatsapp = settings.whatsapp || siteConfig.whatsapp;
   const youtube = settings.social?.youtube || siteConfig.social.youtube;
+  const subscribe = youtubeSubscribeUrl(youtube);
   const shows = settings.counters?.stageShows || siteConfig.stageShows;
 
   const watchUrl = featuredVideo?.url;
@@ -113,7 +115,7 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
           </motion.div>
 
           <motion.a
-            href={youtube}
+            href={subscribe}
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.tile} ${styles.youtube}`}

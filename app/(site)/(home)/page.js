@@ -73,7 +73,7 @@ export default async function HomePage() {
           <div className={s.about}>
             <Reveal variant="right" className={s.media}>
               <Image
-                src={settings.logo || "/images/artist.jpg"}
+                src={settings.artistImage || settings.logo || "/images/artist.jpg"}
                 alt={siteConfig.name}
                 fill
                 sizes="(max-width: 48rem) 100vw, 50vw"
@@ -90,12 +90,12 @@ export default async function HomePage() {
               <h2>Voice of Devotion from {siteConfig.city}</h2>
               <p>
                 {siteConfig.name} is a celebrated {siteConfig.category.toLowerCase()},
-                performing soul-stirring Khatu Shyam, Mataji and Rajasthani bhajans
-                since {siteConfig.performingSince}. Her live Jagran shows bring
-                communities together in devotion across India.
+                performing soul-stirring Sanwariya Seth, Khatu Shyam, Mataji and
+                Rajasthani bhajans since {siteConfig.performingSince}. Her live Jagran
+                shows bring communities together in devotion across India.
               </p>
               <ul>
-                <li>Khatu Shyam & Mataji Bhajan specialist</li>
+                <li>Sanwariya Seth & Khatu Shyam Bhajan specialist</li>
                 <li>{siteConfig.stageShows} stage shows & live Jagrans</li>
                 <li>Growing devotional audience on YouTube & Instagram</li>
               </ul>

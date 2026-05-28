@@ -144,6 +144,14 @@ export default function SettingsPage() {
             folder="branding"
           />
         </div>
+        <div className="adm-field">
+          <label>Artist Photo (square, 1:1 — shown on Home &amp; About)</label>
+          <ImageUploader
+            value={s.artistImage ? { url: s.artistImage } : null}
+            onChange={(media) => set("artistImage", media?.url || "")}
+            folder="branding"
+          />
+        </div>
       </section>
 
       <section className={styles.card}>

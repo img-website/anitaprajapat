@@ -14,9 +14,9 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "About Anita Prajapat — Rajasthani Devotional Singer",
+    title: "About Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer",
     description:
-      "The story of Anita Prajapat, a leading Rajasthani devotional singer from Jaipur — her journey, achievements, and spiritual inspiration behind Khatu Shyam & Mataji bhajans.",
+      "The story of Anita Prajapat, a leading Rajasthani devotional singer from Jaipur — her journey, achievements, and spiritual inspiration behind Sanwariya Seth, Khatu Shyam & Mataji bhajans.",
     path: "/about",
     defaults: seoDefaultsFromSettings(settings),
   });
@@ -24,12 +24,13 @@ export async function generateMetadata() {
 
 const timeline = [
   { year: "2016", title: "The Beginning", text: "Started singing devotional bhajans at local temples and jagrans in Rajasthan." },
-  { year: "2018", title: "Rising Voice", text: "Gained recognition across Marwar for soulful Khatu Shyam & Mataji renditions." },
+  { year: "2018", title: "Rising Voice", text: "Gained recognition across Marwar for soulful Sanwariya Seth, Khatu Shyam & Mataji renditions." },
   { year: "2021", title: "Digital Devotion", text: "Launched the official YouTube channel, reaching devotees worldwide." },
   { year: "2024", title: "Stage Sensation", text: "Crossed thousands of live jagran performances across India." },
 ];
 
 const achievements = [
+  "Sanwariya Seth Bhajan Specialist",
   "Khatu Shyam Bhajan Specialist",
   "Mataji & Marwadi Bhajan Artist",
   "4389+ Live Stage Shows",
@@ -63,15 +64,15 @@ export default async function AboutPage() {
         <div className="container">
           <div className={styles.bio}>
             <Reveal variant="right" className={styles.portrait}>
-              <Image src={settings.logo || "/images/artist.jpg"} alt={siteConfig.name} fill sizes="40vw" />
+              <Image src={settings.artistImage || settings.logo || "/images/artist.jpg"} alt={siteConfig.name} fill sizes="40vw" />
             </Reveal>
             <Reveal variant="left">
               <h2>A Voice Devoted to the Divine</h2>
               <p>
                 {siteConfig.name} is a celebrated {siteConfig.category.toLowerCase()} from {siteConfig.city},
                 Rajasthan. Since {siteConfig.performingSince}, she has dedicated her voice to the divine —
-                performing Khatu Shyam, Mataji, Marwadi and Rajasthani bhajans that move thousands of
-                devotees at live jagrans across the country.
+                performing Sanwariya Seth, Khatu Shyam, Mataji, Marwadi and Rajasthani bhajans that move
+                thousands of devotees at live jagrans across the country.
               </p>
               <p>
                 Her music blends traditional devotional roots with a cinematic, soul-stirring stage

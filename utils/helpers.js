@@ -36,6 +36,18 @@ export function youtubeWatchUrl(url = "") {
   return `https://www.youtube.com/watch?v=${id}`;
 }
 
+/**
+ * Turn a YouTube channel URL into a one-click subscribe link.
+ * Appending ?sub_confirmation=1 makes YouTube open the subscribe dialog
+ * immediately, which converts visitors to subscribers far better than a
+ * plain channel link.
+ */
+export function youtubeSubscribeUrl(channelUrl = "") {
+  if (!channelUrl) return channelUrl;
+  const sep = channelUrl.includes("?") ? "&" : "?";
+  return `${channelUrl.replace(/\/$/, "")}${sep}sub_confirmation=1`;
+}
+
 export function formatDate(date, opts = {}) {
   if (!date) return "";
   return new Date(date).toLocaleDateString("en-IN", {
