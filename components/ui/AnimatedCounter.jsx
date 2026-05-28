@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 
 // Counts up to a numeric target when scrolled into view.
 // Preserves any non-numeric suffix/prefix (e.g. "4389+", "10K").
-export default function AnimatedCounter({ value, duration = 1600 }) {
+export default function AnimatedCounter({ value, duration = 1600, className = "" }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const [display, setDisplay] = useState("0");
@@ -34,7 +34,7 @@ export default function AnimatedCounter({ value, duration = 1600 }) {
   }, [inView, target, duration, str]);
 
   return (
-    <span ref={ref}>
+    <span ref={ref} className={className}>
       {prefix}
       {target === null ? str : display}
       {suffix}

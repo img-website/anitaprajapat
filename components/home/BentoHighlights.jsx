@@ -116,6 +116,14 @@ export default function BentoHighlights({ settings = {} }) {
             <Image src="/images/g4.jpg" alt={siteConfig.name} fill sizes="25vw" unoptimized />
             <span className={styles.portraitTag}>{siteConfig.city}</span>
           </motion.div>
+
+          {/* Fill right-side gap */}
+          <motion.a href="/about" className={`${styles.tile} ${styles.story}`} variants={item}>
+            <span className="chip"><Sparkles size={14} /> Artist Journey</span>
+            <h3>Traditional roots, modern stage presence</h3>
+            <p>Explore Anita Prajapat’s story, live journey and devotional milestones.</p>
+            <span className={styles.storyLink}>Read full story <ArrowRight size={15} /></span>
+          </motion.a>
         </motion.div>
       </div>
     </section>

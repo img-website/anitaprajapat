@@ -74,16 +74,16 @@ export default function Hero({ banner, settings = {} }) {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <div>
-              <strong><AnimatedCounter value={settings.counters?.stageShows || siteConfig.stageShows} /></strong>
-              <span>Stage Shows</span>
+              <strong><AnimatedCounter className={styles.statValue} value={settings.counters?.stageShows || siteConfig.stageShows} /></strong>
+              <span className={styles.statLabel}>Stage Shows</span>
             </div>
             <div>
-              <strong><AnimatedCounter value={`${new Date().getFullYear() - siteConfig.performingSince}+`} /></strong>
-              <span>Years</span>
+              <strong><AnimatedCounter className={styles.statValue} value={`${new Date().getFullYear() - siteConfig.performingSince}+`} /></strong>
+              <span className={styles.statLabel}>Years</span>
             </div>
             <div>
-              <strong><AnimatedCounter value={`${siteConfig.genres.length}+`} /></strong>
-              <span>Genres</span>
+              <strong><AnimatedCounter className={styles.statValue} value={`${siteConfig.genres.length}+`} /></strong>
+              <span className={styles.statLabel}>Genres</span>
             </div>
           </motion.div>
         </div>

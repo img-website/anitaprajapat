@@ -172,3 +172,29 @@
     backdrop-filter: blur(6px);
   }
 }
+
+.story {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.6rem;
+  h3 {
+    font-size: clamp(1.02rem, 2vw, 1.35rem);
+    color: var(--heading);
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    max-width: 44ch;
+  }
+  .storyLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--magenta);
+    font-weight: 600;
+    font-size: 0.84rem;
+  }
+  @include down("sm") { grid-column: span 1; }
+}
