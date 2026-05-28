@@ -101,7 +101,7 @@ export default function Hero({ banner, settings = {} }) {
               <span key={i} style={{ "--i": i }} />
             ))}
           </div>
-          <div className={`${styles.photo} float`}>
+          <div className={styles.photo}>
             <Image src={img} alt={siteConfig.name} fill priority sizes="(max-width:900px) 80vw, 40vw" unoptimized />
           </div>
 

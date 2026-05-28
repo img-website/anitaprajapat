@@ -120,15 +120,19 @@
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface);
+  color: var(--heading);
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 4px;
-  padding: 0 10px;
+  padding: 0;
+  flex-shrink: 0;
   span {
+    width: 18px;
     height: 2px;
     border-radius: 999px;
-    background: var(--heading);
+    background: currentColor;
     display: block;
   }
   @include down("lg") {
@@ -139,35 +143,28 @@
 
 .topbarLeft {
   @include flex(row, flex-start, center, 0.65rem);
+  margin-right: auto;
   strong { font-size: 1rem; color: var(--heading); }
-  span {
-    font-size: 0.74rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
   @include down("sm") {
     strong { font-size: 0.92rem; }
-    span { display: none; }
   }
 }
 
 .topbarActions {
   @include flex(row, flex-end, center, 0.7rem);
+  margin-left: 0.7rem;
   @include down("sm") { gap: 0.45rem; }
 }
 
 .mobileLogo {
-  display: none;
-  @include down("sm") {
-    display: inline-flex;
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    img { object-fit: cover; }
-  }
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  flex-shrink: 0;
+  img { object-fit: cover; }
 }
 
 .viewSite {

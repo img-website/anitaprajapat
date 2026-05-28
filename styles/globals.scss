@@ -9,6 +9,13 @@ body {
   min-height: 100dvh;
   background: var(--grad-mesh), var(--bg);
   background-attachment: fixed;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 // ─── Layout utilities ───────────────────────────────────────

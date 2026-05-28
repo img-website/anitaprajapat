@@ -10,6 +10,16 @@
   @include glass;
   border-radius: $radius;
   overflow-x: auto;
+  @include down("sm") { display: none; }
+}
+
+.thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: block;
 }
 
 .loadingSkeleton {
@@ -28,6 +38,95 @@
   );
   background-size: 220% 100%;
   animation: admTableShimmer 1.2s ease-in-out infinite;
+}
+
+.emptyState {
+  @include glass;
+  border-radius: $radius;
+  min-height: 260px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+  gap: 0.55rem;
+  padding: 1.2rem;
+  h3 {
+    font-size: 1.04rem;
+    color: var(--heading);
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+}
+
+.emptyIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  color: var(--magenta);
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+}
+
+.mobileList {
+  display: none;
+  @include down("sm") {
+    display: grid;
+    gap: 0.65rem;
+  }
+}
+
+.mobileItem {
+  @include glass;
+  border-radius: 10px;
+  padding: 0.58rem 0.62rem;
+}
+
+.mobileImages {
+  display: flex;
+  gap: 0.34rem;
+  margin-bottom: 0.45rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.mobileFields {
+  display: grid;
+  gap: 0.22rem;
+}
+
+.mobileField {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 0.38rem;
+  align-items: flex-start;
+  padding: 0.16rem 0;
+  span {
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  strong {
+    color: var(--text);
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.28;
+  }
+  strong img {
+    margin-top: 0.1rem;
+  }
+}
+
+.mobileActions {
+  @include flex(row, flex-end, center, 0.45rem);
+  margin-top: 0.45rem;
+  padding-top: 0.42rem;
+  border-top: 1px solid var(--border);
 }
 
 .overlay {

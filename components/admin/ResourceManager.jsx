@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import api from "@/services/apiClient";
+import { Inbox } from "lucide-react";
 import ImageUploader from "./ImageUploader";
 import styles from "./ResourceManager.module.scss";
 
@@ -68,6 +69,34 @@ export default function ResourceManager({ config }) {
   };
 
   const setField = (name, value) => setForm((f) => ({ ...f, [name]: value }));
+  const imageFields = fields.filter((fl) => fl.type === "image").map((fl) => fl.name);
+
+  const renderCell = (item, column) => {
+    if (column.render) return column.render(item);
+    const raw = item[column.key];
+    const imageUrl = getImageUrl(raw);
+    const imageFieldMatch = imageFields.some((name) => column.key === name);
+    if (imageUrl && imageFieldMatch) {
+      return (
+        <img
+          src={imageUrl}
+          alt={column.label}
+          className={styles.thumb}
+          loading="lazy"
+        />
+      );
+    }
+    return String(raw ?? "—");
+  };
+
+  const getItemImages = (item) =>
+    imageFields
+      .map((name) => ({
+        name,
+        label: fields.find((f) => f.name === name)?.label || name,
+        url: getImageUrl(item?.[name]),
+      }))
+      .filter((img) => Boolean(img.url));
 
   const validateForm = () => {
     const nextErrors = {};
@@ -148,35 +177,78 @@ export default function ResourceManager({ config }) {
           ))}
         </div>
       ) : items.length === 0 ? (
-        <p style={{ color: "var(--text-muted)" }}>No {label.toLowerCase()}s yet. Create one.</p>
-      ) : (
-        <div className={styles.tableWrap}>
-          <table className="adm-table">
-            <thead>
-              <tr>
-                {columns.map((c) => (
-                  <th key={c.key}>{c.label}</th>
-                ))}
-                <th style={{ textAlign: "right" }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item._id}>
-                  {columns.map((c) => (
-                    <td key={c.key}>
-                      {c.render ? c.render(item) : String(item[c.key] ?? "—")}
-                    </td>
-                  ))}
-                  <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
-                    <button className="adm-btn" onClick={() => openEdit(item)}>Edit</button>{" "}
-                    <button className="adm-btn danger" onClick={() => remove(item._id)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className={styles.emptyState}>
+          <span className={styles.emptyIcon} aria-hidden>
+            <Inbox size={20} />
+          </span>
+          <h3>No {label.toLowerCase()}s yet</h3>
+          <p>Create your first {label.toLowerCase()} to get started.</p>
         </div>
+      ) : (
+        <>
+          <div className={styles.mobileList}>
+            {items.map((item) => {
+              const itemImages = getItemImages(item);
+              return (
+              <article key={item._id} className={styles.mobileItem}>
+                {itemImages.length > 0 && (
+                  <div className={styles.mobileImages}>
+                    {itemImages.map((img) => (
+                      <img
+                        key={`${item._id}-${img.name}`}
+                        src={img.url}
+                        alt={img.label}
+                        className={styles.thumb}
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className={styles.mobileFields}>
+                  {columns.map((c) => (
+                    <div key={c.key} className={styles.mobileField}>
+                      <span>{c.label}</span>
+                      <strong>{renderCell(item, c)}</strong>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.mobileActions}>
+                  <button className="adm-btn" onClick={() => openEdit(item)}>Edit</button>
+                  <button className="adm-btn danger" onClick={() => remove(item._id)}>Delete</button>
+                </div>
+              </article>
+            );
+            })}
+          </div>
+
+          <div className={styles.tableWrap}>
+            <table className="adm-table">
+              <thead>
+                <tr>
+                  {columns.map((c) => (
+                    <th key={c.key}>{c.label}</th>
+                  ))}
+                  <th style={{ textAlign: "right" }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr key={item._id}>
+                    {columns.map((c) => (
+                      <td key={c.key}>
+                      {renderCell(item, c)}
+                      </td>
+                    ))}
+                    <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+                      <button className="adm-btn" onClick={() => openEdit(item)}>Edit</button>{" "}
+                      <button className="adm-btn danger" onClick={() => remove(item._id)}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {editing && (
@@ -212,6 +284,13 @@ export default function ResourceManager({ config }) {
       )}
     </div>
   );
+}
+
+function getImageUrl(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "object") return value.url || "";
+  return "";
 }
 
 function FieldInput({ field, value, onChange }) {

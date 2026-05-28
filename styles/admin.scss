@@ -73,10 +73,14 @@
   cursor: pointer;
   &:hover { border-color: var(--magenta); }
   &.primary {
-    background: var(--grad-brand);
+    background: var(--magenta);
     color: #fff;
-    border-color: transparent;
-    box-shadow: 0 8px 22px color-mix(in srgb, var(--magenta) 30%, transparent);
+    border-color: color-mix(in srgb, var(--magenta) 75%, #000 0%);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--magenta) 22%, transparent);
+    &:hover {
+      background: var(--magenta-deep);
+      border-color: color-mix(in srgb, var(--magenta-deep) 75%, #000 0%);
+    }
   }
   &.danger { color: #ff8a85; border-color: rgba(255, 138, 133, 0.4); }
   @include down("sm") {

@@ -144,6 +144,7 @@
   filter: blur(60px);
   opacity: 0.35;
   z-index: 0;
+  animation: blob-spin 12s linear infinite;
 }
 
 .badge {
@@ -274,4 +275,9 @@
 
 @keyframes marquee {
   to { transform: translateX(-50%); }
+}
+
+@keyframes blob-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
