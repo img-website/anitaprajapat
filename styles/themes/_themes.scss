@@ -17,7 +17,8 @@
 
   --heading: #2a0f2e;
   --text: #4a3450;
-  --text-muted: #8a7090;
+  // Darkened from #8a7090 (4.1:1) to meet WCAG 2.1 AA 4.5:1 on --bg (now ~5.7:1).
+  --text-muted: #74597a;
   --border: rgba(181, 39, 125, 0.14);
 
   --magenta: #b5277d;
@@ -25,6 +26,7 @@
   --blue: #2f43c0;
   --blue-soft: #5468f0;
   --crimson: #d2283f;
+  --red: #d2283f; // alias used by .eyebrow, .card hover, mobile active tab
   // "gold" tokens retired — repointed to brand colours (no yellow/gold anywhere).
   --gold: #b5277d;
   --gold-light: #5468f0;
@@ -67,6 +69,7 @@
   --blue: #6f80ff;
   --blue-soft: #8a98ff;
   --crimson: #ff5a6e;
+  --red: #ff5a6e; // alias used by .eyebrow, .card hover, mobile active tab
   --gold: #e85aa9;
   --gold-light: #8a98ff;
 

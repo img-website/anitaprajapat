@@ -107,7 +107,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html
-      lang="en"
+      lang="en-IN"
       data-theme="light"
       data-scroll-behavior="smooth"
       className={`${heading.variable} ${body.variable}`}

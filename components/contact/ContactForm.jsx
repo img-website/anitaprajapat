@@ -81,7 +81,13 @@ export default function ContactForm() {
       </label>
 
       {status.state !== "idle" && status.msg && (
-        <p className={`${styles.alert} ${styles[status.state]}`}>{status.msg}</p>
+        <p
+          className={`${styles.alert} ${styles[status.state]}`}
+          role={status.state === "error" ? "alert" : "status"}
+          aria-live={status.state === "error" ? "assertive" : "polite"}
+        >
+          {status.msg}
+        </p>
       )}
 
       <button type="submit" className="btn btn-gold" disabled={status.state === "loading"}>

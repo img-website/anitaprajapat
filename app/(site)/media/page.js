@@ -47,7 +47,7 @@ export default async function MediaPage() {
                     {formatDate(m.publishedAt || m.createdAt)}
                   </small>
                   {(m.externalUrl || m.embedUrl) && (
-                    <a href={m.externalUrl || m.embedUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={m.externalUrl || m.embedUrl} target="_blank" rel="noopener noreferrer" title={`View coverage: ${m.title}`}>
                       View coverage →
                     </a>
                   )}

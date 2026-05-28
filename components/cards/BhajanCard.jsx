@@ -11,10 +11,11 @@ export default function BhajanCard({ bhajan }) {
 
   return (
     <article className={styles.card}>
-      <Link href={`/bhajans/${bhajan.slug}`} className={styles.thumb}>
+      <Link href={`/bhajans/${bhajan.slug}`} className={styles.thumb} title={`Watch ${bhajan.title} — bhajan by Anita Prajapat`}>
         <Image
           src={thumb}
-          alt={bhajan.thumbnail?.alt || bhajan.title}
+          alt={bhajan.thumbnail?.alt || `${bhajan.title} — Anita Prajapat bhajan`}
+          title={bhajan.thumbnail?.alt || bhajan.title}
           fill
           sizes="(max-width: 48rem) 100vw, 33vw"
         />
@@ -27,7 +28,7 @@ export default function BhajanCard({ bhajan }) {
           {bhajan.isTrending && <span className="badge">Trending</span>}
           {bhajan.genre && <span className="badge">{bhajan.genre}</span>}
         </div>
-        <Link href={`/bhajans/${bhajan.slug}`}>
+        <Link href={`/bhajans/${bhajan.slug}`} title={`Watch ${bhajan.title} bhajan`}>
           <h3 className={styles.title}>{bhajan.title}</h3>
         </Link>
         <div className={styles.meta}>

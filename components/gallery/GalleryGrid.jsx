@@ -23,6 +23,8 @@ export default function GalleryGrid({ items = [] }) {
               key={item._id || idx}
               className={styles.cell}
               onClick={() => setActive(item)}
+              aria-label={`Open ${item.title || (isVideo ? "video" : "photo")} — Anita Prajapat`}
+              title={item.title || "Anita Prajapat gallery"}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -30,7 +32,8 @@ export default function GalleryGrid({ items = [] }) {
             >
               <Image
                 src={src}
-                alt={item.title || "Gallery media"}
+                alt={item.title ? `${item.title} — Anita Prajapat` : "Anita Prajapat stage & jagran gallery photo"}
+                title={item.title || "Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer"}
                 width={600}
                 height={600}
                 sizes="(max-width: 48rem) 50vw, 25vw"
@@ -46,12 +49,15 @@ export default function GalleryGrid({ items = [] }) {
         {active && (
           <motion.div
             className={styles.lightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label={active.title || "Anita Prajapat gallery media"}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActive(null)}
           >
-            <button className={styles.close} aria-label="Close">✕</button>
+            <button className={styles.close} aria-label="Close gallery viewer" title="Close">✕</button>
             <div className={styles.stage} onClick={(e) => e.stopPropagation()}>
               {active.mediaType !== "image" && youtubeEmbed(active.videoUrl) ? (
                 <iframe
@@ -63,7 +69,8 @@ export default function GalleryGrid({ items = [] }) {
               ) : (
                 <Image
                   src={active.image?.url || youtubeThumb(active.videoUrl) || "/placeholder.svg"}
-                  alt={active.title || "Gallery media"}
+                  alt={active.title ? `${active.title} — Anita Prajapat` : "Anita Prajapat gallery photo"}
+                  title={active.title || "Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer"}
                   width={1280}
                   height={853}
                 />

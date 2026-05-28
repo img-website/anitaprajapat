@@ -64,7 +64,7 @@ export default async function AboutPage() {
         <div className="container">
           <div className={styles.bio}>
             <Reveal variant="right" className={styles.portrait}>
-              <Image src={settings.artistImage || settings.logo || "/images/artist.jpg"} alt={siteConfig.name} fill sizes="40vw" />
+              <Image src={settings.artistImage || settings.logo || "/images/artist.jpg"} alt={`${siteConfig.name} — Sanwariya Seth & Khatu Shyam Bhajan Singer from ${siteConfig.city}`} title={`${siteConfig.name} — ${siteConfig.tagline}`} fill sizes="40vw" />
             </Reveal>
             <Reveal variant="left">
               <h2>A Voice Devoted to the Divine</h2>

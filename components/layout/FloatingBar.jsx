@@ -32,8 +32,12 @@ export default function FloatingBar({ settings = {} }) {
       <aside className={styles.socialBar} aria-label="Social links">
         {["youtube", "instagram", "facebook", "pinterest"].map((k) => {
           const Icon = brandMap[k];
+          const label =
+            k === "youtube"
+              ? "Subscribe to Anita Prajapat on YouTube"
+              : `Follow Anita Prajapat on ${k.charAt(0).toUpperCase() + k.slice(1)}`;
           return social[k] && Icon ? (
-            <a key={k} href={social[k]} data-net={k} target="_blank" rel="noopener noreferrer" title={k} aria-label={k}>
+            <a key={k} href={social[k]} data-net={k} target="_blank" rel="noopener noreferrer" title={label} aria-label={label}>
               <Icon size={19} />
             </a>
           ) : null;
@@ -48,7 +52,8 @@ export default function FloatingBar({ settings = {} }) {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.whatsapp}
-          aria-label="Chat on WhatsApp"
+          aria-label="Book Anita Prajapat for Jagran on WhatsApp"
+          title="Book Anita Prajapat for Jagran on WhatsApp"
         >
           <span className={styles.waIcon}><WhatsappIcon size={22} /></span>
           <span className={styles.waLabel}>Book Now</span>

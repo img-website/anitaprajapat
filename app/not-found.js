@@ -17,7 +17,7 @@ export default function NotFound() {
         <p style={{ marginBottom: "1.5rem" }}>
           The page you are looking for may have moved or no longer exists.
         </p>
-        <Link href="/" className="btn btn-gold">
+        <Link href="/" className="btn btn-gold" title="Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer">
           Back to Home
         </Link>
       </div>

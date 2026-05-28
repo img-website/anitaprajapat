@@ -7,10 +7,11 @@ export default function EventCard({ event }) {
   const d = event.date ? new Date(event.date) : null;
   return (
     <article className={styles.card}>
-      <Link href={`/events/${event.slug}`} className={`${styles.thumb} ${styles.eventThumb}`}>
+      <Link href={`/events/${event.slug}`} className={`${styles.thumb} ${styles.eventThumb}`} title={`${event.title} — live Jagran by Anita Prajapat`}>
         <Image
           src={img}
-          alt={event.coverImage?.alt || event.title}
+          alt={event.coverImage?.alt || `${event.title} — Anita Prajapat live Jagran event`}
+          title={event.coverImage?.alt || event.title}
           fill
           sizes="(max-width: 48rem) 100vw, 33vw"
         />
@@ -25,7 +26,7 @@ export default function EventCard({ event }) {
       </Link>
       <div className={styles.body}>
         <span className="badge">{event.type}</span>
-        <Link href={`/events/${event.slug}`}>
+        <Link href={`/events/${event.slug}`} title={`${event.title} — event details & booking`}>
           <h3 className={styles.title}>{event.title}</h3>
         </Link>
         <div className={styles.meta}>

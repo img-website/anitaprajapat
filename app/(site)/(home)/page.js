@@ -74,7 +74,8 @@ export default async function HomePage() {
             <Reveal variant="right" className={s.media}>
               <Image
                 src={settings.artistImage || settings.logo || "/images/artist.jpg"}
-                alt={siteConfig.name}
+                alt={`${siteConfig.name} — Sanwariya Seth & Khatu Shyam Bhajan Singer from ${siteConfig.city}`}
+                title={`${siteConfig.name} — ${siteConfig.tagline}`}
                 fill
                 sizes="(max-width: 48rem) 100vw, 50vw"
               />
@@ -99,7 +100,7 @@ export default async function HomePage() {
                 <li>{siteConfig.stageShows} stage shows & live Jagrans</li>
                 <li>Growing devotional audience on YouTube & Instagram</li>
               </ul>
-              <Link href="/about" className="btn btn-gold">
+              <Link href="/about" className="btn btn-gold" title="Read the full story of Anita Prajapat — Rajasthani devotional bhajan singer">
                 Read full story
               </Link>
             </Reveal>
@@ -124,7 +125,7 @@ export default async function HomePage() {
               ))}
             </StaggerGroup>
             <div className={s.viewAll}>
-              <Link href="/events" className="btn btn-outline">
+              <Link href="/events" className="btn btn-outline" title="All live Jagran events by Anita Prajapat">
                 All events <ArrowRight size={18} />
               </Link>
             </div>
@@ -142,7 +143,7 @@ export default async function HomePage() {
             <SectionHeading eyebrow="Moments" title="Stage & Gallery Highlights" />
             <GalleryGrid items={gallery} />
             <div className={s.viewAll}>
-              <Link href="/gallery" className="btn btn-outline">
+              <Link href="/gallery" className="btn btn-outline" title="View Anita Prajapat's full photo & stage gallery">
                 View full gallery <ArrowRight size={18} />
               </Link>
             </div>
@@ -172,11 +173,12 @@ export default async function HomePage() {
                 href={`https://wa.me/${settings.whatsapp || siteConfig.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                title="Book Anita Prajapat for your Jagran on WhatsApp"
                 className="btn btn-glass btn-lg"
               >
                 <WhatsappIcon size={18} /> WhatsApp Booking
               </a>
-              <a href={`tel:${settings.phone || siteConfig.phone}`} className="btn btn-light btn-lg">
+              <a href={`tel:${settings.phone || siteConfig.phone}`} title={`Call Anita Prajapat booking line ${settings.phone || siteConfig.phone}`} className="btn btn-light btn-lg">
                 <Phone size={18} /> Call {settings.phone || siteConfig.phone}
               </a>
             </div>
@@ -195,7 +197,7 @@ export default async function HomePage() {
                   <span className={s.outlet}>{m.outlet || m.type}</span>
                   <h3>{m.title}</h3>
                   {(m.externalUrl || m.embedUrl) && (
-                    <a href={m.externalUrl || m.embedUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={m.externalUrl || m.embedUrl} target="_blank" rel="noopener noreferrer" title={`Read coverage: ${m.title}`}>
                       Read coverage →
                     </a>
                   )}
@@ -214,8 +216,8 @@ export default async function HomePage() {
             <div className={s.sponsors}>
               {sponsors.map((sp) =>
                 sp.logo?.url ? (
-                  <a key={sp._id} href={sp.website || "#"} target="_blank" rel="noopener noreferrer">
-                    <Image src={sp.logo.url} alt={sp.name} width={140} height={54} />
+                  <a key={sp._id} href={sp.website || "#"} target="_blank" rel="noopener noreferrer" title={`${sp.name} — sponsor & partner of Anita Prajapat`}>
+                    <Image src={sp.logo.url} alt={`${sp.name} — sponsor logo`} title={sp.name} width={140} height={54} />
                   </a>
                 ) : (
                   <span key={sp._id} className="badge">{sp.name}</span>

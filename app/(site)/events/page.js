@@ -51,7 +51,7 @@ export default async function EventsPage() {
           ) : (
             <p style={{ color: "var(--text-muted)" }}>
               No upcoming events announced yet. To book Anita Prajapat,{" "}
-              <a href={`https://wa.me/${siteConfig.whatsapp}`} style={{ color: "var(--gold)" }}>
+              <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" title="Book Anita Prajapat for Jagran on WhatsApp" style={{ color: "var(--gold)" }}>
                 message on WhatsApp
               </a>
               .

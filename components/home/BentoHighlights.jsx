@@ -49,8 +49,9 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
                 rel="noopener noreferrer"
                 className={styles.featureLink}
                 aria-label={`Watch ${title} on YouTube`}
+                title={`Watch ${title} on Anita Prajapat's YouTube channel`}
               >
-                <Image src={poster} alt={title} fill sizes="50vw" />
+                <Image src={poster} alt={`${title} — Anita Prajapat bhajan video`} title={title} fill sizes="50vw" />
                 {duration && (
                   <span className={styles.duration}>
                     <Clock size={12} /> {duration}
@@ -73,7 +74,7 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
               </a>
             ) : (
               <>
-                <Image src={poster} alt={title} fill sizes="50vw" />
+                <Image src={poster} alt={`${title} — Anita Prajapat bhajan`} title={title} fill sizes="50vw" />
                 <div className={styles.featureText}>
                   <span className="chip">
                     <Sparkles size={15} /> {bento.featureChip}
@@ -93,6 +94,7 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
             href={`https://wa.me/${whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
+            title="Book Anita Prajapat for your Jagran on WhatsApp"
             className={`${styles.tile} ${styles.book}`}
             variants={item}
           >
@@ -118,6 +120,7 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
             href={subscribe}
             target="_blank"
             rel="noopener noreferrer"
+            title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans"
             className={`${styles.tile} ${styles.youtube}`}
             variants={item}
           >
@@ -133,7 +136,8 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
           <motion.div className={`${styles.tile} ${styles.portrait}`} variants={item}>
             <Image
               src={bento.portraitImage || "/images/g4.jpg"}
-              alt={siteConfig.name}
+              alt={`${siteConfig.name} — devotional bhajan singer from ${siteConfig.city}`}
+              title={`${siteConfig.name} — ${siteConfig.tagline}`}
               fill
               sizes="25vw"
             />
@@ -142,6 +146,7 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
 
           <motion.a
             href={bento.storyHref || "/about"}
+            title="Read the story of Anita Prajapat — Rajasthani devotional bhajan singer"
             className={`${styles.tile} ${styles.story}`}
             variants={item}
           >

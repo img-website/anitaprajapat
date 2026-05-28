@@ -63,7 +63,7 @@ export default async function EventSinglePage({ params }) {
             <div className={styles.main}>
               {ev.coverImage?.url && (
                 <div className={styles.cover}>
-                  <Image src={ev.coverImage.url} alt={ev.title} fill sizes="66vw" />
+                  <Image src={ev.coverImage.url} alt={ev.coverImage.alt || `${ev.title} — Anita Prajapat live Jagran in ${ev.city || siteConfig.city}`} title={ev.title} fill sizes="66vw" />
                 </div>
               )}
               {ev.description && <p className={styles.desc}>{ev.description}</p>}
@@ -93,6 +93,7 @@ export default async function EventSinglePage({ params }) {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title={`Enquire & book Anita Prajapat for ${ev.title}`}
                   className="btn btn-gold"
                   style={{ width: "100%", marginTop: "1rem" }}
                 >

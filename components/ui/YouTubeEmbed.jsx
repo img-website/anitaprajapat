@@ -15,6 +15,7 @@ export default function YouTubeEmbed({ url, title = "YouTube video", aspect = "1
       className={styles.facade}
       style={{ backgroundImage: `url(${youtubeThumb(id)})`, aspectRatio: aspect }}
       aria-label={`Watch ${title} on YouTube`}
+      title={`Watch ${title} on Anita Prajapat's YouTube channel`}
     >
       <span className={styles.play}>▶</span>
     </a>

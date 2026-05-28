@@ -7,11 +7,11 @@ import styles from "./MobileTabBar.module.scss";
 
 // App-style bottom navigation for mobile. Hidden on desktop.
 const tabs = [
-  { href: "/", label: "Home", Icon: Home },
-  { href: "/bhajans", label: "Bhajans", Icon: Music2 },
-  { href: "/events", label: "Events", Icon: CalendarDays },
-  { href: "/gallery", label: "Gallery", Icon: Images },
-  { href: "/contact", label: "Contact", Icon: Mail },
+  { href: "/", label: "Home", Icon: Home, title: "Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer" },
+  { href: "/bhajans", label: "Bhajans", Icon: Music2, title: "Watch Sanwariya Seth & Khatu Shyam Bhajans on YouTube" },
+  { href: "/events", label: "Events", Icon: CalendarDays, title: "Live Jagran Events by Anita Prajapat" },
+  { href: "/gallery", label: "Gallery", Icon: Images, title: "Anita Prajapat Photo & Stage Gallery" },
+  { href: "/contact", label: "Contact", Icon: Mail, title: "Contact & Booking for Jagran — Anita Prajapat" },
 ];
 
 export default function MobileTabBar() {
@@ -21,7 +21,13 @@ export default function MobileTabBar() {
       {tabs.map((t) => {
         const active = t.href === "/" ? pathname === "/" : pathname.startsWith(t.href);
         return (
-          <Link key={t.href} href={t.href} className={active ? styles.active : ""}>
+          <Link
+            key={t.href}
+            href={t.href}
+            title={t.title || t.label}
+            aria-current={active ? "page" : undefined}
+            className={active ? styles.active : ""}
+          >
             <t.Icon size={22} aria-hidden />
             <span>{t.label}</span>
           </Link>

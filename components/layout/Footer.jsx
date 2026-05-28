@@ -25,15 +25,22 @@ export default function Footer({ settings = {} }) {
       <div className={`container ${styles.grid}`}>
         <div className={styles.brandCol}>
           <div className={styles.brandTop}>
-            <Image src={settings.logo || "/logo.png"} alt={siteConfig.name} width={52} height={52} />
+            <Image
+              src={settings.logo || "/logo.png"}
+              alt={`${siteConfig.name} logo — Rajasthani Devotional Bhajan Singer`}
+              title={`${siteConfig.name} — ${siteConfig.tagline}`}
+              width={52}
+              height={52}
+            />
             <h3 className="gold-text">{settings.siteName || siteConfig.name}</h3>
           </div>
           <p>{siteConfig.description}</p>
           <div className={styles.social}>
             {Object.entries(social).map(([k, url]) => {
               const Icon = brandMap[k];
+              const label = socialTitles[k] || `Follow Anita Prajapat on ${k}`;
               return url && Icon ? (
-                <a key={k} href={url} target="_blank" rel="noopener noreferrer" aria-label={k}>
+                <a key={k} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
                   <Icon size={18} />
                 </a>
               ) : null;
@@ -46,7 +53,7 @@ export default function Footer({ settings = {} }) {
           <ul>
             {mainNav.map((n) => (
               <li key={n.href}>
-                <Link href={n.href}>{n.label}</Link>
+                <Link href={n.href} title={n.title || n.label}>{n.label}</Link>
               </li>
             ))}
           </ul>
@@ -66,10 +73,10 @@ export default function Footer({ settings = {} }) {
           <ul className={styles.contact}>
             <li>Manager: {settings.manager || siteConfig.manager}</li>
             <li>
-              <a href={`tel:${phone}`}><Phone size={15} /> {phone}</a>
+              <a href={`tel:${phone}`} title={`Call Anita Prajapat booking line ${phone}`}><Phone size={15} /> {phone}</a>
             </li>
             <li>
-              <a href={`mailto:${email}`}><Mail size={15} /> {email}</a>
+              <a href={`mailto:${email}`} title="Email Anita Prajapat for bookings"><Mail size={15} /> {email}</a>
             </li>
             <li><MapPin size={15} /> {settings.address || `${siteConfig.city}, Rajasthan`}</li>
           </ul>
@@ -77,6 +84,7 @@ export default function Footer({ settings = {} }) {
             href={`https://wa.me/${settings.whatsapp || siteConfig.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
+            title="Book Anita Prajapat for Jagran on WhatsApp"
             className="btn btn-gold"
           >
             <WhatsappIcon size={18} /> Book for Jagran <ArrowRight size={16} />

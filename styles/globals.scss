@@ -186,6 +186,25 @@ html {
   border: 0;
 }
 
+// Keyboard skip link — hidden until focused (WCAG 2.4.1 Bypass Blocks).
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 500;
+  padding: 0.6rem 1rem;
+  border-radius: 0.625rem;
+  background: var(--magenta);
+  color: #fff;
+  font-weight: 600;
+  transform: translateY(-150%);
+  transition: transform 0.2s $ease;
+  &:focus-visible { transform: translateY(0); }
+}
+
+// main is focusable for the skip link but should not show an outline ring.
+main:focus { outline: none; }
+
 // ─── Animated gradient text (Gen-Z hero/heading flourish) ───
 .gold-text {
   @include gold-text;

@@ -14,9 +14,9 @@ export default function Counters({ settings = {} }) {
   const social = { ...siteConfig.social, ...(settings.social || {}) };
 
   const items = [
-    { label: "YouTube Subscribers", value: c.youtubeSubscribers || "Subscribe", href: youtubeSubscribeUrl(social.youtube), key: "yt", Icon: YoutubeIcon, cta: "Subscribe" },
-    { label: "Instagram Followers", value: c.instagramFollowers || "Follow", href: social.instagram, key: "ig", Icon: InstagramIcon },
-    { label: "Facebook Followers", value: c.facebookFollowers || "Follow", href: social.facebook, key: "fb", Icon: FacebookIcon },
+    { label: "YouTube Subscribers", value: c.youtubeSubscribers || "Subscribe", href: youtubeSubscribeUrl(social.youtube), key: "yt", Icon: YoutubeIcon, cta: "Subscribe", title: "Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans" },
+    { label: "Instagram Followers", value: c.instagramFollowers || "Follow", href: social.instagram, key: "ig", Icon: InstagramIcon, title: "Follow Anita Prajapat on Instagram" },
+    { label: "Facebook Followers", value: c.facebookFollowers || "Follow", href: social.facebook, key: "fb", Icon: FacebookIcon, title: "Follow Anita Prajapat on Facebook" },
     { label: "Stage Shows", value: c.stageShows || siteConfig.stageShows, href: null, key: "shows", Icon: Music },
   ];
 
@@ -33,7 +33,7 @@ export default function Counters({ settings = {} }) {
               <strong>{it.value}</strong>
               <span className={styles.label}>{it.label}</span>
               {it.href && (
-                <a href={it.href} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                <a href={it.href} target="_blank" rel="noopener noreferrer" title={it.title || it.label} className={styles.link}>
                   {it.cta || "Connect"} <ArrowUpRight size={14} />
                 </a>
               )}

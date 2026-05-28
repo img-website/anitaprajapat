@@ -29,11 +29,11 @@ export default function ShareButtons({ path = "", title = "" }) {
     <div className={styles.share}>
       <span>Share:</span>
       {links.map((l) => (
-        <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">
+        <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" title={`Share${title ? ` "${title}"` : ""} on ${l.label}`}>
           {l.label}
         </a>
       ))}
-      <button onClick={native}>Copy link</button>
+      <button onClick={native} title="Copy link to clipboard">Copy link</button>
     </div>
   );
 }

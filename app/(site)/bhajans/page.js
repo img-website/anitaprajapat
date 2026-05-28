@@ -47,7 +47,7 @@ export default async function BhajansPage() {
             Subscribe to Anita Prajapat on YouTube for fresh Sanwariya Seth &amp; Khatu Shyam
             bhajans and live Jagran videos every week.
           </p>
-          <a href={subscribe} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg shine">
+          <a href={subscribe} target="_blank" rel="noopener noreferrer" title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans" className="btn btn-primary btn-lg shine">
             <YoutubeIcon size={20} /> Subscribe on YouTube
           </a>
         </div>

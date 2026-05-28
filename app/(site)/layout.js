@@ -9,9 +9,10 @@ export default async function SiteLayout({ children }) {
   const settings = await getSettings();
   return (
     <>
+      <a href="#main" className="skip-link">Skip to main content</a>
       <ScrollProgress />
       <Navbar logo={settings.logo} whatsapp={settings.whatsapp} />
-      <main>{children}</main>
+      <main id="main" tabIndex={-1}>{children}</main>
       <Footer settings={settings} />
       <FloatingBar settings={settings} />
       <MobileTabBar whatsapp={settings.whatsapp} />

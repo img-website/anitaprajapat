@@ -10,11 +10,11 @@ export default function PageHeader({ eyebrow, title, subtitle, crumbs = [] }) {
       <div className="container">
         {crumbs.length > 0 && (
           <nav className={styles.crumbs} aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
+            <Link href="/" title="Anita Prajapat — Home">Home</Link>
             {crumbs.map((c, i) => (
               <span key={i}>
                 <span className={styles.sep}>/</span>
-                {c.href ? <Link href={c.href}>{c.name}</Link> : <span>{c.name}</span>}
+                {c.href ? <Link href={c.href} title={c.name}>{c.name}</Link> : <span>{c.name}</span>}
               </span>
             ))}
           </nav>

@@ -44,12 +44,12 @@ export default async function MediaDetailPage({ params }) {
           <article className="card" style={{ padding: "1.25rem" }}>
             {item.excerpt && <p style={{ marginBottom: "1rem" }}>{item.excerpt}</p>}
             {item.externalUrl && (
-              <a href={item.externalUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+              <a href={item.externalUrl} target="_blank" rel="noopener noreferrer" title={`Read original coverage: ${item.title}`} className="btn btn-outline">
                 Read original coverage
               </a>
             )}
             {!item.externalUrl && item.embedUrl && (
-              <a href={item.embedUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+              <a href={item.embedUrl} target="_blank" rel="noopener noreferrer" title={`Open coverage: ${item.title}`} className="btn btn-outline">
                 Open coverage
               </a>
             )}

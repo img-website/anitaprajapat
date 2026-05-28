@@ -61,10 +61,10 @@ export default function Hero({ banner, settings = {} }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.32, ease }}
           >
-            <a href={subscribe} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg shine">
+            <a href={subscribe} target="_blank" rel="noopener noreferrer" title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans" className="btn btn-primary btn-lg shine">
               <YoutubeIcon size={20} /> Subscribe on YouTube
             </a>
-            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg">
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" title="Book Anita Prajapat for Jagran on WhatsApp" className="btn btn-outline btn-lg">
               <WhatsappIcon size={18} /> Book for Jagran <ArrowRight size={18} />
             </a>
           </motion.div>
@@ -104,7 +104,14 @@ export default function Hero({ banner, settings = {} }) {
             ))}
           </div>
           <div className={styles.photo}>
-            <Image src={img} alt={siteConfig.name} fill priority sizes="(max-width:56.25rem) 80vw, 40vw" />
+            <Image
+              src={img}
+              alt={`${siteConfig.name} — Sanwariya Seth & Khatu Shyam Bhajan Singer performing live`}
+              title={`${siteConfig.name} — ${siteConfig.tagline}`}
+              fill
+              priority
+              sizes="(max-width:56.25rem) 80vw, 40vw"
+            />
           </div>
 
           <motion.div

@@ -49,17 +49,17 @@ export default async function ContactPage() {
               <ul className={styles.details}>
                 <li>
                   <span>Phone</span>
-                  <a href={`tel:${phone}`}>{phone}</a>
+                  <a href={`tel:${phone}`} title={`Call Anita Prajapat booking line ${phone}`}>{phone}</a>
                 </li>
                 <li>
                   <span>WhatsApp</span>
-                  <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" title="Book Anita Prajapat for Jagran on WhatsApp">
                     Chat now
                   </a>
                 </li>
                 <li>
                   <span>Email</span>
-                  <a href={`mailto:${email}`}>{email}</a>
+                  <a href={`mailto:${email}`} title="Email Anita Prajapat for bookings & enquiries">{email}</a>
                 </li>
                 <li>
                   <span>Based in</span>
@@ -70,14 +70,20 @@ export default async function ContactPage() {
               <div className={styles.social}>
                 {Object.entries(social).map(([k, url]) =>
                   url ? (
-                    <a key={k} href={url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      key={k}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={k === "youtube" ? "Subscribe to Anita Prajapat on YouTube" : `Follow Anita Prajapat on ${k.charAt(0).toUpperCase() + k.slice(1)}`}
+                    >
                       {k}
                     </a>
                   ) : null
                 )}
               </div>
 
-              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
+              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" title="Quick WhatsApp booking for Anita Prajapat Jagran" className="btn btn-gold">
                 Quick WhatsApp Booking
               </a>
             </div>
