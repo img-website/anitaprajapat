@@ -2,7 +2,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(11.25rem, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
   @include down("sm") {
@@ -20,12 +20,12 @@
   flex-direction: column;
   gap: 0.3rem;
   transition: 0.25s;
-  &:hover { border-color: var(--magenta); transform: translateY(-3px); }
+  &:hover { border-color: var(--magenta); transform: translateY(-0.1875rem); }
   .num { font-family: $font-heading; font-size: 2rem; color: var(--magenta); }
   .label { font-size: 0.85rem; color: var(--text-muted); }
   @include down("sm") {
     padding: 0.78rem;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     .num { font-size: 1.35rem; }
     .label { font-size: 0.74rem; line-height: 1.2; }
   }
@@ -43,7 +43,7 @@
   position: relative;
   overflow: hidden;
   background: color-mix(in srgb, var(--surface) 86%, transparent);
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
 }
 
 .skNum::after,
@@ -65,15 +65,15 @@
 
 .skNum {
   width: 42%;
-  height: 36px;
-  border-radius: 8px;
+  height: 2.25rem;
+  border-radius: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
 .skLabel {
   width: 76%;
-  height: 12px;
-  border-radius: 999px;
+  height: 0.75rem;
+  border-radius: 62.4375rem;
 }
 
 .panel {
@@ -91,7 +91,7 @@
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
   color: var(--text);
-  border-left: 3px solid var(--magenta);
+  border-left: 0.1875rem solid var(--magenta);
   @include down("sm") {
     padding: 0.72rem 0.82rem;
     font-size: 0.78rem;
@@ -100,7 +100,7 @@
 }
 
 .noteSkeleton {
-  height: 72px;
+  height: 4.5rem;
   border-radius: $radius;
   margin-bottom: 1.5rem;
 }
@@ -112,9 +112,9 @@
 }
 
 .quickSk {
-  width: 132px;
-  height: 38px;
-  border-radius: 999px;
+  width: 8.25rem;
+  height: 2.375rem;
+  border-radius: 62.4375rem;
 }
 
 @keyframes admWave {

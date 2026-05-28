@@ -37,7 +37,7 @@ export default function ImageUploader({ value, onChange, folder = "anitaprajapat
         <img
           src={value.url}
           alt="preview"
-          style={{ width: 120, height: 80, objectFit: "cover", borderRadius: 8, marginBottom: 8, border: "1px solid var(--border)" }}
+          style={{ width: 120, height: 80, objectFit: "cover", borderRadius: 8, marginBottom: 8, border: "0.0625rem solid var(--border)" }}
         />
       )}
       <input type="file" accept="image/*,video/*" onChange={handleFile} disabled={busy} />

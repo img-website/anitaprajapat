@@ -12,7 +12,7 @@ export default function EventCard({ event }) {
           src={img}
           alt={event.coverImage?.alt || event.title}
           fill
-          sizes="(max-width: 768px) 100vw, 33vw"
+          sizes="(max-width: 48rem) 100vw, 33vw"
           unoptimized={img.startsWith("http")}
         />
         {d && (

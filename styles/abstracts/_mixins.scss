@@ -17,7 +17,7 @@
 @mixin down($name) {
   $value: map.get($bp, $name);
   @if $value {
-    @media (max-width: ($value - 1px)) {
+    @media (max-width: ($value - 0.0625rem)) {
       @content;
     }
   }
@@ -58,23 +58,23 @@
 // Frosted glassmorphism surface (theme-aware).
 @mixin glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(1.125rem) saturate(150%);
+  -webkit-backdrop-filter: blur(1.125rem) saturate(150%);
+  border: 0.0625rem solid var(--glass-border);
 }
 
 // Heavier glass for sticky/floating chrome (navbar, tab bar).
 @mixin glass-strong {
   background: var(--glass-strong);
-  -webkit-backdrop-filter: blur(30px) saturate(170%);
-  backdrop-filter: blur(30px) saturate(170%);
-  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(1.875rem) saturate(170%);
+  backdrop-filter: blur(1.875rem) saturate(170%);
+  border: 0.0625rem solid var(--glass-border);
   background-clip: padding-box;
 
   // Safari/WebKit specific tuning for more consistent frosted effect.
   @supports (-webkit-touch-callout: none) {
-    -webkit-backdrop-filter: blur(34px) saturate(185%);
-    backdrop-filter: blur(34px) saturate(185%);
+    -webkit-backdrop-filter: blur(2.125rem) saturate(185%);
+    backdrop-filter: blur(2.125rem) saturate(185%);
   }
 }
 
@@ -95,19 +95,19 @@
     position: absolute;
     z-index: -1;
     border-radius: 50%;
-    filter: blur(70px);
+    filter: blur(4.375rem);
     opacity: 0.9;
     pointer-events: none;
   }
   &::before {
     width: 42vw; height: 42vw;
-    max-width: 520px; max-height: 520px;
+    max-width: 32.5rem; max-height: 32.5rem;
     top: -10%; left: -8%;
     background: var(--blob-1);
   }
   &::after {
     width: 38vw; height: 38vw;
-    max-width: 460px; max-height: 460px;
+    max-width: 28.75rem; max-height: 28.75rem;
     bottom: -12%; right: -6%;
     background: var(--blob-2);
   }

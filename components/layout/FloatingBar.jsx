@@ -8,13 +8,21 @@ import styles from "./FloatingBar.module.scss";
 
 export default function FloatingBar({ settings = {} }) {
   const [showTop, setShowTop] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const social = { ...siteConfig.social, ...(settings.social || {}) };
   const whatsapp = settings.whatsapp || siteConfig.whatsapp;
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600);
+    const mq = window.matchMedia("(max-width: 63.9375rem)");
+    const syncViewport = () => setIsMobile(mq.matches);
+    syncViewport();
+    mq.addEventListener("change", syncViewport);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      mq.removeEventListener("change", syncViewport);
+    };
   }, []);
 
   return (
@@ -30,18 +38,20 @@ export default function FloatingBar({ settings = {} }) {
         })}
       </aside>
 
-      <a
-        href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(
-          "Hello, I would like to book Anita Prajapat for a Jagran / event."
-        )}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.whatsapp}
-        aria-label="Chat on WhatsApp"
-      >
-        <span className={styles.waIcon}><WhatsappIcon size={22} /></span>
-        <span className={styles.waLabel}>Book Now</span>
-      </a>
+      {!isMobile && (
+        <a
+          href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(
+            "Hello, I would like to book Anita Prajapat for a Jagran / event."
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.whatsapp}
+          aria-label="Chat on WhatsApp"
+        >
+          <span className={styles.waIcon}><WhatsappIcon size={22} /></span>
+          <span className={styles.waLabel}>Book Now</span>
+        </a>
+      )}
 
       {showTop && (
         <button

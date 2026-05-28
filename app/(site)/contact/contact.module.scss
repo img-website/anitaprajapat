@@ -21,7 +21,7 @@
   li {
     @include flex(row, space-between, center, 1rem);
     padding: 0.85rem 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.0625rem solid var(--border);
     span:first-child { color: var(--text-muted); font-size: 0.85rem; }
     a, span:last-child { color: var(--heading); }
     a:hover { color: var(--magenta); }
@@ -34,8 +34,8 @@
   margin-bottom: 1.5rem;
   a {
     padding: 0.45rem 1rem;
-    border-radius: 999px;
-    border: 1px solid var(--border);
+    border-radius: 62.4375rem;
+    border: 0.0625rem solid var(--border);
     font-size: 0.82rem;
     text-transform: capitalize;
     color: var(--text);
@@ -47,7 +47,7 @@
   margin-top: 1rem;
   iframe {
     width: 100%;
-    height: 380px;
+    height: 23.75rem;
     border: 0;
     display: block;
     filter: grayscale(0.3) contrast(1.1);

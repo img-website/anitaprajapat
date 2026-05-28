@@ -2,7 +2,7 @@
 
 .altBg {
   background: var(--bg-2);
-  border-block: 1px solid var(--border);
+  border-block: 0.0625rem solid var(--border);
 }
 
 .bio {
@@ -20,7 +20,7 @@
   aspect-ratio: 4 / 5;
   border-radius: $radius-lg;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
   box-shadow: $shadow;
   img { object-fit: cover; }
 }

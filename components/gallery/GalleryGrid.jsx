@@ -33,7 +33,7 @@ export default function GalleryGrid({ items = [] }) {
                 alt={item.title || "Gallery media"}
                 width={600}
                 height={600}
-                sizes="(max-width: 768px) 50vw, 25vw"
+                sizes="(max-width: 48rem) 50vw, 25vw"
                 unoptimized={src.startsWith("http")}
               />
               {isVideo && <span className={styles.play}>▶</span>}

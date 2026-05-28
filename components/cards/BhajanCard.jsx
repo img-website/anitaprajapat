@@ -16,7 +16,7 @@ export default function BhajanCard({ bhajan }) {
           src={thumb}
           alt={bhajan.thumbnail?.alt || bhajan.title}
           fill
-          sizes="(max-width: 768px) 100vw, 33vw"
+          sizes="(max-width: 48rem) 100vw, 33vw"
           unoptimized={thumb.startsWith("http")}
         />
         <span className={styles.play}>

@@ -102,7 +102,7 @@ export default function Hero({ banner, settings = {} }) {
             ))}
           </div>
           <div className={styles.photo}>
-            <Image src={img} alt={siteConfig.name} fill priority sizes="(max-width:900px) 80vw, 40vw" unoptimized />
+            <Image src={img} alt={siteConfig.name} fill priority sizes="(max-width:56.25rem) 80vw, 40vw" unoptimized />
           </div>
 
           <motion.div

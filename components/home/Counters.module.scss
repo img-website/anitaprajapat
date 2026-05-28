@@ -2,7 +2,7 @@
 
 .wrap {
   background: var(--bg-2);
-  border-block: 1px solid var(--border);
+  border-block: 0.0625rem solid var(--border);
 }
 
 .grid {
@@ -47,8 +47,8 @@
 .icon {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   font-size: 0.72rem;
   font-weight: 700;

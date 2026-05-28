@@ -15,25 +15,25 @@ $font-heading: var(--font-heading), "Plus Jakarta Sans", system-ui, sans-serif;
 $font-body: var(--font-body), system-ui, -apple-system, sans-serif;
 
 // ─── Layout ─────────────────────────────────────────────────
-$container: 1240px;
-$container-narrow: 900px;
-$radius-sm: 8px;
-$radius: 14px;
-$radius-lg: 24px;
-$header-height: 76px;
+$container: 77.5rem;
+$container-narrow: 56.25rem;
+$radius-sm: 0.5rem;
+$radius: 0.875rem;
+$radius-lg: 1.5rem;
+$header-height: 4.75rem;
 
 // ─── Breakpoints ────────────────────────────────────────────
 $bp: (
-  "sm": 480px,
-  "md": 768px,
-  "lg": 1024px,
-  "xl": 1280px,
+  "sm": 30rem,
+  "md": 48rem,
+  "lg": 64rem,
+  "xl": 80rem,
 );
 
 // ─── Elevation / motion ─────────────────────────────────────
-$shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
-$shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-$shadow-gold: 0 8px 30px rgba(212, 175, 55, 0.25);
+$shadow-sm: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.25);
+$shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.35);
+$shadow-gold: 0 0.5rem 1.875rem rgba(212, 175, 55, 0.25);
 $ease: cubic-bezier(0.22, 1, 0.36, 1);
 $z-header: 100;
 $z-overlay: 200;

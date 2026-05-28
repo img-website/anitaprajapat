@@ -9,11 +9,11 @@
 }
 
 .search {
-  width: min(560px, 100%);
+  width: min(35rem, 100%);
   padding: 0.95rem 1.3rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
   color: var(--text);
   &::placeholder { color: var(--text-muted); }
   &:focus { border-color: var(--gold); outline: none; }
@@ -24,10 +24,10 @@
   flex-wrap: wrap;
   button {
     padding: 0.5rem 1.1rem;
-    border-radius: 999px;
+    border-radius: 62.4375rem;
     font-size: 0.85rem;
     color: var(--text-muted);
-    border: 1px solid var(--border);
+    border: 0.0625rem solid var(--border);
     background: var(--surface);
     transition: 0.2s;
     &:hover { color: var(--heading); }
@@ -60,7 +60,7 @@
 }
 
 .skeletonCard {
-  height: 280px;
+  height: 17.5rem;
   border-radius: $radius;
   background: linear-gradient(
     90deg,

@@ -10,7 +10,7 @@
 
 .card {
   @include glass;
-  width: min(420px, 100%);
+  width: min(26.25rem, 100%);
   border-radius: $radius-lg;
   padding: clamp(1.8rem, 5vw, 2.8rem);
   box-shadow: $shadow;
@@ -22,14 +22,14 @@
   .mark {
     display: inline-grid;
     place-items: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 18px;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 1.125rem;
     font-family: $font-heading;
     font-size: 1.7rem;
     color: #fff;
     background: var(--grad-brand);
-    box-shadow: 0 12px 30px color-mix(in srgb, var(--magenta) 35%, transparent);
+    box-shadow: 0 0.75rem 1.875rem color-mix(in srgb, var(--magenta) 35%, transparent);
     margin-bottom: 0.8rem;
   }
   h1 { font-size: 1.4rem; }

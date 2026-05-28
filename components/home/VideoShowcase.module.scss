@@ -1,6 +1,6 @@
 @use "abstracts" as *;
 
-.wrap { background: var(--bg-2); border-block: 1px solid var(--border); }
+.wrap { background: var(--bg-2); border-block: 0.0625rem solid var(--border); }
 
 .tabsWrap {
   // Block + text-align:center keeps the strip centred when it fits, but lets
@@ -22,7 +22,7 @@
   display: inline-flex;
   gap: 0.3rem;
   padding: 0.3rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   width: max-content;
   @include glass;
   button {
@@ -30,7 +30,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.55rem 1.15rem;
-    border-radius: 999px;
+    border-radius: 62.4375rem;
     font-size: 0.85rem;
     font-weight: 600;
     white-space: nowrap;

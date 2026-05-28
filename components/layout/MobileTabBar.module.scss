@@ -11,50 +11,50 @@
   z-index: $z-float;
   left: 0.7rem;
   right: 0.7rem;
-  bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(0.7rem + env(safe-area-inset-bottom, 0rem));
   padding: 0.5rem 0.4rem;
-  border-radius: 22px;
+  border-radius: 1.375rem;
   @include glass-strong;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 0.75rem 2.25rem rgba(0, 0, 0, 0.18);
   @include down("sm") {
     left: 0.45rem;
     right: 0.45rem;
     padding: 0.38rem 0.28rem;
-    border-radius: 18px;
+    border-radius: 1.125rem;
   }
 
   a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 0.1875rem;
     padding: 0.28rem 0;
-    border-radius: 16px;
+    border-radius: 1rem;
     color: var(--text-muted);
     font-size: 0.58rem;
     font-weight: 600;
     transition: color 0.2s, background 0.2s, transform 0.2s;
 
-    svg { width: 19px; height: 19px; }
-    @include down("sm") { gap: 2px; }
+    svg { width: 1.1875rem; height: 1.1875rem; }
+    @include down("sm") { gap: 0.125rem; }
 
     &.active {
       color: var(--red);
-      svg { transform: translateY(-1px); }
+      svg { transform: translateY(-0.0625rem); }
     }
     &.active::before {
       content: "";
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: -3px;
-      width: 32px;
-      height: 2px;
-      border-radius: 3px;
+      top: -0.1875rem;
+      width: 2rem;
+      height: 0.125rem;
+      border-radius: 0.1875rem;
       background: var(--grad-brand);
       z-index: 2;
       pointer-events: none;
-      @include down("sm") { top: -4px; }
+      @include down("sm") { top: -0.25rem; }
     }
     position: relative;
   }

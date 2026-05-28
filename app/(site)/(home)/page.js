@@ -75,7 +75,7 @@ export default async function HomePage() {
                 src={settings.logo || "/images/artist.jpg"}
                 alt={siteConfig.name}
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 48rem) 100vw, 50vw"
                 unoptimized
               />
               <span className={s.badge2}>
