@@ -1,0 +1,58 @@
+@use "abstracts" as *;
+
+.controls {
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.search {
+  width: min(560px, 100%);
+  padding: 0.95rem 1.3rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  &::placeholder { color: var(--text-muted); }
+  &:focus { border-color: var(--gold); outline: none; }
+}
+
+.filters {
+  @include flex(row, center, center, 0.6rem);
+  flex-wrap: wrap;
+  button {
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: 0.2s;
+    &:hover { color: var(--heading); }
+    &.active {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #211a17;
+      border-color: transparent;
+    }
+  }
+}
+
+.grid {
+  @include grid(3, 1.6rem);
+  @include down("lg") { grid-template-columns: repeat(2, 1fr); }
+  @include down("sm") { grid-template-columns: 1fr; }
+}
+
+.empty,
+.loading {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem 0;
+}
+
+.more {
+  text-align: center;
+  margin-top: 2.5rem;
+}

@@ -1,0 +1,44 @@
+@use "abstracts" as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat {
+  @include glass;
+  border-radius: $radius;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: 0.25s;
+  &:hover { border-color: var(--magenta); transform: translateY(-3px); }
+  .num { font-family: $font-heading; font-size: 2rem; color: var(--magenta); }
+  .label { font-size: 0.85rem; color: var(--text-muted); }
+}
+
+.panel {
+  @include glass;
+  border-radius: $radius;
+  padding: 1.4rem;
+  margin-bottom: 2rem;
+  h2 { font-size: 1.15rem; margin-bottom: 1rem; }
+}
+
+.note {
+  @include glass;
+  border-radius: $radius;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  border-left: 3px solid var(--magenta);
+}
+
+.quick {
+  @include flex(row, flex-start, center, 0.8rem);
+  flex-wrap: wrap;
+}

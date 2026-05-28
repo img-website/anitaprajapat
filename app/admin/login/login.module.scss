@@ -1,0 +1,44 @@
+@use "abstracts" as *;
+
+.wrap {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 55%), var(--bg);
+}
+
+.card {
+  @include glass;
+  width: min(420px, 100%);
+  border-radius: $radius-lg;
+  padding: clamp(1.8rem, 5vw, 2.8rem);
+  box-shadow: $shadow;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 1.8rem;
+  .mark {
+    display: inline-grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    font-family: $font-heading;
+    font-size: 1.7rem;
+    color: #fff;
+    background: var(--grad-brand);
+    box-shadow: 0 12px 30px color-mix(in srgb, var(--magenta) 35%, transparent);
+    margin-bottom: 0.8rem;
+  }
+  h1 { font-size: 1.4rem; }
+  p { color: var(--magenta); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; }
+}
+
+.error {
+  color: #ff8a85;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}

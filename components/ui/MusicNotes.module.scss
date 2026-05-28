@@ -1,0 +1,30 @@
+@use "abstracts" as *;
+
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.note {
+  position: absolute;
+  opacity: 0.12;
+  animation: drift 14s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -2.6s);
+
+  &:nth-child(1) { top: 12%; left: 6%; }
+  &:nth-child(2) { top: 64%; left: 16%; }
+  &:nth-child(3) { top: 28%; right: 10%; }
+  &:nth-child(4) { top: 72%; right: 18%; }
+  &:nth-child(5) { top: 44%; left: 48%; }
+}
+
+.brand .note { color: var(--magenta); }
+.light .note { color: #fff; opacity: 0.18; }
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-26px) rotate(8deg); }
+}

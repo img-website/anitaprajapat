@@ -1,0 +1,30 @@
+@use "abstracts" as *;
+
+.header {
+  position: relative;
+  padding-top: calc(#{$header-height} + clamp(2.5rem, 7vw, 5rem));
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% -10%, rgba(212, 175, 55, 0.16), transparent 55%),
+    var(--bg-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.title {
+  margin-top: 0.5rem;
+}
+
+.subtitle {
+  margin: 1rem auto 0;
+  max-width: 60ch;
+}
+
+.crumbs {
+  @include flex(row, center, center, 0.4rem);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  a:hover { color: var(--magenta); }
+  .sep { margin: 0 0.4rem; opacity: 0.5; }
+}

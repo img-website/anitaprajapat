@@ -1,0 +1,22 @@
+@use "abstracts" as *;
+
+.head {
+  @include flex(row, space-between, center, 1rem);
+  margin-bottom: 1.5rem;
+  position: sticky;
+  top: 0;
+}
+
+.card {
+  @include glass;
+  border-radius: $radius;
+  padding: 1.4rem;
+  margin-bottom: 1.4rem;
+  h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--magenta); }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0 1.2rem;
+}

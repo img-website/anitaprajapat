@@ -1,0 +1,76 @@
+@use "abstracts" as *;
+
+.stage {
+  @include flex(row, center, center, 1rem);
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+.quote {
+  @include glass;
+  position: relative;
+  flex: 1;
+  border-radius: $radius-lg;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+
+  .mark {
+    font-family: $font-heading;
+    font-size: 4rem;
+    line-height: 0;
+    color: var(--gold);
+    display: block;
+    height: 2rem;
+  }
+  p {
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    color: var(--text);
+    font-style: italic;
+  }
+  .stars {
+    color: var(--gold);
+    margin: 1rem 0 0.75rem;
+    letter-spacing: 0.15em;
+  }
+  footer {
+    strong {
+      display: block;
+      color: var(--heading);
+      font-family: $font-heading;
+    }
+    span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  }
+}
+
+.nav {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+  &:hover { background: var(--gold); color: #211a17; }
+  @include down("sm") { display: none; }
+}
+
+.dots {
+  @include flex(row, center, center, 0.5rem);
+  margin-top: 1.6rem;
+  button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .activeDot {
+    background: var(--gold);
+    width: 24px;
+    border-radius: 6px;
+  }
+}

@@ -1,0 +1,144 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { siteConfig } from "@/lib/siteConfig";
+import { ArrowRight, Star, Mic2 } from "lucide-react";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import { YoutubeIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
+import styles from "./Hero.module.scss";
+
+export default function Hero({ banner, settings = {} }) {
+  const title = banner?.title || siteConfig.name;
+  const subtitle = banner?.subtitle || siteConfig.tagline;
+  const description =
+    banner?.description ||
+    "Khatu Shyam · Mataji · Marwadi bhajan & live Jagran — devotion brought to life on stage across India.";
+  const img = banner?.image?.url || "/images/hero.jpg";
+  const youtube = settings.social?.youtube || siteConfig.social.youtube;
+  const whatsapp = settings.whatsapp || siteConfig.whatsapp;
+
+  const ease = [0.22, 1, 0.36, 1];
+
+  return (
+    <section className={`${styles.hero} section-aurora`}>
+      <div className={`container ${styles.grid}`}>
+        <div className={styles.copy}>
+          <motion.span
+            className="chip"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease }}
+          >
+            <span className={styles.dot} /> {subtitle} · {siteConfig.city}
+          </motion.span>
+
+          <motion.h1
+            className={styles.title}
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.08, ease }}
+          >
+            <span>Voice of</span>
+            <span className="gold-text">Devotion</span>
+            <span className={styles.name}>{title}</span>
+          </motion.h1>
+
+          <motion.p
+            className={styles.lead}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease }}
+          >
+            {description}
+          </motion.p>
+
+          <motion.div
+            className={styles.cta}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.32, ease }}
+          >
+            <a href={youtube} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg shine">
+              <YoutubeIcon size={20} /> Subscribe
+            </a>
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg">
+              <WhatsappIcon size={18} /> Book for Jagran <ArrowRight size={18} />
+            </a>
+          </motion.div>
+
+          <motion.div
+            className={styles.stats}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <div>
+              <strong><AnimatedCounter value={settings.counters?.stageShows || siteConfig.stageShows} /></strong>
+              <span>Stage Shows</span>
+            </div>
+            <div>
+              <strong><AnimatedCounter value={`${new Date().getFullYear() - siteConfig.performingSince}+`} /></strong>
+              <span>Years</span>
+            </div>
+            <div>
+              <strong><AnimatedCounter value={`${siteConfig.genres.length}+`} /></strong>
+              <span>Genres</span>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className={styles.visual}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease }}
+        >
+          <div className={styles.ring} aria-hidden />
+          <div className={styles.blob} aria-hidden />
+          <div className={styles.sparkles} aria-hidden>
+            {[...Array(7)].map((_, i) => (
+              <span key={i} style={{ "--i": i }} />
+            ))}
+          </div>
+          <div className={`${styles.photo} float`}>
+            <Image src={img} alt={siteConfig.name} fill priority sizes="(max-width:900px) 80vw, 40vw" unoptimized />
+          </div>
+
+          <motion.div
+            className={`${styles.badge} ${styles.badgeTop}`}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <Mic2 size={14} /> Live Jagran
+          </motion.div>
+          <motion.div
+            className={`${styles.badge} ${styles.badgeBottom}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85 }}
+          >
+            <Star size={14} /> {settings.counters?.stageShows || siteConfig.stageShows} shows
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* genre marquee */}
+      <div className={styles.marquee} aria-hidden>
+        <div className={styles.track}>
+          {[...siteConfig.genres, ...siteConfig.genres].map((g, i) => (
+            <span key={i}>
+              {g} <em>✦</em>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <a href="#explore" className={styles.scrollCue} aria-label="Scroll to explore">
+        <span className={styles.mouse}><span /></span>
+        <span className={styles.cueText}>Scroll</span>
+      </a>
+    </section>
+  );
+}

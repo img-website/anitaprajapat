@@ -1,0 +1,46 @@
+@use "abstracts" as *;
+
+.band {
+  overflow: hidden;
+  padding-block: 1.4rem;
+  background: var(--grad-brand);
+  background-size: 200% 200%;
+  animation: bandPan 12s ease infinite;
+  white-space: nowrap;
+}
+
+@keyframes bandPan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.track {
+  display: inline-flex;
+  gap: 3rem;
+  animation: scroll 38s linear infinite;
+  will-change: transform;
+}
+
+.band:hover .track {
+  animation-play-state: paused;
+}
+
+.item {
+  @include flex(row, center, center, 0.6rem);
+  font-family: $font-heading;
+  font-size: 1.05rem;
+  color: #fff8ec;
+  em {
+    color: var(--gold-light);
+    font-size: 0.85rem;
+  }
+  .om {
+    color: var(--gold-light);
+    font-size: 1.3rem;
+  }
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

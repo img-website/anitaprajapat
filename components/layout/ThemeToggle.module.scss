@@ -1,0 +1,19 @@
+@use "abstracts" as *;
+
+.toggle {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.05rem;
+  color: var(--magenta);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s $ease, border-color 0.25s, color 0.25s;
+  &:hover {
+    transform: rotate(-18deg) scale(1.05);
+    border-color: var(--magenta);
+  }
+}

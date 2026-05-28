@@ -1,0 +1,88 @@
+@use "../abstracts" as *;
+
+// Palette picked from the artist's logo/stage image:
+//   plum-magenta saree · royal-blue dupatta · crimson stage light · warm gold
+// LIGHT is the primary, default experience. Dark is an optional toggle.
+
+:root,
+:root[data-theme="light"] {
+  --bg: #fbf6fb;
+  --bg-2: #ffffff;
+  --bg-3: #f6edf6;
+  --surface: rgba(255, 255, 255, 0.7);
+
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-strong: rgba(255, 255, 255, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.8);
+
+  --heading: #2a0f2e;
+  --text: #4a3450;
+  --text-muted: #8a7090;
+  --border: rgba(181, 39, 125, 0.14);
+
+  --magenta: #b5277d;
+  --magenta-deep: #7a1f5c;
+  --blue: #2f43c0;
+  --blue-soft: #5468f0;
+  --crimson: #d2283f;
+  // "gold" tokens retired — repointed to brand colours (no yellow/gold anywhere).
+  --gold: #b5277d;
+  --gold-light: #5468f0;
+
+  // Signature brand gradients.
+  --grad-brand: linear-gradient(120deg, #b5277d 0%, #6f2bb0 50%, #2f43c0 100%);
+  --grad-gold: linear-gradient(135deg, #6f2bb0, #b5277d);
+  --grad-text: linear-gradient(110deg, #d2283f, #b5277d 45%, #2f43c0);
+  --grad-mesh:
+    radial-gradient(40vw 40vw at 6% 0%, rgba(181, 39, 125, 0.22), transparent 60%),
+    radial-gradient(42vw 42vw at 98% 6%, rgba(47, 67, 192, 0.2), transparent 60%),
+    radial-gradient(36vw 36vw at 80% 100%, rgba(217, 154, 43, 0.22), transparent 60%);
+
+  --blob-1: rgba(181, 39, 125, 0.38);
+  --blob-2: rgba(47, 67, 192, 0.34);
+  --blob-3: rgba(217, 154, 43, 0.34);
+
+  --shadow-soft: 0 14px 50px rgba(122, 31, 92, 0.12);
+  --shadow-pop: 0 26px 60px rgba(47, 67, 192, 0.18);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #120816;
+  --bg-2: #1a0d20;
+  --bg-3: #22132a;
+  --surface: rgba(255, 255, 255, 0.05);
+
+  --glass-bg: rgba(40, 20, 50, 0.4);
+  --glass-strong: rgba(26, 13, 32, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.12);
+
+  --heading: #fbeffb;
+  --text: #ecdcef;
+  --text-muted: #b89cc0;
+  --border: rgba(243, 201, 105, 0.16);
+
+  --magenta: #e85aa9;
+  --magenta-deep: #b5277d;
+  --blue: #6f80ff;
+  --blue-soft: #8a98ff;
+  --crimson: #ff5a6e;
+  --gold: #e85aa9;
+  --gold-light: #8a98ff;
+
+  --grad-brand: linear-gradient(120deg, #e85aa9 0%, #9b5cff 50%, #6f80ff 100%);
+  --grad-gold: linear-gradient(135deg, #9b5cff, #e85aa9);
+  --grad-text: linear-gradient(110deg, #ff5a6e, #e85aa9 45%, #8a98ff);
+  --grad-mesh:
+    radial-gradient(40vw 40vw at 6% 0%, rgba(232, 90, 169, 0.22), transparent 60%),
+    radial-gradient(42vw 42vw at 98% 6%, rgba(111, 128, 255, 0.2), transparent 60%),
+    radial-gradient(36vw 36vw at 80% 100%, rgba(243, 201, 105, 0.18), transparent 60%);
+
+  --blob-1: rgba(232, 90, 169, 0.26);
+  --blob-2: rgba(111, 128, 255, 0.24);
+  --blob-3: rgba(243, 201, 105, 0.2);
+
+  --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.5);
+  --shadow-pop: 0 26px 60px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}

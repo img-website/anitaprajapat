@@ -1,0 +1,19 @@
+@use "abstracts" as *;
+
+.share {
+  @include flex(row, flex-start, center, 0.6rem);
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  span { color: var(--text-muted); }
+  a,
+  button {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: var(--surface);
+    font-size: 0.82rem;
+    transition: 0.2s;
+    &:hover { border-color: var(--magenta); color: var(--magenta); }
+  }
+}

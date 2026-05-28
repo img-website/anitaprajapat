@@ -1,0 +1,66 @@
+@use "abstracts" as *;
+
+.admin-root {
+  min-height: 100dvh;
+  background: var(--grad-mesh), var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+}
+
+// Shared admin form controls
+.adm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+
+  input,
+  textarea,
+  select {
+    padding: 0.7rem 0.9rem;
+    border-radius: $radius-sm;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font: inherit;
+    &:focus { border-color: var(--magenta); outline: none; }
+  }
+  textarea { resize: vertical; min-height: 90px; }
+}
+
+.adm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  th, td {
+    text-align: left;
+    padding: 0.85rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  tr:hover td { background: var(--surface); }
+}
+
+.adm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: $radius-sm;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--heading);
+  cursor: pointer;
+  &:hover { border-color: var(--magenta); }
+  &.primary {
+    background: var(--grad-brand);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--magenta) 30%, transparent);
+  }
+  &.danger { color: #ff8a85; border-color: rgba(255, 138, 133, 0.4); }
+}

@@ -1,0 +1,109 @@
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import { getEventBySlug } from "@/services/content";
+import { buildMetadata, eventSchema, breadcrumbSchema } from "@/lib/seo";
+import { formatDate } from "@/utils/helpers";
+import { siteConfig } from "@/lib/siteConfig";
+import PageHeader from "@/components/ui/PageHeader";
+import GalleryGrid from "@/components/gallery/GalleryGrid";
+import ShareButtons from "@/components/ui/ShareButtons";
+import JsonLd from "@/components/seo/JsonLd";
+import styles from "./event.module.scss";
+
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const ev = await getEventBySlug(slug);
+  if (!ev) return buildMetadata({ title: "Event not found", path: `/events/${slug}`, noindex: true });
+  return buildMetadata({
+    title: ev.seo?.metaTitle || `${ev.title} — ${ev.city || ""}`.trim(),
+    description: ev.seo?.metaDescription || ev.description,
+    path: `/events/${ev.slug}`,
+    image: ev.coverImage?.url,
+    type: "article",
+  });
+}
+
+export default async function EventSinglePage({ params }) {
+  const { slug } = await params;
+  const ev = await getEventBySlug(slug);
+  if (!ev) notFound();
+
+  const gallery = (ev.gallery || []).map((g, i) => ({
+    _id: `g${i}`,
+    mediaType: "image",
+    image: g,
+    title: ev.title,
+  }));
+
+  return (
+    <>
+      <JsonLd
+        data={[
+          eventSchema(ev),
+          breadcrumbSchema([
+            { name: "Events", href: "/events" },
+            { name: ev.title, href: `/events/${ev.slug}` },
+          ]),
+        ]}
+      />
+      <PageHeader
+        eyebrow={ev.type}
+        title={ev.title}
+        crumbs={[{ name: "Events", href: "/events" }, { name: ev.title }]}
+      />
+
+      <section className="section">
+        <div className="container">
+          <div className={styles.layout}>
+            <div className={styles.main}>
+              {ev.coverImage?.url && (
+                <div className={styles.cover}>
+                  <Image src={ev.coverImage.url} alt={ev.title} fill sizes="66vw" unoptimized />
+                </div>
+              )}
+              {ev.description && <p className={styles.desc}>{ev.description}</p>}
+              <ShareButtons path={`/events/${ev.slug}`} title={ev.title} />
+
+              {gallery.length > 0 && (
+                <div className={styles.gallery}>
+                  <h2>Event Gallery</h2>
+                  <GalleryGrid items={gallery} />
+                </div>
+              )}
+            </div>
+
+            <aside className={styles.aside}>
+              <div className={styles.infoCard}>
+                <h3>Event Details</h3>
+                <dl>
+                  <div><dt>Date</dt><dd>{formatDate(ev.date, { weekday: "long" })}</dd></div>
+                  {ev.startTime && <div><dt>Time</dt><dd>{ev.startTime}</dd></div>}
+                  {ev.venue && <div><dt>Venue</dt><dd>{ev.venue}</dd></div>}
+                  <div><dt>Location</dt><dd>{[ev.city, ev.state].filter(Boolean).join(", ")}</dd></div>
+                  <div><dt>Type</dt><dd style={{ textTransform: "capitalize" }}>{ev.type}</dd></div>
+                </dl>
+                <a
+                  href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
+                    `Enquiry about event: ${ev.title}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-gold"
+                  style={{ width: "100%", marginTop: "1rem" }}
+                >
+                  Enquire / Book
+                </a>
+              </div>
+
+              {ev.mapEmbed && (
+                <div className={styles.map} dangerouslySetInnerHTML={{ __html: ev.mapEmbed }} />
+              )}
+            </aside>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

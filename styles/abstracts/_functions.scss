@@ -1,0 +1,17 @@
+@use "sass:math";
+
+// rem from px (assuming 16px root).
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+// Fluid value between two sizes across the viewport.
+@function fluid($min, $max, $minvw: 480, $maxvw: 1280) {
+  $slope: math.div($max - $min, $maxvw - $minvw);
+  $base: $min - $slope * $minvw;
+  @return clamp(
+    #{$min}px,
+    #{$base}px + #{$slope * 100}vw,
+    #{$max}px
+  );
+}
