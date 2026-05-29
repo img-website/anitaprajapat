@@ -32,6 +32,11 @@ const settingsSchema = new mongoose.Schema(
     featuredVideo: { type: String, default: "" },
     featuredVideoTitle: { type: String, default: "" },
 
+    // Soft background music played site-wide (direct audio URL, e.g. .mp3).
+    // Empty = no music. Starts on first user interaction (browser autoplay
+    // policy) and users can mute via the on-screen toggle.
+    backgroundMusic: { type: String, default: "" },
+
     // Homepage bento grid — all tiles editable from admin.
     bento: {
       featureChip: { type: String, default: "Live Devotional Experience" },

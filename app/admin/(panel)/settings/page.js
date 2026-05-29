@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import api from "@/services/apiClient";
 import ImageUploader from "@/components/admin/ImageUploader";
+import AudioUploader from "@/components/admin/AudioUploader";
 import { mergeBento } from "@/lib/bentoDefaults";
 import { youtubeId } from "@/utils/helpers";
 import styles from "./settings.module.scss";
@@ -171,6 +172,24 @@ export default function SettingsPage() {
             label="Custom Title (optional override)"
             value={s.featuredVideoTitle}
             onChange={(v) => set("featuredVideoTitle", v)}
+          />
+        </div>
+      </section>
+
+      <section className={styles.card}>
+        <h2>Background Music</h2>
+        <p style={{ color: "var(--text-muted)", marginBottom: "0.75rem", fontSize: "0.9rem" }}>
+          Soft devotional music played site-wide. Upload an audio file (a short
+          ~1–2 min loop, under 8 MB is ideal). Leave empty to turn music off.
+          It starts on the visitor&apos;s first tap/scroll (browser rule), loops
+          softly, pauses when the tab is hidden, and visitors can mute it anytime.
+        </p>
+        <div className="adm-field">
+          <label>Background Music (audio file)</label>
+          <AudioUploader
+            value={s.backgroundMusic ? { url: s.backgroundMusic } : null}
+            onChange={(media) => set("backgroundMusic", media?.url || "")}
+            folder="audio"
           />
         </div>
       </section>
