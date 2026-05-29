@@ -138,7 +138,7 @@ export default function Hero({ banner, settings = {} }) {
         <div className={styles.track}>
           {[...siteConfig.genres, ...siteConfig.genres].map((g, i) => (
             <span key={i}>
-              {g} <Sparkles size={11} />
+              {g} <em><Sparkles size={11} aria-hidden /></em>
             </span>
           ))}
         </div>

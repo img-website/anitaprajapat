@@ -229,10 +229,12 @@
     -webkit-text-stroke: 0.0625rem color-mix(in srgb, var(--magenta) 45%, transparent);
     em {
       -webkit-text-stroke: 0;
-      color: var(--gold);
+      color: var(--magenta);
       font-style: normal;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       transform: translateY(-0.0625rem);
+      svg { display: block; }
     }
   }
 }

@@ -158,8 +158,9 @@ export default function SettingsPage() {
       <section className={styles.card}>
         <h2>Featured Video (Bento)</h2>
         <p style={{ color: "var(--text-muted)", marginBottom: "0.75rem", fontSize: "0.9rem" }}>
-          Paste a YouTube link — thumbnail, duration & title load automatically on the site.
-          Leave title blank to use the YouTube video name.
+          Paste any YouTube link — thumbnail, duration &amp; title are fetched
+          automatically from YouTube. Custom title is optional (leave blank to
+          use the video&apos;s own title).
         </p>
         <div className={styles.grid}>
           <Field
@@ -169,11 +170,25 @@ export default function SettingsPage() {
             onChange={(v) => set("featuredVideo", v)}
           />
           <Field
-            label="Custom Title (optional override)"
+            label="Custom Title (optional)"
             value={s.featuredVideoTitle}
             onChange={(v) => set("featuredVideoTitle", v)}
           />
         </div>
+        {/* Live thumbnail preview — confirms auto-fetch will work */}
+        {youtubeId(s.featuredVideo) && (
+          <div style={{ marginTop: "0.75rem" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`https://i.ytimg.com/vi/${youtubeId(s.featuredVideo)}/hqdefault.jpg`}
+              alt="YouTube thumbnail preview"
+              style={{ height: 90, borderRadius: 8, border: "0.0625rem solid var(--border)", display: "block" }}
+            />
+            <small style={{ color: "var(--text-muted)", display: "block", marginTop: 4 }}>
+              ✓ Thumbnail auto-fetched from YouTube. Title &amp; duration will load on the site.
+            </small>
+          </div>
+        )}
       </section>
 
       <section className={styles.card}>
@@ -345,9 +360,21 @@ export default function SettingsPage() {
           <Field label="Stage Shows" value={s.counters?.stageShows} error={errors["counters.stageShows"]} onChange={(v) => set("counters.stageShows", v)} />
         </div>
         {syncReport && (
-          <p style={{ color: "var(--text-muted)", marginTop: "0.6rem", fontSize: "0.85rem" }}>
-            YouTube: {syncReport.youtubeSubscribers} · Instagram: {syncReport.instagramFollowers} · Facebook: {syncReport.facebookFollowers}
-          </p>
+          <div style={{ marginTop: "0.6rem", fontSize: "0.85rem" }}>
+            {[
+              ["YouTube", syncReport.youtubeSubscribers],
+              ["Instagram", syncReport.instagramFollowers],
+              ["Facebook", syncReport.facebookFollowers],
+            ].map(([label, result]) => {
+              const ok = result === "updated";
+              const skipped = result === "skipped" || result === "missing_config";
+              return (
+                <div key={label} style={{ color: ok ? "#4caf86" : skipped ? "var(--text-muted)" : "#ff8a85", marginBottom: 2 }}>
+                  {ok ? "✓" : skipped ? "–" : "✗"} {label}: {ok ? "updated" : skipped ? "no config" : result}
+                </div>
+              );
+            })}
+          </div>
         )}
       </section>
 

@@ -41,17 +41,20 @@ export default async function sitemap() {
     dynamicRoutes = events.map((e) => ({
       url: `${base}/events/${e.slug}`,
       lastModified: e.updatedAt,
+      changeFrequency: "weekly",
       priority: 0.6,
     }));
     dynamicRoutes.push(
       ...bhajans.map((b) => ({
         url: `${base}/bhajans/${b.slug}`,
         lastModified: b.updatedAt,
+        changeFrequency: "weekly",
         priority: 0.6,
       })),
       ...mediaItems.map((m) => ({
         url: `${base}/media/${m.slug}`,
         lastModified: m.updatedAt,
+        changeFrequency: "monthly",
         priority: 0.55,
       }))
     );

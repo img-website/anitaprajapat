@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getMediaBySlug, getSettings } from "@/services/content";
-import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, newsArticleSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { siteConfig } from "@/lib/siteConfig";
 import PageHeader from "@/components/ui/PageHeader";
 import JsonLd from "@/components/seo/JsonLd";
 
@@ -28,10 +29,21 @@ export default async function MediaDetailPage({ params }) {
   return (
     <>
       <JsonLd
-        data={breadcrumbSchema([
-          { name: "Media", href: "/media" },
-          { name: item.title, href: `/media/${item.slug}` },
-        ])}
+        data={[
+          newsArticleSchema({
+            title: item.title,
+            description: item.excerpt,
+            image: item.image?.url,
+            datePublished: item.createdAt,
+            dateModified: item.updatedAt,
+            url: `${siteConfig.url}/media/${item.slug}`,
+            outlet: item.outlet,
+          }),
+          breadcrumbSchema([
+            { name: "Media", href: "/media" },
+            { name: item.title, href: `/media/${item.slug}` },
+          ]),
+        ]}
       />
       <PageHeader
         eyebrow={item.outlet || item.type}
