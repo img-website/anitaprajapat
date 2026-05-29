@@ -4,9 +4,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/siteConfig";
 import { youtubeSubscribeUrl } from "@/utils/helpers";
-import { ArrowRight, Star, Mic2, Sparkles } from "lucide-react";
+import { ArrowRight, Star, Mic2, Sparkles, PlayCircle, MessageCircle } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
-import { YoutubeIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
 import styles from "./Hero.module.scss";
 
 export default function Hero({ banner, settings = {} }) {
@@ -62,10 +61,10 @@ export default function Hero({ banner, settings = {} }) {
             transition={{ duration: 0.7, delay: 0.32, ease }}
           >
             <a href={subscribe} target="_blank" rel="noopener noreferrer" title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans" className="btn btn-primary btn-lg shine">
-              <YoutubeIcon size={20} /> Subscribe on YouTube
+              <PlayCircle size={20} /> Subscribe on YouTube
             </a>
             <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" title="Book Anita Prajapat for Jagran on WhatsApp" className="btn btn-outline btn-lg">
-              <WhatsappIcon size={18} /> Book for Jagran <ArrowRight size={18} />
+              <MessageCircle size={18} /> Book for Jagran <ArrowRight size={18} />
             </a>
           </motion.div>
 

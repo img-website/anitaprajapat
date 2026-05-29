@@ -30,6 +30,7 @@
   .stars {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.15rem;
     color: var(--gold);
     margin: 1rem 0 0.75rem;
@@ -48,6 +49,9 @@
 }
 
 .nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2.875rem;
   height: 2.875rem;
   border-radius: 50%;

@@ -37,6 +37,7 @@ export default function ImageUploader({ value, onChange, folder = "anitaprajapat
         <img
           src={value.url}
           alt="preview"
+          loading="lazy"
           style={{ width: 120, height: 80, objectFit: "cover", borderRadius: 8, marginBottom: 8, border: "0.0625rem solid var(--border)" }}
         />
       )}

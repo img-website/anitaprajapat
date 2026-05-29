@@ -182,6 +182,7 @@ export default function SettingsPage() {
             <img
               src={`https://i.ytimg.com/vi/${youtubeId(s.featuredVideo)}/hqdefault.jpg`}
               alt="YouTube thumbnail preview"
+              loading="lazy"
               style={{ height: 90, borderRadius: 8, border: "0.0625rem solid var(--border)", display: "block" }}
             />
             <small style={{ color: "var(--text-muted)", display: "block", marginTop: 4 }}>
