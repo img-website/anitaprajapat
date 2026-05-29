@@ -5,6 +5,10 @@ const stylesDir = path.join(process.cwd(), "styles");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Ensure the brand font files are bundled with the /og route on Vercel.
+  outputFileTracingIncludes: {
+    "/og": ["./assets/fonts/**"],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },

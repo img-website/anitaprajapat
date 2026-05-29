@@ -2,6 +2,7 @@ import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import "@/styles/globals.scss";
 import { siteConfig } from "@/lib/siteConfig";
+import { robotsIndex } from "@/lib/seo";
 import Providers from "@/components/providers/Providers";
 import ServiceWorkerRegister from "@/components/pwa/ServiceWorkerRegister";
 import { getSettings } from "@/services/content";
@@ -74,20 +75,7 @@ export async function generateMetadata() {
       description,
       images: [ogImageUrl],
     },
-    robots: {
-      index: true,
-      follow: true,
-      nocache: false,
-      noimageindex: false,
-      googleBot: {
-        index: true,
-        follow: true,
-        noimageindex: false,
-        "max-image-preview": "large",
-        "max-video-preview": -1,
-        "max-snippet": -1,
-      },
-    },
+    robots: robotsIndex,
   };
 }
 
