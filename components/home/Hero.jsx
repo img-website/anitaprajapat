@@ -41,9 +41,9 @@ export default function Hero({ banner, settings = {} }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease }}
           >
-            <span>Voice of </span>
-            <span className="gold-text"> Devotion </span>
-            <span className={styles.name}> {title} </span>
+            <span>Voice of&nbsp;</span>
+            <span className="gold-text">Devotion</span>
+            <span className={styles.name}> {title}</span>
           </motion.h1>
 
           <motion.p

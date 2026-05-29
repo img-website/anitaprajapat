@@ -59,7 +59,7 @@ export default async function ContactPage() {
                 </li>
                 <li>
                   <span>Email</span>
-                  <a href={`mailto:${email}`} title="Email Anita Prajapat for bookings & enquiries">{email}</a>
+                  <a href={`mailto:${email}`} title="Email Anita Prajapat for bookings &amp; inquiries">{email}</a>
                 </li>
                 <li>
                   <span>Based in</span>

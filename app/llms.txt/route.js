@@ -8,7 +8,7 @@ export async function GET() {
     "",
     `> ${siteConfig.description}`,
     "",
-    `${siteConfig.name} is a Rajasthani devotional singer based in ${siteConfig.city}, performing since ${siteConfig.performingSince}. She is best known for Sanwariya Seth Bhajan and Khatu Shyam Bhajan, along with Mataji, Marwadi and Rajasthani bhajans, and has performed at ${siteConfig.stageShows} live Jagrans across India. New bhajans are published every week on her YouTube channel.`,
+    `${siteConfig.name} is a Rajasthani devotional singer based in ${siteConfig.city}, performing since ${siteConfig.performingSince}. She is best known for Sanwariya Seth Bhajan and Khatu Shyam Bhajan, along with Mataji, Marwadi, and Rajasthani bhajans, and has performed at ${siteConfig.stageShows} live Jagrans across India. New bhajans are published every week on her YouTube channel.`,
     "",
     "## Specialties",
     ...siteConfig.genres.map((g) => `- ${g}`),

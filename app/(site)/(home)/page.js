@@ -98,7 +98,7 @@ export default async function HomePage() {
               <ul>
                 <li>Sanwariya Seth & Khatu Shyam Bhajan specialist</li>
                 <li>{siteConfig.stageShows} stage shows & live Jagrans</li>
-                <li>Growing devotional audience on YouTube & Instagram</li>
+                <li>Growing devotee base on YouTube &amp; Instagram</li>
               </ul>
               <Link href="/about" className="btn btn-gold" title="Read the full story of Anita Prajapat — Rajasthani devotional bhajan singer">
                 Read full story

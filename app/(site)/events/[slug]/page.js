@@ -89,15 +89,15 @@ export default async function EventSinglePage({ params }) {
                 </dl>
                 <a
                   href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
-                    `Enquiry about event: ${ev.title}`
+                    `Inquiry about event: ${ev.title}`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={`Enquire & book Anita Prajapat for ${ev.title}`}
+                  title={`Inquire &amp; book Anita Prajapat for ${ev.title}`}
                   className="btn btn-gold"
                   style={{ width: "100%", marginTop: "1rem" }}
                 >
-                  Enquire / Book
+                  Inquire / Book
                 </a>
               </div>
 

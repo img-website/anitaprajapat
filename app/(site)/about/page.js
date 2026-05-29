@@ -24,10 +24,10 @@ export async function generateMetadata() {
 }
 
 const timeline = [
-  { year: "2016", title: "The Beginning", text: "Started singing devotional bhajans at local temples and jagrans in Rajasthan." },
+  { year: "2016", title: "The Beginning", text: "Started singing devotional bhajans at local temples and Jagrans in Rajasthan." },
   { year: "2018", title: "Rising Voice", text: "Gained recognition across Marwar for soulful Sanwariya Seth, Khatu Shyam & Mataji renditions." },
   { year: "2021", title: "Digital Devotion", text: "Launched the official YouTube channel, reaching devotees worldwide." },
-  { year: "2024", title: "Stage Sensation", text: "Crossed thousands of live jagran performances across India." },
+  { year: "2024", title: "Stage Sensation", text: "Crossed thousands of live Jagran performances across India." },
 ];
 
 const achievements = [
@@ -72,12 +72,12 @@ export default async function AboutPage() {
               <p>
                 {siteConfig.name} is a celebrated {siteConfig.category.toLowerCase()} from {siteConfig.city},
                 Rajasthan. Since {siteConfig.performingSince}, she has dedicated her voice to the divine —
-                performing Sanwariya Seth, Khatu Shyam, Mataji, Marwadi and Rajasthani bhajans that move
-                thousands of devotees at live jagrans across the country.
+                performing Sanwariya Seth, Khatu Shyam, Mataji, Marwadi, and Rajasthani bhajans that move
+                thousands of devotees at live Jagrans across the country.
               </p>
               <p>
                 Her music blends traditional devotional roots with a cinematic, soul-stirring stage
-                presence — making every jagran an unforgettable spiritual experience.
+                presence — making every Jagran an unforgettable spiritual experience.
               </p>
               <div className={styles.stats}>
                 <div><strong>{settings.counters?.stageShows || siteConfig.stageShows}</strong><span>Stage Shows</span></div>

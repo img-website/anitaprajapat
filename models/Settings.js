@@ -40,7 +40,7 @@ const settingsSchema = new mongoose.Schema(
     // Homepage bento grid — all tiles editable from admin.
     bento: {
       featureChip: { type: String, default: "Live Devotional Experience" },
-      statLabel: { type: String, default: "Stage shows & live jagrans" },
+      statLabel: { type: String, default: "Stage shows & live Jagrans" },
       bookTitle: { type: String, default: "Book for your Jagran" },
       bookCta: { type: String, default: "Chat on WhatsApp" },
       repertoireLabel: { type: String, default: "Repertoire" },

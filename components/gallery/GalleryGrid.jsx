@@ -33,7 +33,7 @@ export default function GalleryGrid({ items = [] }) {
             >
               <Image
                 src={src}
-                alt={item.title ? `${item.title} — Anita Prajapat` : "Anita Prajapat stage & jagran gallery photo"}
+                alt={item.title ? `${item.title} — Anita Prajapat` : "Anita Prajapat stage & Jagran gallery photo"}
                 title={item.title || "Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer"}
                 width={600}
                 height={600}

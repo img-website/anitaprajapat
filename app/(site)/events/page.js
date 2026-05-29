@@ -33,7 +33,7 @@ export default async function EventsPage() {
       <PageHeader
         eyebrow="Live Jagran"
         title="Events"
-        subtitle="Experience devotion live — upcoming jagrans and past performances."
+        subtitle="Experience devotion live — upcoming Jagrans and past performances."
         crumbs={[{ name: "Events" }]}
       />
 
