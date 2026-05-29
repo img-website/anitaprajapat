@@ -50,7 +50,7 @@ async function main() {
           facebook: "https://www.facebook.com/SuperstarAnitaPrajapat/",
           pinterest: "https://in.pinterest.com/anitaprajapatsuperstar/",
         },
-        counters: { stageShows: "4389+" },
+        counters: { stageShows: "10000+" },
         theme: { primary: "#b5277d", gold: "#d99a2b", dark: "#120816", defaultMode: "light" },
         createdAt: new Date(),
       },

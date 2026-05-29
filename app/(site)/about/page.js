@@ -33,7 +33,7 @@ const achievements = [
   "Sanwariya Seth Bhajan Specialist",
   "Khatu Shyam Bhajan Specialist",
   "Mataji & Marwadi Bhajan Artist",
-  "4389+ Live Stage Shows",
+  "10000+ Live Stage Shows",
   "Growing YouTube & Instagram Devotee Base",
   "Trusted Live Jagran Performer",
   "Spiritual Music Ambassador of Rajasthan",

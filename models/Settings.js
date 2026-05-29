@@ -59,7 +59,7 @@ const settingsSchema = new mongoose.Schema(
       youtubeSubscribers: { type: String, default: "" },
       instagramFollowers: { type: String, default: "" },
       facebookFollowers: { type: String, default: "" },
-      stageShows: { type: String, default: "4389+" },
+      stageShows: { type: String, default: "10000+" },
     },
     countersLastSyncedAt: { type: Date },
 
