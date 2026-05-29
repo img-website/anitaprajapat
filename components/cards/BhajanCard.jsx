@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Play } from "lucide-react";
 import { youtubeThumb } from "@/utils/helpers";
 import styles from "./Cards.module.scss";
 
@@ -20,7 +21,7 @@ export default function BhajanCard({ bhajan }) {
           sizes="(max-width: 48rem) 100vw, 33vw"
         />
         <span className={styles.play}>
-          <span className={styles.playBtn}>▶</span>
+          <span className={styles.playBtn}><Play size={22} fill="currentColor" aria-hidden /></span>
         </span>
       </Link>
       <div className={styles.body}>

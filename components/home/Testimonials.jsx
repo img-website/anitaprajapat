@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import styles from "./Testimonials.module.scss";
 
@@ -16,7 +17,7 @@ export default function Testimonials({ items = [] }) {
       <div className="container">
         <SectionHeading eyebrow="Kind Words" title="What Devotees & Organizers Say" />
         <div className={styles.stage}>
-          <button className={styles.nav} onClick={() => go(-1)} aria-label="Previous">‹</button>
+          <button className={styles.nav} onClick={() => go(-1)} aria-label="Previous"><ChevronLeft size={22} aria-hidden /></button>
           <AnimatePresence mode="wait">
             <motion.blockquote
               key={t._id || i}
@@ -28,14 +29,18 @@ export default function Testimonials({ items = [] }) {
             >
               <span className={styles.mark}>“</span>
               <p>{t.message}</p>
-              <div className={styles.stars}>{"★".repeat(t.rating || 5)}</div>
+              <div className={styles.stars} aria-label={`${t.rating || 5} out of 5 stars`}>
+                {Array.from({ length: t.rating || 5 }).map((_, idx) => (
+                  <Star key={idx} size={14} fill="currentColor" aria-hidden />
+                ))}
+              </div>
               <footer>
                 <strong>{t.name}</strong>
                 {t.role && <span>{t.role}</span>}
               </footer>
             </motion.blockquote>
           </AnimatePresence>
-          <button className={styles.nav} onClick={() => go(1)} aria-label="Next">›</button>
+          <button className={styles.nav} onClick={() => go(1)} aria-label="Next"><ChevronRight size={22} aria-hidden /></button>
         </div>
         <div className={styles.dots}>
           {items.map((_, idx) => (

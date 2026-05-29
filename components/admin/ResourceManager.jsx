@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import api from "@/services/apiClient";
-import { Inbox } from "lucide-react";
+import { Inbox, X } from "lucide-react";
 import ImageUploader from "./ImageUploader";
 import styles from "./ResourceManager.module.scss";
 
@@ -256,7 +256,7 @@ export default function ResourceManager({ config }) {
           <form className={styles.modal} onClick={(e) => e.stopPropagation()} onSubmit={save}>
             <div className={styles.modalHead}>
               <h2>{editing === "new" ? `New ${label}` : `Edit ${label}`}</h2>
-              <button type="button" onClick={() => setEditing(null)} aria-label="Close">✕</button>
+              <button type="button" onClick={() => setEditing(null)} aria-label="Close" title="Close"><X size={18} aria-hidden /></button>
             </div>
 
             <div className={styles.fields}>

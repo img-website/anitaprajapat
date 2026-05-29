@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Sparkles } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { buildMetadata, personSchema, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getSettings, getGalleryPreview } from "@/services/content";
@@ -109,7 +110,7 @@ export default async function AboutPage() {
           <div className={styles.achievements}>
             {achievements.map((a, i) => (
               <Reveal key={a} variant="scale" delay={i * 0.05} className={styles.achv}>
-                <span>✦</span> {a}
+                <Sparkles size={14} aria-hidden style={{ color: "var(--magenta)", flexShrink: 0 }} /> {a}
               </Reveal>
             ))}
           </div>

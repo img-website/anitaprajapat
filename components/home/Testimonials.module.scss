@@ -28,9 +28,11 @@
     font-style: italic;
   }
   .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
     color: var(--gold);
     margin: 1rem 0 0.75rem;
-    letter-spacing: 0.15em;
   }
   footer {
     strong {

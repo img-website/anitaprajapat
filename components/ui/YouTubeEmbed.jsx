@@ -1,3 +1,4 @@
+import { Play } from "lucide-react";
 import { youtubeId, youtubeThumb, youtubeWatchUrl } from "@/utils/helpers";
 import styles from "./YouTubeEmbed.module.scss";
 
@@ -17,7 +18,7 @@ export default function YouTubeEmbed({ url, title = "YouTube video", aspect = "1
       aria-label={`Watch ${title} on YouTube`}
       title={`Watch ${title} on Anita Prajapat's YouTube channel`}
     >
-      <span className={styles.play}>▶</span>
+      <span className={styles.play}><Play size={18} fill="currentColor" aria-hidden /></span>
     </a>
   );
 }

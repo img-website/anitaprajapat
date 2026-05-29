@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/siteConfig";
 import { youtubeSubscribeUrl } from "@/utils/helpers";
-import { ArrowRight, Star, Mic2 } from "lucide-react";
+import { ArrowRight, Star, Mic2, Sparkles } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { YoutubeIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
 import styles from "./Hero.module.scss";
@@ -138,7 +138,7 @@ export default function Hero({ banner, settings = {} }) {
         <div className={styles.track}>
           {[...siteConfig.genres, ...siteConfig.genres].map((g, i) => (
             <span key={i}>
-              {g} <em>✦</em>
+              {g} <Sparkles size={11} />
             </span>
           ))}
         </div>

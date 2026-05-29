@@ -41,8 +41,7 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
-    font-size: 0.85rem;
-    padding-left: 0.12rem;
+    padding-left: 0.1rem; /* optical centre for play icon */
     color: #fff;
     background: rgba(183, 28, 28, 0.9);
     box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.1);
@@ -53,8 +52,7 @@
     .play {
       width: 2rem;
       height: 2rem;
-      font-size: 0.6rem;
-      padding-left: 0.08rem;
+      padding-left: 0.06rem;
       box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.08);
     }
   }

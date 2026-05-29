@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Play, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { youtubeThumb, youtubeEmbed } from "@/utils/helpers";
 import styles from "./GalleryGrid.module.scss";
@@ -38,7 +39,7 @@ export default function GalleryGrid({ items = [] }) {
                 height={600}
                 sizes="(max-width: 48rem) 50vw, 25vw"
               />
-              {isVideo && <span className={styles.play}>▶</span>}
+              {isVideo && <span className={styles.play}><Play size={20} fill="currentColor" aria-hidden /></span>}
               {item.title && <span className={styles.caption}>{item.title}</span>}
             </motion.button>
           );
@@ -57,7 +58,7 @@ export default function GalleryGrid({ items = [] }) {
             exit={{ opacity: 0 }}
             onClick={() => setActive(null)}
           >
-            <button className={styles.close} aria-label="Close gallery viewer" title="Close">✕</button>
+            <button className={styles.close} aria-label="Close gallery viewer" title="Close"><X size={20} aria-hidden /></button>
             <div className={styles.stage} onClick={(e) => e.stopPropagation()}>
               {active.mediaType !== "image" && youtubeEmbed(active.videoUrl) ? (
                 <iframe
