@@ -3,6 +3,7 @@ import Script from "next/script";
 import "@/styles/globals.scss";
 import { siteConfig } from "@/lib/siteConfig";
 import Providers from "@/components/providers/Providers";
+import ServiceWorkerRegister from "@/components/pwa/ServiceWorkerRegister";
 import { getSettings } from "@/services/content";
 
 // Display: Bricolage Grotesque (expressive, modern). Body: Plus Jakarta Sans.
@@ -132,6 +133,7 @@ gtag('config', '${gaMeasurementId}');`}
           </>
         )}
         <Providers>{children}</Providers>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
