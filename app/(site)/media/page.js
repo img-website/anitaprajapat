@@ -1,6 +1,7 @@
-import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, itemListSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getMediaCoverage, getSettings } from "@/services/content";
 import { formatDate } from "@/utils/helpers";
+import { siteConfig } from "@/lib/siteConfig";
 import PageHeader from "@/components/ui/PageHeader";
 import Reveal from "@/components/ui/Reveal";
 import JsonLd from "@/components/seo/JsonLd";
@@ -21,9 +22,18 @@ export async function generateMetadata() {
 
 export default async function MediaPage() {
   const items = await getMediaCoverage(60);
+  const listItems = items.map((m) => ({
+    name: m.title,
+    url: `${siteConfig.url}/media/${m.slug}`,
+  }));
   return (
     <>
-      <JsonLd data={breadcrumbSchema([{ name: "Media", href: "/media" }])} />
+      <JsonLd
+        data={[
+          itemListSchema(listItems, { name: "Media Coverage" }),
+          breadcrumbSchema([{ name: "Media", href: "/media" }]),
+        ]}
+      />
       <PageHeader
         eyebrow="In the Press"
         title="Media Coverage"

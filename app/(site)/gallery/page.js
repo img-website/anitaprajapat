@@ -1,5 +1,6 @@
-import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, imageGallerySchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getGalleryPreview, getSettings } from "@/services/content";
+import { youtubeThumb } from "@/utils/helpers";
 import PageHeader from "@/components/ui/PageHeader";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import JsonLd from "@/components/seo/JsonLd";
@@ -19,9 +20,18 @@ export async function generateMetadata() {
 
 export default async function GalleryPage() {
   const items = await getGalleryPreview(60);
+  const galleryImages = items.map((it) => ({
+    url: it.image?.url || youtubeThumb(it.videoUrl),
+    caption: it.title || undefined,
+  }));
   return (
     <>
-      <JsonLd data={breadcrumbSchema([{ name: "Gallery", href: "/gallery" }])} />
+      <JsonLd
+        data={[
+          imageGallerySchema(galleryImages, { path: "/gallery", name: "Gallery" }),
+          breadcrumbSchema([{ name: "Gallery", href: "/gallery" }]),
+        ]}
+      />
       <PageHeader
         eyebrow="Moments"
         title="Gallery"

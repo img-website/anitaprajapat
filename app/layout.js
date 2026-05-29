@@ -27,9 +27,16 @@ export async function generateMetadata() {
   const tagline = settings?.tagline || siteConfig.tagline;
   const seo = settings?.seo || {};
   const description = seo.defaultDescription || siteConfig.description;
-  const ogImage = seo.ogImage || siteConfig.ogImage;
   const gscVerification = seo.gscVerification || undefined;
   const defaultTitle = seo.defaultTitle?.trim() || `${siteName} — ${tagline}`;
+  // Social card: admin-uploaded custom image wins; otherwise the branded
+  // /og generator renders a card with the site name + tagline.
+  const ogImageUrl =
+    seo.ogImage ||
+    `${siteConfig.url}/og?title=${encodeURIComponent(siteName)}&subtitle=${encodeURIComponent(tagline)}`;
+  const ogImages = seo.ogImage
+    ? [{ url: ogImageUrl }]
+    : [{ url: ogImageUrl, width: 1200, height: 630 }];
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -59,13 +66,13 @@ export async function generateMetadata() {
       siteName,
       title: defaultTitle,
       description,
-      images: [{ url: ogImage, width: siteConfig.ogImageWidth, height: siteConfig.ogImageHeight }],
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: `${siteName} — ${tagline}`,
       description,
-      images: [ogImage],
+      images: [ogImageUrl],
     },
     robots: {
       index: true,
