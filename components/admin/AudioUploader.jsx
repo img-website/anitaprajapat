@@ -13,24 +13,38 @@ export default function AudioUploader({ value, onChange, folder = "audio" }) {
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    // Keep uploads small — base64 goes through the request body (~4MB host limit).
-    if (file.size > 8 * 1024 * 1024) {
-      setErr("File too large. Please use an audio file under 8 MB (a short ~1–2 min loop is ideal).");
+    // Audio files can be large, so upload DIRECTLY to Cloudinary (multipart),
+    // not through our API as base64 (which hits the ~4.5 MB serverless limit).
+    if (file.size > 25 * 1024 * 1024) {
+      setErr("File too large (max 25 MB). A short ~1–2 min loop is ideal.");
       return;
     }
     setBusy(true);
     setErr("");
     try {
-      const dataUri = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+      const { data: cfg } = await api.post("/upload/sign", { folder });
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("api_key", cfg.apiKey);
+      fd.append("timestamp", cfg.timestamp);
+      fd.append("folder", cfg.folder);
+      fd.append("signature", cfg.signature);
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${cfg.cloudName}/auto/upload`,
+        { method: "POST", body: fd }
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message || "Cloudinary upload failed");
+
+      onChange({
+        url: data.secure_url,
+        publicId: data.public_id,
+        resourceType: data.resource_type,
+        format: data.format,
       });
-      const res = await api.post("/upload", { file: dataUri, folder });
-      onChange(res.data);
     } catch (e2) {
-      setErr(e2.data?.message || "Upload failed. Configure Cloudinary or paste a URL.");
+      setErr(e2.data?.message || e2.message || "Upload failed. Configure Cloudinary on the server, or paste a URL.");
     } finally {
       setBusy(false);
     }
