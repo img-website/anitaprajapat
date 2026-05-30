@@ -63,7 +63,7 @@ export default async function EventSinglePage({ params }) {
             <div className={styles.main}>
               {ev.coverImage?.url && (
                 <div className={styles.cover}>
-                  <Image src={ev.coverImage.url} alt={ev.coverImage.alt || `${ev.title} — Anita Prajapat live Jagran in ${ev.city || siteConfig.city}`} title={ev.title} fill priority sizes="66vw" />
+                  <Image src={ev.coverImage.url} alt={ev.coverImage.alt || `${ev.title} — Anita Prajapat live Jagran in ${ev.city || siteConfig.city}`} title={ev.title} fill preload fetchPriority="high" sizes="66vw" />
                 </div>
               )}
               {ev.description && <p className={styles.desc}>{ev.description}</p>}

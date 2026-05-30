@@ -9,11 +9,13 @@
   border-radius: $radius;
   overflow: hidden;
   border: 0.0625rem solid var(--border);
-  background-size: cover;
-  background-position: center;
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.25s $ease;
+
+  .thumb {
+    object-fit: cover;
+  }
 
   &::after {
     content: "";

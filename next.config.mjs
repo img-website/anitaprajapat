@@ -5,6 +5,11 @@ const stylesDir = path.join(process.cwd(), "styles");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Inline CSS into <style> tags — removes render-blocking stylesheet requests
+  // (the CSS bundle is small and the audience is mostly first-time visitors).
+  experimental: {
+    inlineCss: true,
+  },
   // Ensure the brand font files are bundled with the /og route on Vercel.
   outputFileTracingIncludes: {
     "/og": ["./assets/fonts/**"],
@@ -17,6 +22,9 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
     formats: ["image/avif", "image/webp"],
+    // Cache optimized images at the edge for a year (fixes "efficient cache
+    // lifetimes" — third-party thumbnails get re-served by Next with long TTL).
+    minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

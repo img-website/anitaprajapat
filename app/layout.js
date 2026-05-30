@@ -110,6 +110,10 @@ export default async function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <head>
+        {/* Warm up connections to the image CDNs used above the fold / in lists. */}
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://i.ytimg.com" />
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body>

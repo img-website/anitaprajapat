@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Play } from "lucide-react";
 import { youtubeId, youtubeThumb, youtubeWatchUrl } from "@/utils/helpers";
 import styles from "./YouTubeEmbed.module.scss";
@@ -14,10 +15,18 @@ export default function YouTubeEmbed({ url, title = "YouTube video", aspect = "1
       target="_blank"
       rel="noopener noreferrer"
       className={styles.facade}
-      style={{ backgroundImage: `url(${youtubeThumb(id)})`, aspectRatio: aspect }}
+      style={{ aspectRatio: aspect }}
       aria-label={`Watch ${title} on YouTube`}
       title={`Watch ${title} on Anita Prajapat's YouTube channel`}
     >
+      {/* next/image optimizes the YouTube thumbnail → WebP/AVIF + long edge cache. */}
+      <Image
+        src={youtubeThumb(id)}
+        alt={`${title} — Anita Prajapat bhajan`}
+        fill
+        sizes="(max-width: 48rem) 100vw, 33vw"
+        className={styles.thumb}
+      />
       <span className={styles.play}><Play size={18} fill="currentColor" aria-hidden /></span>
     </a>
   );
