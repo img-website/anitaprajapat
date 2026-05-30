@@ -66,15 +66,28 @@
 }
 
 .dots {
-  @include flex(row, center, center, 0.5rem);
+  @include flex(row, center, center, 0.25rem);
   margin-top: 1.6rem;
+  // 24px touch targets (WCAG 2.2) — the visible dot stays small via ::before.
   button {
-    width: 0.5625rem;
-    height: 0.5625rem;
-    border-radius: 50%;
-    background: var(--border);
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    &::before {
+      content: "";
+      width: 0.5625rem;
+      height: 0.5625rem;
+      border-radius: 50%;
+      background: var(--border);
+      transition: width 0.2s, background 0.2s;
+    }
   }
-  .activeDot {
+  .activeDot::before {
     background: var(--gold);
     width: 1.5rem;
     border-radius: 0.375rem;

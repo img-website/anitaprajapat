@@ -91,7 +91,7 @@ export default function Hero({ banner, settings = {} }) {
 
         <motion.div
           className={styles.visual}
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 1, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease }}
         >
@@ -110,7 +110,7 @@ export default function Hero({ banner, settings = {} }) {
               fill
               preload
               fetchPriority="high"
-              sizes="(max-width:56.25rem) 80vw, 40vw"
+              sizes="(max-width:36rem) 66vw, (max-width:56.25rem) 60vw, 27rem"
             />
           </div>
 
