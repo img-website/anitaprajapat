@@ -27,9 +27,13 @@ export default function InstallPrompt() {
       if (localStorage.getItem(DISMISS_KEY) === "1") return;
     } catch {}
 
+    // iOS has no `beforeinstallprompt`, so we detect it from the UA on mount and
+    // show the manual hint. This environment check can't run during SSR — a
+    // legitimate exception to the set-state-in-effect rule.
     const ua = window.navigator.userAgent || "";
     const ios = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
     if (ios) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsIOS(true);
       setShow(true);
     }

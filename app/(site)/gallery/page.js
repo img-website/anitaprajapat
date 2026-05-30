@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Gallery — Photos, Reels & Stage Moments | Anita Prajapat",
+    title: "Gallery — Photos, Reels & Stage Moments",
     description:
       "Photos, videos, reels and live stage moments of Rajasthani devotional singer Anita Prajapat.",
     path: "/gallery",

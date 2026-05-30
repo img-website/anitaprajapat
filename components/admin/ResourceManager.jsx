@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
 import api from "@/services/apiClient";
 import { Inbox, X } from "lucide-react";
 import ImageUploader from "./ImageUploader";
@@ -43,7 +44,10 @@ export default function ResourceManager({ config }) {
     }
   }, [resource]);
 
+  // Initial fetch for this admin CRUD list. Client-side data fetching inherently
+  // sets loading state from the effect — an accepted exception to the rule.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);
 
@@ -78,11 +82,13 @@ export default function ResourceManager({ config }) {
     const imageFieldMatch = imageFields.some((name) => column.key === name);
     if (imageUrl && imageFieldMatch) {
       return (
-        <img
+        <Image
           src={imageUrl}
           alt={column.label}
+          width={48}
+          height={48}
           className={styles.thumb}
-          loading="lazy"
+          unoptimized
         />
       );
     }
@@ -194,12 +200,14 @@ export default function ResourceManager({ config }) {
                 {itemImages.length > 0 && (
                   <div className={styles.mobileImages}>
                     {itemImages.map((img) => (
-                      <img
+                      <Image
                         key={`${item._id}-${img.name}`}
                         src={img.url}
                         alt={img.label}
+                        width={48}
+                        height={48}
                         className={styles.thumb}
-                        loading="lazy"
+                        unoptimized
                       />
                     ))}
                   </div>

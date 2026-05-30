@@ -16,8 +16,9 @@ export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
     title: "About Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer",
+    titleAbsolute: true,
     description:
-      "The story of Anita Prajapat, a leading Rajasthani devotional singer from Jaipur — her journey, achievements, and spiritual inspiration behind Sanwariya Seth, Khatu Shyam & Mataji bhajans.",
+      "The story of Anita Prajapat — Rajasthani devotional singer from Jaipur. Her journey, milestones & the devotion behind Sanwariya Seth, Khatu Shyam & Mataji bhajans.",
     path: "/about",
     defaults: seoDefaultsFromSettings(settings),
   });

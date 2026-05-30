@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Contact & Booking — Anita Prajapat",
+    title: "Contact & Booking",
     description:
       "Book Anita Prajapat for live Jagran and devotional events. Contact manager Jitendra Kumar Bijarnia via phone, WhatsApp or email.",
     path: "/contact",

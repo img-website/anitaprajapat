@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
+import usePersistedFlag from "@/hooks/usePersistedFlag";
 import styles from "./BackgroundMusic.module.scss";
 
 const PREF_KEY = "bg-music";
@@ -18,15 +19,9 @@ const PREF_KEY = "bg-music";
  */
 export default function BackgroundMusic({ src, volume = 0.2 }) {
   const audioRef = useRef(null);
-  const [on, setOn] = useState(true);
+  // Persisted on/off choice (read without setState-in-effect, remembered across visits).
+  const [on, setOnPref] = usePersistedFlag(PREF_KEY, true);
   const [playing, setPlaying] = useState(false);
-
-  // Restore the visitor's previous choice.
-  useEffect(() => {
-    try {
-      if (localStorage.getItem(PREF_KEY) === "off") setOn(false);
-    } catch {}
-  }, []);
 
   useEffect(() => {
     const el = audioRef.current;
@@ -67,10 +62,7 @@ export default function BackgroundMusic({ src, volume = 0.2 }) {
   const toggle = () => {
     const el = audioRef.current;
     const next = !on;
-    setOn(next);
-    try {
-      localStorage.setItem(PREF_KEY, next ? "on" : "off");
-    } catch {}
+    setOnPref(next);
     if (!el) return;
     if (next) {
       el.play()

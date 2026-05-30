@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Media Coverage & Press — Anita Prajapat",
+    title: "Media Coverage & Press",
     description:
       "News, interviews, articles and press coverage featuring Rajasthani devotional singer Anita Prajapat.",
     path: "/media",

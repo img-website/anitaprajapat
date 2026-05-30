@@ -16,11 +16,10 @@ export default function AnimatedCounter({ value, duration = 1600, className = ""
   const prefix = match ? str.slice(0, match.index) : "";
   const suffix = match ? str.slice(match.index + match[1].length) : str;
 
+  // Non-numeric values render `str` directly (below), so the effect only runs
+  // the count-up animation for numeric targets — no setState needed otherwise.
   useEffect(() => {
-    if (!inView || target === null) {
-      if (target === null) setDisplay(str);
-      return;
-    }
+    if (!inView || target === null) return;
     let raf;
     const start = performance.now();
     const tick = (now) => {
@@ -31,7 +30,7 @@ export default function AnimatedCounter({ value, duration = 1600, className = ""
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, target, duration, str]);
+  }, [inView, target, duration]);
 
   return (
     <span ref={ref} className={className}>

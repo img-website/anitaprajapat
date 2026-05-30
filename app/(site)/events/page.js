@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Events & Live Jagran — Anita Prajapat",
+    title: "Events & Live Jagran",
     description:
       "Upcoming and past live Jagran events & devotional concerts by Anita Prajapat across Rajasthan and India. Book her for your event.",
     path: "/events",

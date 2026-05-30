@@ -15,8 +15,16 @@ export default function Navbar({ logo, whatsapp }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [lastPath, setLastPath] = useState(pathname);
   const logoSrc = logo || "/logo.png";
   const wa = whatsapp || siteConfig.whatsapp;
+
+  // Close the mobile menu on route change — React's recommended render-time
+  // adjustment instead of an effect (avoids an extra render + setState-in-effect).
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    if (open) setOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -24,8 +32,6 @@ export default function Navbar({ logo, whatsapp }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => setOpen(false), [pathname]);
 
   // Lock body scroll while mobile menu open.
   useEffect(() => {

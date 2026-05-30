@@ -38,14 +38,17 @@ export default function BhajanExplorer({ initialItems = [], categories = [] }) {
     [debouncedQ, category, page]
   );
 
-  // Reset + reload when filters change.
+  // Reload (fresh list) when filters change. Page is reset to 1 in the filter
+  // handlers. The fetch sets loading state — an accepted data-fetching exception.
   useEffect(() => {
-    setPage(1);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQ, category]);
 
+  // Append the next page when "load more" advances the page counter.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (page > 1) load(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
@@ -57,14 +60,14 @@ export default function BhajanExplorer({ initialItems = [], categories = [] }) {
           type="search"
           placeholder="Search bhajans, lyrics…"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => { setQ(e.target.value); setPage(1); }}
           className={styles.search}
           aria-label="Search bhajans"
         />
         <div className={styles.filters}>
           <button
             className={!category ? styles.active : ""}
-            onClick={() => setCategory("")}
+            onClick={() => { setCategory(""); setPage(1); }}
           >
             All
           </button>
@@ -72,7 +75,7 @@ export default function BhajanExplorer({ initialItems = [], categories = [] }) {
             <button
               key={c._id || c.slug}
               className={category === c.slug ? styles.active : ""}
-              onClick={() => setCategory(c.slug)}
+              onClick={() => { setCategory(c.slug); setPage(1); }}
             >
               {c.name}
             </button>
