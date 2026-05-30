@@ -20,16 +20,54 @@
   input,
   select,
   textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
     padding: 0.8rem 1rem;
     border-radius: $radius-sm;
     background: var(--bg-3);
     border: 0.0625rem solid var(--border);
     color: var(--text);
+    font: inherit;
     &:focus { border-color: var(--magenta); outline: none; }
   }
+  // Native date/time controls otherwise ignore width on iOS/Android.
+  input[type="date"] { appearance: none; -webkit-appearance: none; }
   textarea { resize: vertical; }
 
   .btn { align-self: flex-start; }
+}
+
+// intl-tel-input integration (searchable country dropdown with flags).
+// The library injects a global `.iti` wrapper around our input.
+.form :global(.iti) {
+  width: 100%;
+  display: block;
+}
+.form :global(.iti__tel-input) {
+  width: 100%;
+}
+// Theme the dropdown + search to match the form surface.
+:global(.iti__dropdown-content) {
+  background: var(--bg-2, #fff);
+  border-color: var(--border);
+  color: var(--text);
+}
+// Scope under .form so it outranks the generic `.form input` rule, which would
+// otherwise overwrite the padding that leaves room for the search icon.
+.form :global(.iti__search-input) {
+  background: var(--bg-3);
+  color: var(--text);
+  border: none;
+  border-bottom: 0.0625rem solid var(--border);
+  // Keep the left space for the magnifier icon (matches the library default).
+  padding: 0.7rem 1rem 0.7rem 2.4rem;
+}
+:global(.iti__country.iti__highlight) {
+  background: color-mix(in srgb, var(--magenta) 14%, transparent);
+}
+:global(.iti__selected-dial-code) {
+  color: var(--text);
 }
 
 .row {

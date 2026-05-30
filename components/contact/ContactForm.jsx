@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import api from "@/services/apiClient";
+import PhoneField from "./PhoneField";
 import styles from "./ContactForm.module.scss";
 
 const initial = {
@@ -45,7 +46,11 @@ export default function ContactForm() {
         </label>
         <label>
           Phone *
-          <input name="phone" value={form.phone} onChange={update} required />
+          <PhoneField
+            value={form.phone}
+            onChange={(val) => setForm((f) => ({ ...f, phone: val }))}
+            required
+          />
         </label>
       </div>
 
