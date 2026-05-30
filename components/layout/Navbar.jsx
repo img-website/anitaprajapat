@@ -49,7 +49,7 @@ export default function Navbar({ logo, whatsapp }) {
             title={`${siteConfig.name} — ${siteConfig.tagline}`}
             width={48}
             height={48}
-            fetchPriority="low"
+            loading="eager"
           />
         </Link>
 

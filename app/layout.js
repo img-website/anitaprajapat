@@ -1,4 +1,5 @@
 import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
+import { headers } from "next/headers";
 import Script from "next/script";
 import "@/styles/globals.scss";
 import { siteConfig } from "@/lib/siteConfig";
@@ -100,6 +101,9 @@ const themeInit = `
 export default async function RootLayout({ children }) {
   const settings = await getSettings();
   const gaMeasurementId = settings?.seo?.gaMeasurementId || "";
+  // CSP nonce injected by proxy.js — applied to our inline scripts so they pass
+  // the strict script-src policy.
+  const nonce = (await headers()).get("x-nonce") || undefined;
 
   return (
     <html
@@ -114,7 +118,9 @@ export default async function RootLayout({ children }) {
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        {/* Browsers strip the nonce attribute from the DOM (anti-exfiltration),
+            so the hydrated value differs from SSR — suppress that false mismatch. */}
+        <script nonce={nonce} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body>
         {gaMeasurementId && (
@@ -122,8 +128,9 @@ export default async function RootLayout({ children }) {
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
               strategy="afterInteractive"
+              nonce={nonce}
             />
-            <Script id="ga-init" strategy="afterInteractive">
+            <Script id="ga-init" strategy="afterInteractive" nonce={nonce}>
               {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());

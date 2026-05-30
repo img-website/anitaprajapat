@@ -17,19 +17,8 @@
     object-fit: cover;
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(13, 10, 9, 0.35);
-    transition: background 0.25s;
-  }
-
   &:hover {
     transform: scale(1.01);
-    &::after {
-      background: rgba(13, 10, 9, 0.25);
-    }
     .play {
       transform: scale(1.06);
     }

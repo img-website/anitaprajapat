@@ -29,7 +29,7 @@ export default function Testimonials({ items = [] }) {
             >
               <span className={styles.mark}>“</span>
               <p>{t.message}</p>
-              <div className={styles.stars} aria-label={`${t.rating || 5} out of 5 stars`}>
+              <div className={styles.stars} role="img" aria-label={`${t.rating || 5} out of 5 stars`}>
                 {Array.from({ length: t.rating || 5 }).map((_, idx) => (
                   <Star key={idx} size={14} fill="currentColor" aria-hidden />
                 ))}

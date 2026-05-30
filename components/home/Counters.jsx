@@ -33,7 +33,7 @@ export default function Counters({ settings = {} }) {
               <strong>{it.value}</strong>
               <span className={styles.label}>{it.label}</span>
               {it.href && (
-                <a href={it.href} target="_blank" rel="noopener noreferrer" title={it.title || it.label} className={styles.link}>
+                <a href={it.href} target="_blank" rel="noopener noreferrer" title={it.title || it.label} aria-label={it.title || `${it.cta || "Connect"} — ${it.label}`} className={styles.link}>
                   {it.cta || "Connect"} <ArrowUpRight size={14} />
                 </a>
               )}
