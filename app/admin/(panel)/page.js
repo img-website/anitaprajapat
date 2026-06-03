@@ -34,87 +34,121 @@ function fmtDate(val) {
   return new Date(val).toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
 }
 
+function fmtViews(n) {
+  if (!n) return "0";
+  if (n >= 1e7) return `${(n / 1e7).toFixed(1)} Cr`;
+  if (n >= 1e5) return `${(n / 1e5).toFixed(1)} L`;
+  if (n >= 1e3) return `${(n / 1e3).toFixed(1)}K`;
+  return String(n);
+}
+
 /**
- * Compact gradient area + bar chart — pure SVG, no library.
- * viewBox: 0 0 220 72
- * Grid lines: 3 horizontal rules at 25%, 50%, 75%
- * Bars: thin gradient-filled rounded rects
- * Line: smooth polyline with gradient fill area beneath
+ * Gradient area + bar chart — pure SVG, no external library.
+ * Proper readable size with crisp labels.
  */
 function InquiriesChart({ data }) {
   if (!data?.length) return <p className={styles.empty}>No data yet.</p>;
 
-  const W = 220, H = 60, BOTTOM = 52, TOP = 8;
+  const W = 300, CHART_H = 100, LABEL_H = 18, H = CHART_H + LABEL_H;
+  const PAD_L = 28, PAD_R = 8, PAD_TOP = 10, PAD_BOT = 4;
+  const plotW = W - PAD_L - PAD_R;
+  const plotH = CHART_H - PAD_TOP - PAD_BOT;
   const max = Math.max(...data.map((d) => d.inquiries), 1);
-  const bw = 18; // bar width
-  const gap = (W - bw) / (data.length - 1 || 1);
+  const n = data.length;
+  const stepX = plotW / (n - 1 || 1);
 
-  const points = data.map((d, i) => {
-    const x = i * gap + bw / 2;
-    const y = BOTTOM - ((d.inquiries / max) * (BOTTOM - TOP));
-    return [x, y];
-  });
+  const pts = data.map((d, i) => ({
+    x: PAD_L + i * stepX,
+    y: PAD_TOP + plotH - (d.inquiries / max) * plotH,
+    v: d.inquiries,
+    month: d.month,
+  }));
 
-  const polyline = points.map((p) => p.join(",")).join(" ");
-  // Closed path for the filled area under the line
-  const areaPath = `M ${points[0][0]},${BOTTOM} ` +
-    points.map((p) => `L ${p[0]},${p[1]}`).join(" ") +
-    ` L ${points[points.length - 1][0]},${BOTTOM} Z`;
+  const polyPts = pts.map((p) => `${p.x},${p.y}`).join(" ");
+  const areaD = `M ${pts[0].x},${PAD_TOP + plotH} ` +
+    pts.map((p) => `L ${p.x},${p.y}`).join(" ") +
+    ` L ${pts[pts.length - 1].x},${PAD_TOP + plotH} Z`;
+
+  // Y-axis: 3 guide lines
+  const guides = [0, 0.5, 1].map((f) => ({
+    y: PAD_TOP + plotH - f * plotH,
+    label: f === 0 ? "0" : Math.round(f * max),
+  }));
 
   return (
-    <svg viewBox={`0 0 ${W} ${H + 14}`} className={styles.svg} aria-hidden>
+    <svg viewBox={`0 0 ${W} ${H}`} className={styles.svg} aria-hidden>
       <defs>
-        <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#b5277d" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#6f2bb0" stopOpacity="0.6" />
+        <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#b5277d" />
+          <stop offset="100%" stopColor="#6f2bb0" />
         </linearGradient>
         <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#b5277d" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#b5277d" stopOpacity="0" />
+          <stop offset="0%" stopColor="#b5277d" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#6f2bb0" stopOpacity="0.02" />
+        </linearGradient>
+        <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#b5277d" stopOpacity="0.65" />
+          <stop offset="100%" stopColor="#6f2bb0" stopOpacity="0.35" />
         </linearGradient>
       </defs>
 
-      {/* Grid lines */}
-      {[0.25, 0.5, 0.75].map((f) => {
-        const y = BOTTOM - f * (BOTTOM - TOP);
-        return <line key={f} x1={0} y1={y} x2={W} y2={y} stroke="currentColor" strokeOpacity="0.08" strokeWidth="0.5" />;
-      })}
+      {/* Y-axis guide lines + labels */}
+      {guides.map(({ y, label }) => (
+        <g key={label}>
+          <line x1={PAD_L} y1={y} x2={W - PAD_R} y2={y}
+            stroke="currentColor" strokeOpacity="0.1" strokeWidth="0.6"
+            strokeDasharray={label === "0" ? "none" : "2 2"} />
+          <text x={PAD_L - 3} y={y + 3} textAnchor="end" className={styles.axisY}>
+            {label}
+          </text>
+        </g>
+      ))}
 
-      {/* Bars */}
-      {data.map((d, i) => {
-        const x = i * gap;
-        const barH = Math.max((d.inquiries / max) * (BOTTOM - TOP), d.inquiries > 0 ? 1.5 : 0);
+      {/* Gradient bars (thin, behind line) */}
+      {pts.map((p, i) => {
+        const bw = Math.max(stepX * 0.4, 4);
+        const bh = PAD_TOP + plotH - p.y;
         return (
-          <rect key={d.month} x={x} y={BOTTOM - barH} width={bw} height={barH}
-            rx="2" fill="url(#barGrad)" opacity="0.55" />
+          <rect key={i} x={p.x - bw / 2} y={p.y}
+            width={bw} height={bh > 0 ? bh : 0}
+            rx="2" fill="url(#barGrad)" />
         );
       })}
 
       {/* Area fill */}
-      <path d={areaPath} fill="url(#areaGrad)" />
+      <path d={areaD} fill="url(#areaGrad)" />
 
       {/* Line */}
-      <polyline points={polyline} fill="none" stroke="#b5277d" strokeWidth="1.5"
+      <polyline points={polyPts} fill="none"
+        stroke="url(#lineGrad)" strokeWidth="2"
         strokeLinecap="round" strokeLinejoin="round" />
 
-      {/* Dots at data points */}
-      {points.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={data[i].inquiries > 0 ? 2.2 : 0}
-          fill="#b5277d" stroke="white" strokeWidth="0.8" />
+      {/* Dots */}
+      {pts.map((p, i) => (
+        <circle key={i} cx={p.x} cy={p.y} r="3"
+          fill="#b5277d" stroke="white" strokeWidth="1.2" />
       ))}
 
-      {/* Month labels */}
-      {data.map((d, i) => (
-        <text key={d.month} x={i * gap + bw / 2} y={H + 12}
-          textAnchor="middle" className={styles.axisLabel}>
-          {d.month}
+      {/* Value labels above dots */}
+      {pts.map((p, i) => p.v > 0 && (
+        <text key={i} x={p.x} y={p.y - 5}
+          textAnchor="middle" className={styles.dotLabel}>
+          {p.v}
+        </text>
+      ))}
+
+      {/* X-axis month labels */}
+      {pts.map((p, i) => (
+        <text key={i} x={p.x} y={CHART_H + 13}
+          textAnchor="middle" className={styles.axisX}>
+          {p.month}
         </text>
       ))}
     </svg>
   );
 }
 
-/** Horizontal bar with gradient fill — top bhajans. */
+/** Gradient horizontal bar — YouTube top videos by views. */
 function HBar({ value, max }) {
   const pct = Math.round((value / Math.max(max, 1)) * 100);
   return (
@@ -141,7 +175,8 @@ export default function AdminDashboard() {
 
   useEffect(() => { load(); }, []);
 
-  const maxViews = Math.max(...(stats?.topBhajans?.map((b) => b.views) || [1]), 1);
+  const topVideos = stats?.topVideos || [];
+  const maxViews = Math.max(...topVideos.map((v) => v.views), 1);
 
   return (
     <div className={styles.root}>
@@ -183,33 +218,44 @@ export default function AdminDashboard() {
       {/* Charts row */}
       <div className={styles.chartsRow}>
 
-        {/* Inquiries chart */}
+        {/* Inquiries gradient chart */}
         <div className={styles.panel}>
           <div className={styles.panelHead}>
-            <TrendingUp size={14} aria-hidden /><h2>Inquiries — Last 6 Months</h2>
+            <TrendingUp size={14} aria-hidden />
+            <h2>Inquiries — Last 6 Months</h2>
           </div>
-          {loading ? <div className={styles.chartSkel} />
+          {loading
+            ? <div className={styles.chartSkel} />
             : <InquiriesChart data={stats?.chart} />}
         </div>
 
-        {/* Top bhajans */}
+        {/* Top YouTube videos by views */}
         <div className={styles.panel}>
           <div className={styles.panelHead}>
-            <Music2 size={14} aria-hidden /><h2>Top Bhajans by Views</h2>
+            <Music2 size={14} aria-hidden />
+            <h2>Top YouTube Videos</h2>
+            <span className={styles.ytBadge}>Live from YouTube</span>
           </div>
           {loading
             ? Array.from({ length: 5 }).map((_, i) => <div key={i} className={styles.rowSkel} />)
-            : stats?.topBhajans?.length
-              ? stats.topBhajans.map((b) => (
-                  <div key={b._id} className={styles.bhItem}>
+            : topVideos.length
+              ? topVideos.map((v) => (
+                  <div key={v.id} className={styles.bhItem}>
                     <div className={styles.bhRow}>
-                      <span className={styles.bhTitle}>{b.title}</span>
-                      <span className={styles.bhViews}>{(b.views || 0).toLocaleString("en-IN")}</span>
+                      <a href={v.url} target="_blank" rel="noopener noreferrer"
+                        className={styles.bhTitle} title={v.title}>
+                        {v.title}
+                      </a>
+                      <span className={styles.bhViews}>{fmtViews(v.views)}</span>
                     </div>
-                    <HBar value={b.views || 0} max={maxViews} />
+                    <HBar value={v.views} max={maxViews} />
                   </div>
                 ))
-              : <p className={styles.empty}>No bhajans with views yet.</p>
+              : (
+                <p className={styles.empty}>
+                  No YouTube view data yet. Set <code>YOUTUBE_API_KEY</code> in Vercel env for live counts.
+                </p>
+              )
           }
         </div>
       </div>
@@ -261,7 +307,7 @@ export default function AdminDashboard() {
             ))}
           </div>
           <p className={styles.ytHint}>
-            <Music2 size={12} aria-hidden /> Bhajan videos are pulled live from YouTube — no manual upload needed.
+            <Music2 size={12} aria-hidden /> Bhajan videos pull live from YouTube — no manual upload needed.
           </p>
         </div>
       </div>
