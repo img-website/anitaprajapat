@@ -1,94 +1,237 @@
 @use "abstracts" as *;
 
-.errorBox {
-  margin-bottom: 1rem;
-  padding: 0.85rem 1rem;
-  border-radius: $radius-sm;
-  border: 0.0625rem solid color-mix(in srgb, #ff8a85 55%, transparent);
-  background: color-mix(in srgb, #ff8a85 12%, var(--surface));
-  color: var(--heading);
-  font-size: 0.88rem;
-  ul {
-    margin: 0.45rem 0 0;
-    padding-left: 1.2rem;
-    display: grid;
-    gap: 0.25rem;
-  }
-}
+.root { min-height: 100%; }
 
+// ── Sticky header ─────────────────────────────────────────────
 .head {
-  @include flex(row, space-between, center, 1rem);
-  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   position: sticky;
   top: var(--admin-topbar-offset, 4.5rem);
-  z-index: 6;
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-  backdrop-filter: blur(0.375rem);
-  padding: 0.45rem 0;
-  @include down("sm") {
-    margin-bottom: 0.9rem;
-    gap: 0.55rem;
-    h1 { font-size: 1.25rem; }
-  }
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(0.5rem);
+  padding: 0.5rem 0;
+  margin-bottom: 1.5rem;
+  h1 { font-size: 1.6rem; margin: 0; }
+  @include down("sm") { margin-bottom: 1rem; h1 { font-size: 1.25rem; } }
+}
+
+.headRight {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.statusErr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: #ff8a85;
+}
+
+.savedBtn { background: #16a34a !important; border-color: #16a34a !important; }
+
+// ── Layout: sidebar + content ─────────────────────────────────
+.layout {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  @include down("lg") { grid-template-columns: 1fr; }
+}
+
+// ── Side navigation ───────────────────────────────────────────
+.sidenav {
+  position: sticky;
+  top: calc(var(--admin-topbar-offset, 4.5rem) + 4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  @include down("lg") { display: none; }
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: $radius-sm;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  &:hover { background: var(--bg-3); color: var(--text); }
+}
+
+.navActive {
+  background: color-mix(in srgb, var(--magenta) 12%, transparent);
+  color: var(--magenta);
+  font-weight: 600;
+}
+
+.navArrow {
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.15s;
+  .navActive & { opacity: 1; }
+}
+
+// ── Sections ──────────────────────────────────────────────────
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .card {
   @include glass;
-  border-radius: $radius;
-  padding: 1.4rem;
-  margin-bottom: 1.4rem;
-  h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--magenta); }
-  @include down("sm") {
-    border-radius: 0.75rem;
-    padding: 0.9rem;
-    margin-bottom: 0.85rem;
-    h2 { font-size: 0.95rem; margin-bottom: 0.7rem; }
-  }
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+  scroll-margin-top: calc(var(--admin-topbar-offset, 4.5rem) + 4.5rem);
+  @include down("sm") { padding: 1rem; border-radius: $radius; }
 }
 
-.grid {
+// ── Section header ────────────────────────────────────────────
+.sectionHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 0.0625rem solid var(--border);
+  h2 { font-size: 1rem; margin: 0 0 0.15rem; color: var(--heading); }
+  p { font-size: 0.78rem; color: var(--text-muted); margin: 0; }
+}
+
+.sectionIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--magenta) 12%, transparent);
+  color: var(--magenta);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
-  gap: 0 1.2rem;
-  @include down("sm") {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+  place-items: center;
+  flex-shrink: 0;
 }
 
-.counterHead {
-  @include flex(row, space-between, center, 0.8rem);
-  margin-bottom: 0.65rem;
+// ── Field grids ───────────────────────────────────────────────
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 1.25rem;
+  @include down("sm") { grid-template-columns: 1fr; }
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 1rem;
+  @include down("lg") { grid-template-columns: repeat(2, 1fr); }
+  @include down("sm") { grid-template-columns: 1fr; }
+}
+
+.spanFull { grid-column: 1 / -1; }
+
+// ── Counters ──────────────────────────────────────────────────
+.syncRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   flex-wrap: wrap;
+  margin-bottom: 0.65rem;
 }
 
-.skeletonWrap {
-  display: grid;
-  gap: 1rem;
+.syncTime { font-size: 0.78rem; color: var(--text-muted); }
+
+.syncReport {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
 }
+
+.syncOk   { font-size: 0.78rem; color: #22c55e; }
+.syncSkip { font-size: 0.78rem; color: var(--text-muted); }
+.syncFail { font-size: 0.78rem; color: #ff8a85; }
+
+.hint {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.55;
+}
+
+// ── YouTube preview ───────────────────────────────────────────
+.ytPreview {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+
+  img {
+    height: 5.5rem;
+    border-radius: $radius-sm;
+    border: 0.0625rem solid var(--border);
+    display: block;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+}
+
+.ytMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+// ── Error box ─────────────────────────────────────────────────
+.errorBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: $radius-sm;
+  border: 0.0625rem solid color-mix(in srgb, #ff8a85 55%, transparent);
+  background: color-mix(in srgb, #ff8a85 10%, var(--bg-2));
+  color: var(--heading);
+  font-size: 0.85rem;
+  svg { color: #ff8a85; flex-shrink: 0; margin-top: 0.1rem; }
+  strong { display: block; margin-bottom: 0.35rem; }
+  ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.2rem; font-size: 0.82rem; }
+}
+
+// ── Skeleton ──────────────────────────────────────────────────
+.skeletonWrap { display: flex; flex-direction: column; gap: 1rem; }
 
 .skeletonHead,
 .skeletonCard {
   border-radius: $radius;
-  background: linear-gradient(
-    90deg,
+  background: linear-gradient(90deg,
     color-mix(in srgb, var(--surface) 85%, transparent) 25%,
     color-mix(in srgb, var(--border) 70%, transparent) 50%,
-    color-mix(in srgb, var(--surface) 85%, transparent) 75%
-  );
+    color-mix(in srgb, var(--surface) 85%, transparent) 75%);
   background-size: 220% 100%;
   animation: admShimmer 1.2s ease-in-out infinite;
 }
 
-.skeletonHead {
-  height: 3.5rem;
-}
+.skeletonHead { height: 3.5rem; }
+.skeletonCard { height: 12rem; }
 
-.skeletonCard {
-  height: 11.25rem;
-}
+.spin { animation: spin 0.8s linear infinite; }
 
 @keyframes admShimmer {
   0% { background-position: 100% 0; }
   100% { background-position: -100% 0; }
 }
+
+@keyframes spin { to { transform: rotate(360deg); } }

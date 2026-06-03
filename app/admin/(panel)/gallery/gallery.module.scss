@@ -1,0 +1,41 @@
+@use "abstracts" as *;
+
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--bg-2);
+  border-radius: $radius;
+  border: 0.0625rem solid var(--border);
+  width: fit-content;
+  margin-bottom: 1.5rem;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: calc($radius - 0.15rem);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: background 0.2s, color 0.2s;
+
+    &:hover { color: var(--text); }
+
+    &.active {
+      background: var(--magenta);
+      color: #fff;
+    }
+  }
+}
+
+.panel {
+  h2 { margin-bottom: 0.4rem; font-size: 1.15rem; }
+}
+
+.hint {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
