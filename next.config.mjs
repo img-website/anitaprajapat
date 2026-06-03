@@ -41,7 +41,10 @@ const nextConfig = {
         source: "/(.*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          // X-Frame-Options removed — Next.js 16 auto-generates a nonce-based
+          // CSP that already includes `frame-ancestors 'none'`, which is the
+          // modern, browser-preferred replacement. Keeping X-Frame-Options
+          // alongside would send conflicting signals.
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           // Origin isolation (COOP) + tightened cross-origin policies.
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
@@ -52,8 +55,11 @@ const nextConfig = {
             value: "max-age=63072000; includeSubDomains; preload",
           },
           {
+            // interest-cohort=() added alongside browsing-topics=() to cover
+            // older Chrome FLoC (pre-Topics API) — belt-and-suspenders approach.
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+            value:
+              "camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()",
           },
         ],
       },
