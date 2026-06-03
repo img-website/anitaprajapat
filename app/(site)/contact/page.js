@@ -6,7 +6,8 @@ import ContactForm from "@/components/contact/ContactForm";
 import JsonLd from "@/components/seo/JsonLd";
 import styles from "./contact.module.scss";
 
-export const dynamic = "force-dynamic";
+// Revalidate every 10 min — contact info rarely changes.
+export const revalidate = 600;
 
 export async function generateMetadata() {
   const settings = await getSettings();

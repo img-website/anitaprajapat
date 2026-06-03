@@ -5,7 +5,8 @@ import PageHeader from "@/components/ui/PageHeader";
 import JsonLd from "@/components/seo/JsonLd";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 
-export const dynamic = "force-dynamic";
+// ISR: revalidate every 5 min; view count increments on server so still works.
+export const revalidate = 300;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

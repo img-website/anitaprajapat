@@ -5,7 +5,8 @@ import PageHeader from "@/components/ui/PageHeader";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import JsonLd from "@/components/seo/JsonLd";
 
-export const dynamic = "force-dynamic";
+// Revalidate every 5 min — gallery changes occasionally.
+export const revalidate = 300;
 
 export async function generateMetadata() {
   const settings = await getSettings();

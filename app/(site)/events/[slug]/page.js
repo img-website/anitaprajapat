@@ -10,7 +10,8 @@ import ShareButtons from "@/components/ui/ShareButtons";
 import JsonLd from "@/components/seo/JsonLd";
 import styles from "./event.module.scss";
 
-export const dynamic = "force-dynamic";
+// ISR: revalidate every 2 min for event detail pages.
+export const revalidate = 120;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

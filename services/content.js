@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { connectDB } from "@/lib/db";
 import { serialize } from "@/lib/serialize";
 import Settings from "@/models/Settings";
@@ -28,12 +29,14 @@ async function safe(fn, fallback) {
   }
 }
 
-export function getSettings() {
+// Wrapped with React cache() so multiple RSC calls within one request
+// (layout + generateMetadata + page component) share a single DB fetch.
+export const getSettings = cache(function getSettings() {
   return safe(async () => {
     const s = await Settings.findOne({ key: "global" }).lean();
     return s || {};
   }, {});
-}
+});
 
 export function getHeroBanners() {
   return safe(

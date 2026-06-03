@@ -7,7 +7,8 @@ import Reveal from "@/components/ui/Reveal";
 import JsonLd from "@/components/seo/JsonLd";
 import s from "@/components/home/home.module.scss";
 
-export const dynamic = "force-dynamic";
+// Revalidate every 5 min — media coverage doesn't change per-request.
+export const revalidate = 300;
 
 export async function generateMetadata() {
   const settings = await getSettings();

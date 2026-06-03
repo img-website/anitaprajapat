@@ -10,7 +10,8 @@ import GalleryGrid from "@/components/gallery/GalleryGrid";
 import JsonLd from "@/components/seo/JsonLd";
 import styles from "./about.module.scss";
 
-export const dynamic = "force-dynamic";
+// Revalidate every 10 min — about page rarely changes; ISR avoids DB hit per visit.
+export const revalidate = 600;
 
 export async function generateMetadata() {
   const settings = await getSettings();

@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/siteConfig";
 import PageHeader from "@/components/ui/PageHeader";
 import JsonLd from "@/components/seo/JsonLd";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
