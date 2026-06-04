@@ -31,7 +31,7 @@ export const GET = apiHandler(
       Bhajan.countDocuments(),
       Blog.countDocuments(),
       Event.countDocuments(),
-      Event.countDocuments({ status: "upcoming" }),
+      Event.countDocuments({ date: { $gte: new Date() } }),
       Gallery.countDocuments({ isActive: true }),
       ContactInquiry.countDocuments(),
       ContactInquiry.countDocuments({ status: "new" }),

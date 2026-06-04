@@ -48,9 +48,13 @@ export default function ResourceManager({ config }) {
     metaKey,
     metaRender,
     badgeKey,
+    extraBadgeKey,
+    bodyKey,
     badgeColors = {},
+    renderBadge: badgeRenderFn,
     quickToggles = [],
   } = view;
+  const compactCards = mode === "cards" && !imageKey;
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -203,19 +207,33 @@ export default function ResourceManager({ config }) {
     return "";
   };
 
-  const renderBadge = (item) => {
-    if (!badgeKey) return null;
-    const val = item[badgeKey];
-    if (val === undefined || val === null) return null;
-    const color = badgeColors[String(val)] || "var(--magenta)";
+  const renderBadge = (item, key = badgeKey) => {
+    let value, color;
+    if (key === badgeKey && badgeRenderFn) {
+      const out = badgeRenderFn(item) || {};
+      value = out.value;
+      color = out.color || badgeColors[String(value)] || "var(--magenta)";
+    } else {
+      if (!key) return null;
+      value = item[key];
+      if (value === undefined || value === null || value === "") return null;
+      color = badgeColors[String(value)] || "var(--magenta)";
+    }
+    if (value === undefined || value === null || value === "") return null;
     return (
       <span
         className={styles.badge}
         style={{ background: `color-mix(in srgb, ${color} 18%, transparent)`, color }}
       >
-        {String(val)}
+        {String(value)}
       </span>
     );
+  };
+
+  const initialsOf = (text) => {
+    const parts = String(text || "").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "?";
+    return ((parts[0][0] || "") + (parts[1]?.[0] || "")).toUpperCase();
   };
 
   const renderCell = (item, column) => {
@@ -290,13 +308,76 @@ export default function ResourceManager({ config }) {
 
       {/* ── Card view ── */}
       {mode === "cards" && filtered.length > 0 && (
-        <div className={styles.cardGrid} onClick={() => setOpenMenu(null)}>
+        <div
+          className={`${styles.cardGrid} ${compactCards ? styles.cardGridCompact : ""}`}
+          onClick={() => setOpenMenu(null)}
+        >
           {filtered.map((item) => {
             const imgUrl = imageKey ? getImageUrl(item[imageKey]) : "";
             const title = titleKey ? String(item[titleKey] || "Untitled") : "";
             const subtitle = subtitleKey ? String(item[subtitleKey] || "") : "";
             const meta = metaRender ? metaRender(item) : metaKey ? String(item[metaKey] || "") : "";
+            const bodyText = bodyKey ? String(item[bodyKey] || "") : "";
             const menuOpen = openMenu === item._id;
+            if (compactCards) {
+              return (
+                <div
+                  key={item._id}
+                  className={`${styles.card} ${styles.cardCompact} ${item.isActive === false ? styles.cardInactive : ""}`}
+                  onClick={() => openEdit(item)}
+                  title={`Edit ${title}`}
+                >
+                  <div className={styles.cardAvatar} aria-hidden>
+                    {initialsOf(title)}
+                  </div>
+                  <div className={styles.cardBody}>
+                    <div className={styles.cardTop}>
+                      <p className={styles.cardTitle} title={title}>{title}</p>
+                      <div className={styles.cardTopRight}>
+                        {renderBadge(item)}
+                        <div className={styles.kebabWrap}>
+                          <button
+                            type="button"
+                            className={styles.kebab}
+                            aria-label="More options"
+                            title="More options"
+                            onClick={(e) => { e.stopPropagation(); setOpenMenu(menuOpen ? null : item._id); }}
+                          >
+                            <MoreVertical size={16} aria-hidden />
+                          </button>
+                          {menuOpen && (
+                            <div className={styles.kebabMenu} onClick={(e) => e.stopPropagation()}>
+                              <button type="button" onClick={() => { setOpenMenu(null); openEdit(item); }}>
+                                <Pencil size={13} aria-hidden /> Edit
+                              </button>
+                              <button type="button" className={styles.kebabDel} onClick={() => { setOpenMenu(null); remove(item); }}>
+                                <Trash2 size={13} aria-hidden /> Delete
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {subtitle && <p className={styles.cardSub}>{subtitle}</p>}
+                    {(meta || extraBadgeKey) && (
+                      <p className={styles.cardMeta}>
+                        {extraBadgeKey && renderBadge(item, extraBadgeKey)}
+                        {meta && <span>{meta}</span>}
+                      </p>
+                    )}
+                    {bodyText && <p className={styles.cardQuote}>“{bodyText}”</p>}
+                  </div>
+                  <div className={styles.cardCompactActions} onClick={(e) => e.stopPropagation()}>
+                    <button type="button" className={styles.cardIconBtn} title="Edit" aria-label="Edit" onClick={() => openEdit(item)}>
+                      <Pencil size={14} aria-hidden />
+                    </button>
+                    <button type="button" className={`${styles.cardIconBtn} ${styles.cardIconDel}`} title="Delete" aria-label="Delete" onClick={() => remove(item)}>
+                      <Trash2 size={14} aria-hidden />
+                    </button>
+                  </div>
+                </div>
+              );
+            }
             return (
               <div key={item._id} className={`${styles.card} ${item.isActive === false ? styles.cardInactive : ""}`}>
                 {/* Thumbnail — desktop hover shows Edit/Delete overlay */}

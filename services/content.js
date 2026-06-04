@@ -85,7 +85,7 @@ export function getTrendingBhajans(limit = 6) {
 export function getUpcomingEvents(limit = 4) {
   return safe(
     () =>
-      Event.find({ status: "upcoming" })
+      Event.find({ date: { $gte: new Date() } })
         .sort("date")
         .limit(limit)
         .lean(),
@@ -223,12 +223,20 @@ export function listBhajans({ q, category, page = 1, limit = 12 } = {}) {
   }, { items: [], total: 0 });
 }
 
-export function listEvents(status) {
+export function listEvents(phase) {
+  // `phase` is "upcoming" | "past" | undefined — derived from the date field
+  // so admins don't need to flip a status flag manually.
   return safe(
-    () =>
-      Event.find(status ? { status } : {})
-        .sort(status === "past" ? "-date" : "date")
-        .lean(),
+    () => {
+      const now = new Date();
+      const filter =
+        phase === "upcoming" ? { date: { $gte: now } }
+        : phase === "past" ? { date: { $lt: now } }
+        : {};
+      return Event.find(filter)
+        .sort(phase === "past" ? "-date" : "date")
+        .lean();
+    },
     []
   );
 }

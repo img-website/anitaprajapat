@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { LogOut } from "lucide-react";
 import { adminNav } from "@/lib/siteConfig";
 import styles from "./AdminShell.module.scss";
 
@@ -49,8 +50,16 @@ export default function AdminShell({ logo, children }) {
             );
           })}
         </nav>
-        <button className={styles.signout} onClick={() => setConfirmOpen(true)}>
-          Sign out
+        <button
+          type="button"
+          className={styles.signout}
+          onClick={() => setConfirmOpen(true)}
+          title="Sign out"
+        >
+          <span className={styles.signoutIcon} aria-hidden>
+            <LogOut size={15} />
+          </span>
+          <span className={styles.signoutLabel}>Sign out</span>
         </button>
       </aside>
 

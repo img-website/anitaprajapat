@@ -81,6 +81,91 @@
   @include down("sm") { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
 }
 
+.cardGridCompact {
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  @include down("sm") { grid-template-columns: 1fr; gap: 0.55rem; }
+}
+
+// ── Compact card (no image) — used for Inquiries etc. ────────
+.cardCompact {
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0.75rem;
+  padding: 0.85rem 0.95rem;
+  cursor: pointer;
+  overflow: visible;
+  @include down("sm") { padding: 0.7rem 0.75rem; gap: 0.6rem; }
+
+  .cardBody { padding: 0; gap: 0.25rem; }
+  .cardTitle { font-size: 0.92rem; }
+  .cardSub { font-size: 0.78rem; color: var(--text); }
+  .cardMeta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: capitalize;
+  }
+}
+
+.cardAvatar {
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  color: var(--magenta);
+  background: color-mix(in srgb, var(--magenta) 14%, transparent);
+  border: 0.0625rem solid color-mix(in srgb, var(--magenta) 35%, var(--border));
+  align-self: flex-start;
+  margin-top: 0.1rem;
+}
+
+.cardQuote {
+  font-size: 0.78rem;
+  color: var(--text);
+  margin: 0.35rem 0 0;
+  padding: 0.45rem 0.6rem;
+  border-left: 0.15rem solid color-mix(in srgb, var(--magenta) 45%, transparent);
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
+  border-radius: 0 0.4rem 0.4rem 0;
+  font-style: italic;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardCompactActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-self: center;
+  flex-shrink: 0;
+  @media (pointer: coarse) { display: none; }
+}
+
+.cardIconBtn {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.5rem;
+  background: var(--bg-3);
+  color: var(--text-muted);
+  border: 0.0625rem solid var(--border);
+  transition: all 0.15s;
+  cursor: pointer;
+  &:hover { color: var(--heading); border-color: var(--magenta); background: color-mix(in srgb, var(--magenta) 10%, var(--bg-3)); }
+  &.cardIconDel:hover { color: #ef4444; border-color: rgba(239,68,68,0.5); background: rgba(239,68,68,0.08); }
+}
+
 .card {
   @include glass;
   border-radius: $radius;
