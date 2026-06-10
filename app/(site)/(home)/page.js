@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/lib/siteConfig";
@@ -31,9 +32,29 @@ import s from "@/components/home/home.module.scss";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const settings = await getSettings();
+  // Only the hero's data (fast CMS queries) is awaited up front, so the hero —
+  // the LCP element — is in the very first streamed chunk. Everything below,
+  // including the slow YouTube Data API calls, renders inside a <Suspense>
+  // boundary and streams in separately, so it can never block TTFB / first paint.
+  const [settings, banners] = await Promise.all([getSettings(), getHeroBanners()]);
+
+  return (
+    <>
+      <JsonLd data={[personSchema(), musicGroupSchema(), organizationSchema(), websiteSchema()]} />
+
+      <Hero banner={banners[0]} settings={settings} />
+
+      <Suspense fallback={null}>
+        <HomeSections settings={settings} />
+      </Suspense>
+    </>
+  );
+}
+
+// Streamed below-the-fold content. All remaining data (CMS + YouTube) is fetched
+// here so a slow YouTube response delays only this chunk, never the hero.
+async function HomeSections({ settings }) {
   const [
-    banners,
     events,
     testimonials,
     gallery,
@@ -42,7 +63,6 @@ export default async function HomePage() {
     videos,
     featuredVideo,
   ] = await Promise.all([
-    getHeroBanners(),
     getUpcomingEvents(3),
     getTestimonials(),
     getGalleryPreview(8),
@@ -54,10 +74,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd data={[personSchema(), musicGroupSchema(), organizationSchema(), websiteSchema()]} />
-
-      <Hero banner={banners[0]} settings={settings} />
-
       <BentoHighlights settings={settings} featuredVideo={featuredVideo} />
 
       {/* All bhajan videos come live from YouTube (popular · latest · playlists) */}

@@ -35,6 +35,23 @@ const nextConfig = {
     includePaths: [stylesDir],
     loadPaths: [stylesDir],
   },
+  async redirects() {
+    return [
+      // The legacy app/favicon.ico that shipped with the project was never
+      // replaced with Anita's logo. Browsers show the correct icon because they
+      // prefer the PNG <link rel="icon"> (app/icon.png), but Google's favicon
+      // crawler fetches /favicon.ico directly — so the old default kept showing
+      // in search results. Redirect /favicon.ico to the branded /icon.png so
+      // search engines (and anything that probes the root favicon) get the
+      // correct logo. Temporary (307) so it's easy to drop later if a real
+      // multi-resolution favicon.ico (Anita's logo) is committed to app/.
+      {
+        source: "/favicon.ico",
+        destination: "/icon.png",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -108,7 +108,7 @@ export default function Hero({ banner, settings = {} }) {
               alt={`${siteConfig.name} — Sanwariya Seth & Khatu Shyam Bhajan Singer performing live`}
               title={`${siteConfig.name} — ${siteConfig.tagline}`}
               fill
-              preload
+              priority
               fetchPriority="high"
               sizes="(max-width:36rem) 66vw, (max-width:56.25rem) 60vw, 27rem"
             />
