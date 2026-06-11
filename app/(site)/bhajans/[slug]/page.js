@@ -38,6 +38,7 @@ export default async function BhajanDetailPage({ params }) {
             thumbnailUrl: bhajan.thumbnail?.url,
             uploadDate: bhajan.createdAt,
             embedUrl: bhajan.youtubeUrl,
+            views: bhajan.views,
           }),
           breadcrumbSchema([
             { name: "Bhajans", href: "/bhajans" },

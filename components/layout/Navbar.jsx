@@ -33,10 +33,16 @@ export default function Navbar({ logo, whatsapp }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while mobile menu open.
+  // Lock body scroll while mobile menu open + close on Escape (a11y).
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!open) return () => { document.body.style.overflow = ""; };
+    const onKey = (e) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
   return (

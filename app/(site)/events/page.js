@@ -1,4 +1,4 @@
-import { buildMetadata, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, itemListSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getSettings, listEvents } from "@/services/content";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -27,9 +27,19 @@ export default async function EventsPage() {
     listEvents("past"),
   ]);
 
+  const listItems = [...upcoming, ...past].map((e) => ({
+    name: e.title,
+    url: `${siteConfig.url}/events/${e.slug}`,
+  }));
+
   return (
     <>
-      <JsonLd data={breadcrumbSchema([{ name: "Events", href: "/events" }])} />
+      <JsonLd
+        data={[
+          itemListSchema(listItems, { name: "Events & Live Jagran" }),
+          breadcrumbSchema([{ name: "Events", href: "/events" }]),
+        ]}
+      />
       <PageHeader
         eyebrow="Live Jagran"
         title="Events"
