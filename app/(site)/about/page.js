@@ -20,7 +20,7 @@ export async function generateMetadata() {
     title: "About Anita Prajapat — Sanwariya Seth & Khatu Shyam Bhajan Singer",
     titleAbsolute: true,
     description:
-      "The story of Anita Prajapat — Rajasthani devotional singer from Jaipur. Her journey, milestones & the devotion behind Sanwariya Seth, Khatu Shyam & Mataji bhajans.",
+      "The story of Anita Prajapat (अनीता प्रजापत) — female Rajasthani bhajan singer from Jaipur. Her journey behind Sanwariya Seth, Khatu Shyam, Balaji, Mataji & Satguru bhajans.",
     path: "/about",
     defaults: seoDefaultsFromSettings(settings),
   });
@@ -36,7 +36,9 @@ const timeline = [
 const achievements = [
   "Sanwariya Seth Bhajan Specialist",
   "Khatu Shyam Bhajan Specialist",
+  "Balaji & Hanuman Bhajan Performer",
   "Mataji & Marwadi Bhajan Artist",
+  "Satguru & Krishna Bhajan Repertoire",
   "10000+ Live Stage Shows",
   "Growing YouTube & Instagram Devotee Base",
   "Trusted Live Jagran Performer",
@@ -74,10 +76,10 @@ export default async function AboutPage() {
             <Reveal variant="left">
               <h2>A Voice Devoted to the Divine</h2>
               <p>
-                {siteConfig.name} is a celebrated {siteConfig.categoryInline} from {siteConfig.city},
+                {siteConfig.name} (अनीता प्रजापत) is a celebrated female {siteConfig.categoryInline} from {siteConfig.city},
                 Rajasthan. Since {siteConfig.performingSince}, she has dedicated her voice to the divine —
-                performing Sanwariya Seth, Khatu Shyam, Mataji, Marwadi, and Rajasthani bhajans that move
-                thousands of devotees at live Jagrans across the country.
+                performing Sanwariya Seth, Khatu Shyam, Balaji, Mataji, Satguru, Marwadi and Rajasthani
+                bhajans that move thousands of devotees at live Jagrans across the country.
               </p>
               <p>
                 Her music blends traditional devotional roots with a cinematic, soul-stirring stage
@@ -86,7 +88,7 @@ export default async function AboutPage() {
               <div className={styles.stats}>
                 <div><strong>{settings.counters?.stageShows || siteConfig.stageShows}</strong><span>Stage Shows</span></div>
                 <div><strong>{new Date().getFullYear() - siteConfig.performingSince}+</strong><span>Years</span></div>
-                <div><strong>6+</strong><span>Genres</span></div>
+                <div><strong>{siteConfig.genres.length}+</strong><span>Genres</span></div>
               </div>
             </Reveal>
           </div>

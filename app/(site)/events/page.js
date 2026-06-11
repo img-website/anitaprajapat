@@ -15,7 +15,7 @@ export async function generateMetadata() {
   return buildMetadata({
     title: "Events & Live Jagran",
     description:
-      "Upcoming and past live Jagran events & devotional concerts by Anita Prajapat across Rajasthan and India. Book her for your event.",
+      "Upcoming & past live Jagran by Anita Prajapat — Khatu Shyam kirtan, mata ka jagran & devotional concerts across Rajasthan and India. Book the jagran singer for your event.",
     path: "/events",
     defaults: seoDefaultsFromSettings(settings),
   });

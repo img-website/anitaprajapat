@@ -12,9 +12,9 @@ export const revalidate = 600;
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Contact & Booking",
+    title: "Contact & Booking — Jagran Singer",
     description:
-      "Book Anita Prajapat for live Jagran and devotional events. Contact manager Jitendra Kumar Bijarnia via phone, WhatsApp or email.",
+      "Book female Rajasthani bhajan singer Anita Prajapat for live Jagran, Khatu Shyam kirtan & devotional events. Contact number, fees & availability via manager Jitendra Kumar Bijarnia.",
     path: "/contact",
     defaults: seoDefaultsFromSettings(settings),
   });
@@ -29,7 +29,11 @@ const buildFaqs = ({ manager, phone, city }) => [
   },
   {
     question: "Which types of events does Anita Prajapat perform at?",
-    answer: "She performs live Jagran, temple events, devotional concerts and private functions — singing Sanwariya Seth, Khatu Shyam, Mataji, Marwadi and Rajasthani bhajans.",
+    answer: "She is a female Rajasthani bhajan singer who performs at live Jagran, mata ka jagran, Khatu Shyam kirtan, temple events, devotional concerts and private functions — singing Sanwariya Seth, Khatu Shyam, Balaji, Mataji, Satguru and Marwadi bhajans.",
+  },
+  {
+    question: "What are the booking fees for a Jagran or kirtan?",
+    answer: "Fees depend on the city, date, event duration and stage setup (sound system, musicians). Share your event details on WhatsApp or by phone and the management team will send you a clear quote, usually the same day.",
   },
   {
     question: "Does Anita Prajapat travel outside Rajasthan for events?",

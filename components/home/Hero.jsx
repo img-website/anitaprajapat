@@ -13,7 +13,7 @@ export default function Hero({ banner, settings = {} }) {
   const subtitle = banner?.subtitle || siteConfig.tagline;
   const description =
     banner?.description ||
-    "Sanwariya Seth · Khatu Shyam · Mataji bhajan & live Jagran — devotion brought to life on stage across India.";
+    "Sanwariya Seth · Khatu Shyam · Balaji · Mataji · Satguru bhajan & live Jagran — devotion brought to life on stage across India.";
   const img = banner?.image?.url || "/images/hero.jpg";
   const youtube = settings.social?.youtube || siteConfig.social.youtube;
   const subscribe = youtubeSubscribeUrl(youtube);

@@ -13,9 +13,9 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata() {
   const settings = await getSettings();
   return buildMetadata({
-    title: "Sanwariya Seth, Khatu Shyam & Mataji Bhajans",
+    title: "Sanwariya Seth, Khatu Shyam, Balaji & Mataji Bhajans",
     description:
-      "Watch Anita Prajapat's devotional bhajans — Sanwariya Seth, Khatu Shyam, Mataji & Rajasthani. Popular, latest & curated playlists, streaming live from YouTube.",
+      "Watch Anita Prajapat ke bhajan — Sanwariya Seth (सांवरिया सेठ भजन), Khatu Shyam, Balaji, Mataji & Satguru. Popular, latest & playlists, live from YouTube every week.",
     path: "/bhajans",
     defaults: seoDefaultsFromSettings(settings),
   });

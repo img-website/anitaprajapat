@@ -106,13 +106,14 @@ async function HomeSections({ settings }) {
               </span>
               <h2>Voice of Devotion from {siteConfig.city}</h2>
               <p>
-                {siteConfig.name} is a celebrated {siteConfig.categoryInline},
-                performing soul-stirring Sanwariya Seth, Khatu Shyam, Mataji and
-                Rajasthani bhajans since {siteConfig.performingSince}. Her live Jagran
+                {siteConfig.name} is a celebrated female {siteConfig.categoryInline},
+                performing soul-stirring Sanwariya Seth, Khatu Shyam, Balaji, Mataji
+                and Satguru bhajans since {siteConfig.performingSince}. Her live Jagran
                 shows bring communities together in devotion across India.
               </p>
               <ul>
                 <li>Sanwariya Seth & Khatu Shyam Bhajan specialist</li>
+                <li>Balaji, Satguru, Mataji & Marwadi bhajan repertoire</li>
                 <li>{siteConfig.stageShows} stage shows & live Jagrans</li>
                 <li>Growing devotee base on YouTube &amp; Instagram</li>
               </ul>
