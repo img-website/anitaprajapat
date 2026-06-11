@@ -69,3 +69,27 @@
   color: var(--text);
   span { color: var(--magenta); }
 }
+
+.pressList {
+  @include grid(3, 1.2rem);
+  @include down("md") { grid-template-columns: 1fr; }
+}
+
+.pressItem {
+  @include glass;
+  border-radius: $radius;
+  padding: 1.4rem 1.3rem;
+  h3 {
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+    a:hover { color: var(--magenta); }
+  }
+}
+
+.pressOutlet {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  font-weight: 600;
+}

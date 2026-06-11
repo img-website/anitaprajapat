@@ -106,7 +106,7 @@ async function HomeSections({ settings }) {
               </span>
               <h2>Voice of Devotion from {siteConfig.city}</h2>
               <p>
-                {siteConfig.name} is a celebrated {siteConfig.category.toLowerCase()},
+                {siteConfig.name} is a celebrated {siteConfig.categoryInline},
                 performing soul-stirring Sanwariya Seth, Khatu Shyam, Mataji and
                 Rajasthani bhajans since {siteConfig.performingSince}. Her live Jagran
                 shows bring communities together in devotion across India.

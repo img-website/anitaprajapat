@@ -29,6 +29,12 @@ export default async function sitemap() {
     changeFrequency: p === "" ? "daily" : "weekly",
     priority: p === "" ? 1 : 0.7,
   }));
+  staticRoutes.push({
+    url: `${base}/privacy-policy`,
+    lastModified: now,
+    changeFrequency: "yearly",
+    priority: 0.3,
+  });
 
   let dynamicRoutes = [];
   try {

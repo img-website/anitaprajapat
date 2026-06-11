@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getMediaBySlug, getSettings } from "@/services/content";
 import { buildMetadata, breadcrumbSchema, newsArticleSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { formatDate } from "@/utils/helpers";
 import { siteConfig } from "@/lib/siteConfig";
 import PageHeader from "@/components/ui/PageHeader";
 import JsonLd from "@/components/seo/JsonLd";
@@ -54,6 +55,13 @@ export default async function MediaDetailPage({ params }) {
       <section className="section">
         <div className="container-narrow">
           <article className="card" style={{ padding: "1.25rem" }}>
+            <p style={{ color: "var(--text-muted)", fontSize: "0.82rem", marginBottom: "0.75rem" }}>
+              {item.outlet ? `${item.outlet} · ` : ""}
+              Published{" "}
+              <time dateTime={new Date(item.publishedAt || item.createdAt).toISOString()}>
+                {formatDate(item.publishedAt || item.createdAt)}
+              </time>
+            </p>
             {item.excerpt && <p style={{ marginBottom: "1rem" }}>{item.excerpt}</p>}
             {item.externalUrl && (
               <a href={item.externalUrl} target="_blank" rel="noopener noreferrer" title={`Read original coverage: ${item.title}`} className="btn btn-outline">

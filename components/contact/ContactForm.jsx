@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import api from "@/services/apiClient";
 import PhoneField from "./PhoneField";
 import styles from "./ContactForm.module.scss";
@@ -98,6 +99,11 @@ export default function ContactForm() {
       <button type="submit" className="btn btn-gold" disabled={status.state === "loading"}>
         {status.state === "loading" ? "Sending…" : "Send Inquiry"}
       </button>
+
+      <p className={styles.consent}>
+        Your details are used only to respond to your inquiry — never sold or shared.
+        See our <Link href="/privacy-policy">Privacy Policy</Link>.
+      </p>
     </form>
   );
 }

@@ -95,7 +95,10 @@ export default function Footer({ settings = {} }) {
       <div className={styles.bottom}>
         <div className="container">
           <span>
-            © {year} {siteConfig.name}. All rights reserved.
+            © {year} {siteConfig.name}. All rights reserved. ·{" "}
+            <Link href="/privacy-policy" title="Privacy Policy — Anita Prajapat official website">
+              Privacy Policy
+            </Link>
           </span>
           <span>
             Devotional music from {siteConfig.city} · Performing since{" "}

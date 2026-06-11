@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Sparkles, ArrowRight } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
-import { buildMetadata, personSchema, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
-import { getSettings, getGalleryPreview } from "@/services/content";
+import { buildMetadata, profilePageSchema, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { getSettings, getGalleryPreview, getMediaCoverage } from "@/services/content";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
@@ -43,16 +44,17 @@ const achievements = [
 ];
 
 export default async function AboutPage() {
-  const [settings, gallery] = await Promise.all([
+  const [settings, gallery, press] = await Promise.all([
     getSettings(),
     getGalleryPreview(8),
+    getMediaCoverage(3),
   ]);
 
   return (
     <>
       <JsonLd
         data={[
-          personSchema(),
+          profilePageSchema({ dateModified: settings.updatedAt }),
           breadcrumbSchema([{ name: "About", href: "/about" }]),
         ]}
       />
@@ -72,7 +74,7 @@ export default async function AboutPage() {
             <Reveal variant="left">
               <h2>A Voice Devoted to the Divine</h2>
               <p>
-                {siteConfig.name} is a celebrated {siteConfig.category.toLowerCase()} from {siteConfig.city},
+                {siteConfig.name} is a celebrated {siteConfig.categoryInline} from {siteConfig.city},
                 Rajasthan. Since {siteConfig.performingSince}, she has dedicated her voice to the divine —
                 performing Sanwariya Seth, Khatu Shyam, Mataji, Marwadi, and Rajasthani bhajans that move
                 thousands of devotees at live Jagrans across the country.
@@ -119,8 +121,35 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {gallery.length > 0 && (
+      {press.length > 0 && (
         <section className={`section ${styles.altBg}`}>
+          <div className="container">
+            <SectionHeading
+              eyebrow="External Recognition"
+              title="In the Press"
+              subtitle="Independent media coverage of Anita Prajapat's devotional music journey."
+            />
+            <div className={styles.pressList}>
+              {press.map((m) => (
+                <Reveal key={m._id} variant="up" className={styles.pressItem}>
+                  <span className={styles.pressOutlet}>{m.outlet || m.type}</span>
+                  <h3>
+                    <Link href={`/media/${m.slug}`} title={`Press coverage: ${m.title}`}>{m.title}</Link>
+                  </h3>
+                </Reveal>
+              ))}
+            </div>
+            <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+              <Link href="/media" className="btn btn-outline" title="All press & media coverage of Anita Prajapat">
+                All media coverage <ArrowRight size={18} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {gallery.length > 0 && (
+        <section className="section">
           <div className="container">
             <SectionHeading eyebrow="Gallery" title="Professional Moments" />
             <GalleryGrid items={gallery} />
