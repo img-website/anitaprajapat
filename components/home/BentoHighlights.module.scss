@@ -65,7 +65,7 @@
     flex-direction: column;
     gap: 0.7rem;
     align-items: flex-start;
-    background: linear-gradient(0deg, rgba(20, 6, 22, 0.85), transparent);
+    background: linear-gradient(0deg, rgba(26, 10, 6, 0.85), transparent);
     .featureTitle { color: #fff; font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-weight: 700; }
   }
   @include down("sm") {
@@ -185,10 +185,10 @@
     place-items: center;
     width: 3rem; height: 3rem;
     border-radius: 0.875rem;
-    background: #ff2d55;
+    background: #ff0000;
     color: #fff;
     flex-shrink: 0;
-    box-shadow: 0 0.5rem 1.25rem rgba(255, 45, 85, 0.35);
+    box-shadow: 0 0.5rem 1.25rem rgba(255, 0, 0, 0.32);
   }
   strong { display: block; color: var(--heading); }
   span { color: var(--text-muted); font-size: 0.84rem; }
@@ -219,7 +219,7 @@
     font-size: 0.72rem;
     font-weight: 600;
     color: #fff;
-    background: rgba(20, 6, 22, 0.5);
+    background: rgba(26, 10, 6, 0.5);
     backdrop-filter: blur(0.375rem);
   }
   @include down("sm") {

@@ -7,7 +7,15 @@
 body {
   position: relative;
   min-height: 100dvh;
-  background: var(--grad-mesh), var(--bg);
+  // Editorial "paper" stack: warm mesh wash + a faint 72px engineering grid
+  // (the signature studio texture) over the cream base. The grid line colour is
+  // derived from --heading so it inverts correctly in dark mode.
+  background:
+    var(--grad-mesh),
+    linear-gradient(to right, color-mix(in srgb, var(--heading) 5%, transparent) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(to bottom, color-mix(in srgb, var(--heading) 5%, transparent) 0.0625rem, transparent 0.0625rem),
+    var(--bg);
+  background-size: auto, 4.5rem 4.5rem, 4.5rem 4.5rem, auto;
   // `background-attachment: fixed` was removed — it forces the browser to
   // repaint the full-viewport mesh gradient on every scroll frame (a well-known
   // mobile scroll-jank cause). The ambient wash looks the same without it.
@@ -29,6 +37,14 @@ html {
   position: relative;
 }
 .section-aurora { @include aurora; }
+
+// Opt-in denser editorial grid for feature sections (hero, CTA bands).
+.grid-lines {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--heading) 6%, transparent) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(to bottom, color-mix(in srgb, var(--heading) 6%, transparent) 0.0625rem, transparent 0.0625rem);
+  background-size: 4.5rem 4.5rem;
+}
 
 .section-head {
   text-align: center;
@@ -112,14 +128,16 @@ html {
   &:hover { color: var(--magenta); border-color: var(--magenta); }
 }
 
-// Clear outlined button (high-contrast border so it's always visible).
+// Clear outlined button — saffron border with the deeper saffron label so the
+// text clears WCAG AA on cream (bright saffron alone is only ~3:1 as text).
 .btn-outline {
   border: 0.0938rem solid var(--magenta);
-  color: var(--magenta);
+  color: var(--magenta-deep);
   background: transparent;
   &:hover {
     color: #fff;
     background: var(--magenta);
+    border-color: var(--magenta);
   }
 }
 
@@ -128,6 +146,15 @@ html {
   color: var(--heading);
   padding-inline: 0.6rem;
   &:hover { color: var(--magenta); transform: none; gap: 0.7rem; }
+}
+
+// Editorial solid-ink button (deep maroon) → hovers to saffron. The signature
+// premium CTA on cream/paper backgrounds.
+.btn-ink {
+  background: var(--heading);
+  color: var(--bg-2);
+  box-shadow: 0 0.75rem 1.75rem -0.6rem color-mix(in srgb, var(--heading) 55%, transparent);
+  &:hover { background: var(--magenta); color: #fff; box-shadow: 0 1rem 2rem -0.6rem color-mix(in srgb, var(--magenta) 60%, transparent); }
 }
 
 // White outline — for use ON dark / gradient backgrounds.

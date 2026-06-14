@@ -113,6 +113,30 @@ export default function Hero({ banner, settings = {} }) {
           <div className={`${styles.badge} ${styles.badgeBottom}`}>
             <Star size={14} /> {settings.counters?.stageShows || siteConfig.stageShows} shows
           </div>
+
+          {/* Rotating sticker — editorial flourish + one-click subscribe CTA */}
+          <a
+            href={subscribe}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.sticker}
+            aria-label="Subscribe on YouTube — new bhajans every week"
+            title="Subscribe to Anita Prajapat on YouTube — new bhajans every week"
+          >
+            <svg className={styles.stickerRing} viewBox="0 0 100 100" aria-hidden>
+              <defs>
+                <path id="heroStickerPath" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" />
+              </defs>
+              <text>
+                <textPath href="#heroStickerPath" startOffset="0">
+                  NEW BHAJANS WEEKLY · SUBSCRIBE · NEW BHAJANS WEEKLY · SUBSCRIBE ·
+                </textPath>
+              </text>
+            </svg>
+            <span className={styles.stickerCore}>
+              <PlayCircle size={22} aria-hidden />
+            </span>
+          </a>
         </div>
       </div>
 

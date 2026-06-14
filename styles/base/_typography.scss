@@ -16,9 +16,10 @@ h1, h2, h3, h4, h5 {
   color: var(--heading);
 }
 
-h1 { font-size: clamp(2.6rem, 7vw, 5.2rem); font-weight: 800; }
-h2 { font-size: clamp(1.9rem, 4.5vw, 3.2rem); }
-h3 { font-size: clamp(1.35rem, 3vw, 2rem); }
+// Editorial display scale — larger & tighter for premium, confident headlines.
+h1 { font-size: clamp(2.8rem, 7.4vw, 5.8rem); font-weight: 800; letter-spacing: -0.04em; }
+h2 { font-size: clamp(2rem, 4.8vw, 3.5rem); letter-spacing: -0.035em; }
+h3 { font-size: clamp(1.4rem, 3vw, 2.1rem); }
 h4 { font-size: clamp(1.05rem, 2vw, 1.3rem); }
 
 @include down("sm") {

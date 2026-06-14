@@ -52,32 +52,34 @@
 }
 
 .desktopNav {
-  @include flex(row, center, center, 0.35rem);
+  @include flex(row, center, center, 0.2rem);
   @include down("lg") { display: none; }
   a {
     position: relative;
-    padding: 0.5rem 0.95rem;
-    border-radius: 62.4375rem;
+    padding: 0.5rem 0.85rem;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-muted);
-    transition: color 0.2s, background 0.2s;
-    &:hover { color: var(--heading); background: var(--surface); }
-    &.active {
-      color: var(--heading);
-      background: transparent;
-      &::before {
-        content: "";
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 0.25rem;
-        width: 2rem;
-        height: 0.125rem;
-        border-radius: 62.4375rem;
-        background: var(--grad-brand);
-      }
+    transition: color 0.2s;
+    // Editorial underline-grow: a saffron rule sweeps in from the left on hover
+    // and stays full-width on the active route.
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0.85rem;
+      right: 0.85rem;
+      bottom: 0.28rem;
+      height: 0.125rem;
+      border-radius: 62.4375rem;
+      background: var(--magenta);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.28s $ease;
     }
+    &:hover { color: var(--heading); }
+    &:hover::after,
+    &.active::after { transform: scaleX(1); }
+    &.active { color: var(--heading); }
   }
 }
 

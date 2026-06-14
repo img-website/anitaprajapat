@@ -15,19 +15,19 @@ const nextConfig = {
     "/og": ["./assets/fonts/**"],
   },
   images: {
+    // Hand optimization to the image host via a custom loader (see
+    // lib/imageLoader.js). Cloudinary delivers f_auto/q_auto/resized images
+    // straight to the browser, so we no longer proxy through Next's optimizer
+    // (which 500'd when an upstream fetch timed out). `remotePatterns` is kept
+    // for documentation of allowed hosts; the loader controls the actual URLs.
+    loaderFile: "./lib/imageLoader.js",
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "img.youtube.com" },
       { protocol: "https", hostname: "i.ytimg.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
-    formats: ["image/avif", "image/webp"],
-    // Cache optimized images at the edge for a year (fixes "efficient cache
-    // lifetimes" — third-party thumbnails get re-served by Next with long TTL).
-    minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   sassOptions: {
     // Absolute paths so `@use "abstracts" as *;` resolves from CSS Modules

@@ -188,7 +188,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: conic-gradient(from 0deg, #b5277d, #2f43c0, #d99a2b, #d2283f, #b5277d);
+  background: conic-gradient(from 0deg, #e4682b, #c2451a, #c79a3e, #8a1f2c, #e4682b);
   padding: 0.1875rem;
   -webkit-mask: radial-gradient(circle, transparent 49%, #000 50%);
           mask: radial-gradient(circle, transparent 49%, #000 50%);
@@ -229,6 +229,51 @@
 }
 .badgeTop { top: 4%; right: -2%; }
 .badgeBottom { bottom: 6%; left: -4%; animation-delay: 1.2s; }
+
+// ─── Rotating subscribe sticker ─────────────────────────────
+.sticker {
+  position: absolute;
+  z-index: 4;
+  right: -4%;
+  bottom: -3%;
+  width: 6.5rem;
+  height: 6.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg-2);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s $ease;
+  &:hover { transform: scale(1.06) rotate(-4deg); }
+  @include down("lg") { display: none; }
+}
+.stickerRing {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin-slow 18s linear infinite;
+  text {
+    font-family: $font-body;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    fill: var(--magenta-deep);
+  }
+}
+.stickerCore {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--magenta);
+  color: #fff;
+  box-shadow: 0 0.4rem 1rem -0.3rem color-mix(in srgb, var(--magenta) 70%, transparent);
+}
 
 // ─── Genre marquee ──────────────────────────────────────────
 .marquee {
