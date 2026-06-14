@@ -1,0 +1,81 @@
+@use "abstracts" as *;
+
+.wrap { position: relative; }
+
+.band {
+  position: relative;
+  text-align: center;
+  border-radius: $radius-lg;
+  padding: clamp(2.2rem, 5vw, 3.6rem) clamp(1.4rem, 4vw, 3rem);
+  overflow: hidden;
+  background:
+    radial-gradient(70% 120% at 50% -10%, color-mix(in srgb, var(--magenta) 16%, transparent), transparent 65%),
+    var(--bg-2);
+  border: 0.0625rem solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.34rem 0.85rem;
+  border-radius: 62.4375rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  background: color-mix(in srgb, var(--magenta) 12%, transparent);
+  svg { color: #ff0033; } // YouTube-red glyph for instant recognition
+}
+
+.title {
+  margin: 1rem auto 0;
+  max-width: 18ch;
+}
+
+.lead {
+  margin: 0.9rem auto 1.6rem;
+  max-width: 56ch;
+  @include down("sm") { margin: 0.7rem auto 1.1rem; font-size: 0.9rem; }
+}
+
+// Subscribe button — on-brand magenta with a confident lift; the YouTube glyph
+// carries the platform recognition without breaking the palette.
+.subscribe {
+  background: var(--magenta);
+  color: #fff;
+  box-shadow: 0 0.6rem 1.5rem -0.4rem color-mix(in srgb, var(--magenta) 70%, transparent);
+  &:hover { background: var(--magenta-deep); }
+}
+
+.follow {
+  margin-top: 1.4rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem;
+    border-radius: 62.4375rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--heading);
+    background: var(--surface);
+    border: 0.0625rem solid var(--border);
+    transition: transform 0.2s $ease, border-color 0.2s, color 0.2s;
+    &:hover { transform: translateY(-0.125rem); border-color: var(--magenta); color: var(--magenta); }
+  }
+  a[data-net="instagram"]:hover { color: #e1306c; border-color: #e1306c; }
+  a[data-net="facebook"]:hover { color: #1877f2; border-color: #1877f2; }
+  a[data-net="pinterest"]:hover { color: #e60023; border-color: #e60023; }
+
+  @include down("sm") {
+    a { padding: 0.42rem 0.8rem; font-size: 0.78rem; }
+  }
+}

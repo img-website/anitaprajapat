@@ -8,7 +8,9 @@ body {
   position: relative;
   min-height: 100dvh;
   background: var(--grad-mesh), var(--bg);
-  background-attachment: fixed;
+  // `background-attachment: fixed` was removed — it forces the browser to
+  // repaint the full-viewport mesh gradient on every scroll frame (a well-known
+  // mobile scroll-jank cause). The ambient wash looks the same without it.
   overflow-x: hidden;
   overflow-x: clip;
 }
@@ -271,15 +273,20 @@ main:focus { outline: none; }
 }
 
 // ─── Film-grain texture overlay (adds premium depth) ────────
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.45;
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+// A fixed, full-viewport `mix-blend-mode` layer is a permanent GPU compositing
+// cost. Keep it as a subtle desktop-only flourish — disabled below `md` (where
+// scroll perf matters most) and lightened — so phones/tablets stay buttery.
+@include up("md") {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.28;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
 }
 
 // ─── Text selection + custom scrollbar ──────────────────────
@@ -383,9 +390,15 @@ body::before {
   }
 }
 
+// Gentle fluid root scale for tablet/desktop. The whole UI is rem-based, so the
+// root font-size sets the global scale. This MUST never drop below the 16px
+// browser default. (Previously `1vw`, which collapsed the rem base to ~7.7px at
+// 768px and caused a jarring jump exactly at this breakpoint — illegible text
+// and broken spacing on every tablet/laptop.) `rem` on the root resolves to the
+// initial 16px, so this clamps a comfortable 16px→17px and never regresses.
 @media (min-width: 48rem) {
   html {
-    font-size: 1vw;
+    font-size: clamp(1rem, 0.86rem + 0.3vw, 1.0625rem);
   }
 }
 

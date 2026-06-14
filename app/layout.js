@@ -61,6 +61,14 @@ export async function generateMetadata() {
     verification: {
       google: gscVerification,
     },
+    // Geo-targeting signals — primary market is India, home city Jaipur. These
+    // reinforce the hreflang (en-IN) + Person address for local/regional engines.
+    other: {
+      "geo.region": "IN-RJ",
+      "geo.placename": siteConfig.city,
+      "geo.position": "26.9124;75.7873",
+      ICBM: "26.9124, 75.7873",
+    },
     openGraph: {
       type: "website",
       locale: "en_IN",

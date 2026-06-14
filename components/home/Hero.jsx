@@ -1,13 +1,16 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/siteConfig";
 import { youtubeSubscribeUrl } from "@/utils/helpers";
 import { ArrowRight, Star, Mic2, Sparkles, PlayCircle, MessageCircle } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import styles from "./Hero.module.scss";
 
+// Server component: the hero is the LCP region, so its content is rendered as
+// plain server HTML (no "use client") and the entrance is pure CSS. Nothing
+// here waits on JS/hydration to become visible — only the small <AnimatedCounter>
+// number islands hydrate. (Previously this was a client component whose H1/lead/
+// CTA started at opacity:0 behind Framer Motion, hiding the LCP text until the
+// JS bundle loaded.)
 export default function Hero({ banner, settings = {} }) {
   const title = banner?.title || siteConfig.name;
   const subtitle = banner?.subtitle || siteConfig.tagline;
@@ -19,82 +22,72 @@ export default function Hero({ banner, settings = {} }) {
   const subscribe = youtubeSubscribeUrl(youtube);
   const whatsapp = settings.whatsapp || siteConfig.whatsapp;
 
-  const ease = [0.22, 1, 0.36, 1];
-
   return (
     <section className={`${styles.hero} section-aurora`}>
       <div className={`container ${styles.grid}`}>
         <div className={styles.copy}>
-          <motion.span
-            className="chip"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease }}
-          >
+          <span className={`chip ${styles.reveal} ${styles.d1}`}>
             <span className={styles.dot} /> {subtitle} · {siteConfig.city}
-          </motion.span>
+          </span>
 
-          <motion.h1
-            className={styles.title}
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.08, ease }}
-          >
+          <h1 className={`${styles.title} ${styles.reveal} ${styles.d2}`}>
             <span>Voice of&nbsp;</span>
             <span className="gold-text">Devotion</span>
             <span className={styles.name}> {title}</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className={styles.lead}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease }}
-          >
-            {description}
-          </motion.p>
+          <p className={`${styles.lead} ${styles.reveal} ${styles.d3}`}>{description}</p>
 
-          <motion.div
-            className={styles.cta}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.32, ease }}
-          >
-            <a href={subscribe} target="_blank" rel="noopener noreferrer" title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans" className="btn btn-primary btn-lg shine">
+          <div className={`${styles.cta} ${styles.reveal} ${styles.d4}`}>
+            <a
+              href={subscribe}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans"
+              className="btn btn-primary btn-lg shine"
+            >
               <PlayCircle size={20} /> Subscribe on YouTube
             </a>
-            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" title="Book Anita Prajapat for Jagran on WhatsApp" className="btn btn-outline btn-lg">
+            <a
+              href={`https://wa.me/${whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Book Anita Prajapat for Jagran on WhatsApp"
+              className="btn btn-outline btn-lg"
+            >
               <MessageCircle size={18} /> Book for Jagran <ArrowRight size={18} />
             </a>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className={styles.stats}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
+          <div className={`${styles.stats} ${styles.reveal} ${styles.d5}`}>
             <div>
-              <strong><AnimatedCounter className={styles.statValue} value={settings.counters?.stageShows || siteConfig.stageShows} /></strong>
+              <strong>
+                <AnimatedCounter
+                  className={styles.statValue}
+                  value={settings.counters?.stageShows || siteConfig.stageShows}
+                />
+              </strong>
               <span className={styles.statLabel}>Stage Shows</span>
             </div>
             <div>
-              <strong><AnimatedCounter className={styles.statValue} value={`${new Date().getFullYear() - siteConfig.performingSince}+`} /></strong>
+              <strong>
+                <AnimatedCounter
+                  className={styles.statValue}
+                  value={`${new Date().getFullYear() - siteConfig.performingSince}+`}
+                />
+              </strong>
               <span className={styles.statLabel}>Years</span>
             </div>
             <div>
-              <strong><AnimatedCounter className={styles.statValue} value={`${siteConfig.genres.length}+`} /></strong>
+              <strong>
+                <AnimatedCounter className={styles.statValue} value={`${siteConfig.genres.length}+`} />
+              </strong>
               <span className={styles.statLabel}>Genres</span>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          className={styles.visual}
-          initial={{ opacity: 1, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, ease }}
-        >
+        <div className={`${styles.visual} ${styles.visualReveal}`}>
           <div className={styles.ring} aria-hidden />
           <div className={styles.blob} aria-hidden />
           <div className={styles.sparkles} aria-hidden>
@@ -114,23 +107,13 @@ export default function Hero({ banner, settings = {} }) {
             />
           </div>
 
-          <motion.div
-            className={`${styles.badge} ${styles.badgeTop}`}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-          >
+          <div className={`${styles.badge} ${styles.badgeTop}`}>
             <Mic2 size={14} /> Live Jagran
-          </motion.div>
-          <motion.div
-            className={`${styles.badge} ${styles.badgeBottom}`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85 }}
-          >
+          </div>
+          <div className={`${styles.badge} ${styles.badgeBottom}`}>
             <Star size={14} /> {settings.counters?.stageShows || siteConfig.stageShows} shows
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* genre marquee */}

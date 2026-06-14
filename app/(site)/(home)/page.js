@@ -18,6 +18,7 @@ import MusicNotes from "@/components/ui/MusicNotes";
 import Hero from "@/components/home/Hero";
 import BentoHighlights from "@/components/home/BentoHighlights";
 import VideoShowcase from "@/components/home/VideoShowcase";
+import SubscribeCTA from "@/components/home/SubscribeCTA";
 import Counters from "@/components/home/Counters";
 import Testimonials from "@/components/home/Testimonials";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
@@ -82,6 +83,11 @@ async function HomeSections({ settings }) {
         latest={videos.latest}
         playlists={videos.playlists}
       />
+
+      {/* Primary goal: convert viewers → YouTube subscribers + social followers */}
+      <div className={s.altBg}>
+        <SubscribeCTA settings={settings} />
+      </div>
 
       {/* About teaser */}
       <section className={`section ${s.altBg}`}>

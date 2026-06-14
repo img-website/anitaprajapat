@@ -38,6 +38,12 @@ export default function Loading() {
 
       <section className={`${s.section} ${s.alt}`}>
         <div className="container">
+          <div className={s.subscribeBand} />
+        </div>
+      </section>
+
+      <section className={`${s.section} ${s.alt}`}>
+        <div className="container">
           <div className={s.about}>
             <div className={`${s.photo} ${s.aboutMedia}`} />
             <div className={s.aboutCopy}>

@@ -34,6 +34,31 @@
   @include down("lg") { order: 2; }
 }
 
+// ─── Pure-CSS entrance (no JS) ──────────────────────────────
+// Content is server-rendered; these only add a subtle fade-up. The global
+// prefers-reduced-motion rule (globals.scss) collapses the duration so the
+// final state shows instantly for users who opt out of motion.
+.reveal {
+  opacity: 0;
+  animation: heroRise 0.7s $ease forwards;
+}
+.d1 { animation-delay: 0.04s; }
+.d2 { animation-delay: 0.12s; }
+.d3 { animation-delay: 0.22s; }
+.d4 { animation-delay: 0.34s; }
+.d5 { animation-delay: 0.46s; }
+
+.visualReveal { animation: heroPop 0.9s $ease both; }
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(1.4rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroPop {
+  from { opacity: 1; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
 .dot {
   width: 0.5rem; height: 0.5rem;
   border-radius: 50%;
