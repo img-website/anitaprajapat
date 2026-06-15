@@ -1,12 +1,16 @@
-import { buildMetadata, musicGroupSchema, breadcrumbSchema, seoDefaultsFromSettings } from "@/lib/seo";
+import { buildMetadata, musicGroupSchema, breadcrumbSchema, itemListSchema, seoDefaultsFromSettings } from "@/lib/seo";
 import { getYouTubeData } from "@/services/youtube";
-import { getSettings } from "@/services/content";
+import { getSettings, getLatestBhajans } from "@/services/content";
 import { siteConfig } from "@/lib/siteConfig";
 import { youtubeSubscribeUrl } from "@/utils/helpers";
 import { YoutubeIcon } from "@/components/ui/BrandIcons";
 import PageHeader from "@/components/ui/PageHeader";
+import SectionHeading from "@/components/ui/SectionHeading";
 import VideoShowcase from "@/components/home/VideoShowcase";
+import BhajanCard from "@/components/cards/BhajanCard";
+import { StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
 import JsonLd from "@/components/seo/JsonLd";
+import s from "@/components/home/home.module.scss";
 
 export const dynamic = "force-dynamic";
 
@@ -22,12 +26,27 @@ export async function generateMetadata() {
 }
 
 export default async function BhajansPage() {
-  const [videos, settings] = await Promise.all([getYouTubeData(), getSettings()]);
+  const [videos, settings, bhajans] = await Promise.all([
+    getYouTubeData(),
+    getSettings(),
+    getLatestBhajans(24),
+  ]);
   const subscribe = youtubeSubscribeUrl(settings?.social?.youtube || siteConfig.social.youtube);
+
+  const listItems = bhajans.map((b) => ({
+    name: b.title,
+    url: `${siteConfig.url}/bhajans/${b.slug}`,
+  }));
 
   return (
     <>
-      <JsonLd data={[musicGroupSchema(), breadcrumbSchema([{ name: "Bhajans", href: "/bhajans" }])]} />
+      <JsonLd
+        data={[
+          musicGroupSchema(),
+          breadcrumbSchema([{ name: "Bhajans", href: "/bhajans" }]),
+          ...(listItems.length ? [itemListSchema(listItems, { name: "Bhajans" })] : []),
+        ]}
+      />
       <PageHeader
         eyebrow="Devotional Music"
         title="Bhajans"
@@ -40,6 +59,27 @@ export default async function BhajansPage() {
         playlists={videos.playlists}
         hideHeading
       />
+
+      {/* Owned bhajan pages (with lyrics) — indexable, internally linked song pages. */}
+      {bhajans.length > 0 && (
+        <section className={`section ${s.altBg}`}>
+          <div className="container">
+            <SectionHeading
+              eyebrow="Watch & Read"
+              title="Bhajans with Lyrics"
+              subtitle="Full video and lyrics for each bhajan — tap any track to read along and share."
+            />
+            <StaggerGroup className={s.cardGrid}>
+              {bhajans.map((b) => (
+                <StaggerItem key={b._id}>
+                  <BhajanCard bhajan={b} />
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
+
       <section className="section" style={{ textAlign: "center" }}>
         <div className="container-narrow">
           <h2 style={{ marginBottom: "0.5rem" }}>Never miss a new bhajan</h2>

@@ -1,18 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Sparkles, Mic2, ArrowRight, Play, Clock } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { youtubeSubscribeUrl } from "@/utils/helpers";
 import { mergeBento } from "@/lib/bentoDefaults";
 import { YoutubeIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
+import { StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
 import styles from "./BentoHighlights.module.scss";
-
-const item = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0 },
-};
 
 export default function BentoHighlights({ settings = {}, featuredVideo = null }) {
   const bento = mergeBento(settings);
@@ -33,15 +28,9 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
   return (
     <section id="explore" className="section">
       <div className="container">
-        <motion.div
-          className={styles.bento}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={{ show: { transition: { staggerChildren: 0.07 } } }}
-        >
+        <StaggerGroup className={styles.bento}>
           {/* Featured YouTube video — metadata from API, link from admin */}
-          <motion.div className={`${styles.tile} ${styles.feature}`} variants={item}>
+          <StaggerItem className={`${styles.tile} ${styles.feature}`}>
             {watchUrl ? (
               <a
                 href={watchUrl}
@@ -83,20 +72,20 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
                 </div>
               </>
             )}
-          </motion.div>
+          </StaggerItem>
 
-          <motion.div className={`${styles.tile} ${styles.stat}`} variants={item}>
+          <StaggerItem className={`${styles.tile} ${styles.stat}`}>
             <strong className="grad-head">{shows}</strong>
             <span>{bento.statLabel}</span>
-          </motion.div>
+          </StaggerItem>
 
-          <motion.a
+          <StaggerItem
+            as="a"
             href={`https://wa.me/${whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
             title="Book Anita Prajapat for your Jagran on WhatsApp"
             className={`${styles.tile} ${styles.book}`}
-            variants={item}
           >
             <span className={styles.bookIcon}>
               <Mic2 size={26} />
@@ -105,24 +94,24 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
             <span className={styles.arrow}>
               <WhatsappIcon size={16} /> {bento.bookCta} <ArrowRight size={16} />
             </span>
-          </motion.a>
+          </StaggerItem>
 
-          <motion.div className={`${styles.tile} ${styles.genres}`} variants={item}>
+          <StaggerItem className={`${styles.tile} ${styles.genres}`}>
             <span className="chip">{bento.repertoireLabel}</span>
             <ul>
               {bento.repertoireItems.map((g) => (
                 <li key={g}>{g}</li>
               ))}
             </ul>
-          </motion.div>
+          </StaggerItem>
 
-          <motion.a
+          <StaggerItem
+            as="a"
             href={subscribe}
             target="_blank"
             rel="noopener noreferrer"
             title="Subscribe to Anita Prajapat on YouTube for Sanwariya Seth & Khatu Shyam bhajans"
             className={`${styles.tile} ${styles.youtube}`}
-            variants={item}
           >
             <span className={styles.ytIcon}>
               <YoutubeIcon size={22} />
@@ -131,9 +120,9 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
               <strong>{bento.youtubeTitle}</strong>
               <span>{bento.youtubeSubtitle}</span>
             </div>
-          </motion.a>
+          </StaggerItem>
 
-          <motion.div className={`${styles.tile} ${styles.portrait}`} variants={item}>
+          <StaggerItem className={`${styles.tile} ${styles.portrait}`}>
             <Image
               src={bento.portraitImage || "/images/g4.jpg"}
               alt={`${siteConfig.name} — devotional bhajan singer from ${siteConfig.city}`}
@@ -142,13 +131,13 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
               sizes="25vw"
             />
             <span className={styles.portraitTag}>{bento.portraitTag}</span>
-          </motion.div>
+          </StaggerItem>
 
-          <motion.a
+          <StaggerItem
+            as="a"
             href={bento.storyHref || "/about"}
             title="Read the story of Anita Prajapat — Rajasthani devotional bhajan singer"
             className={`${styles.tile} ${styles.story}`}
-            variants={item}
           >
             <span className="chip">
               <Sparkles size={14} /> {bento.storyChip}
@@ -158,8 +147,8 @@ export default function BentoHighlights({ settings = {}, featuredVideo = null })
             <span className={styles.storyLink}>
               {bento.storyLinkLabel} <ArrowRight size={15} />
             </span>
-          </motion.a>
-        </motion.div>
+          </StaggerItem>
+        </StaggerGroup>
       </div>
     </section>
   );

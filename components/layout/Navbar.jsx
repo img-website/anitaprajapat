@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { CalendarHeart } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/siteConfig";
 import { WhatsappIcon } from "@/components/ui/BrandIcons";
@@ -101,39 +100,26 @@ export default function Navbar({ logo, whatsapp }) {
         </div>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className={styles.mobileSheet}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+      {open && (
+        <div className={styles.mobileSheet} style={{ animation: "fadeIn 0.25s ease both" }}>
+          <nav aria-label="Mobile">
+            {mainNav.map((item) => (
+              <div key={item.href}>
+                <Link href={item.href} title={item.title || item.label}>{item.label}</Link>
+              </div>
+            ))}
+          </nav>
+          <a
+            href={`https://wa.me/${wa}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Book Anita Prajapat for Jagran on WhatsApp"
+            className="btn btn-gold btn-lg"
           >
-            <nav aria-label="Mobile">
-              {mainNav.map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 * i }}
-                >
-                  <Link href={item.href} title={item.title || item.label}>{item.label}</Link>
-                </motion.div>
-              ))}
-            </nav>
-            <a
-              href={`https://wa.me/${wa}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Book Anita Prajapat for Jagran on WhatsApp"
-              className="btn btn-gold btn-lg"
-            >
-              <WhatsappIcon size={18} /> Book on WhatsApp
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <WhatsappIcon size={18} /> Book on WhatsApp
+          </a>
+        </div>
+      )}
     </header>
   );
 }

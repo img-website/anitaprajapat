@@ -1,14 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { createElement } from "react";
+import useReveal from "@/hooks/useReveal";
 
-const variants = {
-  up: { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } },
-  down: { hidden: { opacity: 0, y: -40 }, show: { opacity: 1, y: 0 } },
-  left: { hidden: { opacity: 0, x: 40 }, show: { opacity: 1, x: 0 } },
-  right: { hidden: { opacity: 0, x: -40 }, show: { opacity: 1, x: 0 } },
-  fade: { hidden: { opacity: 0 }, show: { opacity: 1 } },
-  scale: { hidden: { opacity: 0, scale: 0.92 }, show: { opacity: 1, scale: 1 } },
+// Variant → CSS modifier class (see globals.scss `.rv*`).
+const VARIANT = {
+  up: "",
+  down: "rv-down",
+  left: "rv-left",
+  right: "rv-right",
+  fade: "rv-fade",
+  scale: "rv-scale",
 };
 
 export default function Reveal({
@@ -16,52 +18,37 @@ export default function Reveal({
   as = "div",
   variant = "up",
   delay = 0,
-  duration = 0.6,
   amount = 0.2,
-  className,
+  className = "",
+  style,
   ...rest
 }) {
-  const MotionTag = motion[as] || motion.div;
-  return (
-    <MotionTag
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount }}
-      variants={variants[variant] || variants.up}
-      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
-      {...rest}
-    >
-      {children}
-    </MotionTag>
+  const ref = useReveal({ once: true, amount });
+  const cls = [className, VARIANT[variant] || ""].filter(Boolean).join(" ");
+  return createElement(
+    as,
+    {
+      ref,
+      className: cls,
+      style: delay ? { transitionDelay: `${delay}s`, ...style } : style,
+      ...rest,
+    },
+    children
   );
 }
 
-// Stagger container + item helpers for lists/grids.
-export function StaggerGroup({ children, className, stagger = 0.08, ...rest }) {
+// Stagger container — a plain wrapper; the incremental delay comes from the
+// `.rv-stagger:nth-child()` CSS on each item.
+export function StaggerGroup({ children, className, ...rest }) {
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={{ show: { transition: { staggerChildren: stagger } } }}
-      {...rest}
-    >
+    <div className={className} {...rest}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-export function StaggerItem({ children, className, variant = "up", ...rest }) {
-  return (
-    <motion.div
-      className={className}
-      variants={variants[variant] || variants.up}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      {...rest}
-    >
-      {children}
-    </motion.div>
-  );
+export function StaggerItem({ children, as = "div", variant = "up", className = "", ...rest }) {
+  const ref = useReveal({ once: true, amount: 0.1 });
+  const cls = ["rv-stagger", className, VARIANT[variant] || ""].filter(Boolean).join(" ");
+  return createElement(as, { ref, className: cls, ...rest }, children);
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import styles from "./Testimonials.module.scss";
@@ -18,28 +17,24 @@ export default function Testimonials({ items = [] }) {
         <SectionHeading eyebrow="Kind Words" title="What Devotees & Organizers Say" />
         <div className={styles.stage}>
           <button className={styles.nav} onClick={() => go(-1)} aria-label="Previous"><ChevronLeft size={22} aria-hidden /></button>
-          <AnimatePresence mode="wait">
-            <motion.blockquote
-              key={t._id || i}
-              className={styles.quote}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -24 }}
-              transition={{ duration: 0.4 }}
-            >
-              <span className={styles.mark}>“</span>
-              <p>{t.message}</p>
-              <div className={styles.stars} role="img" aria-label={`${t.rating || 5} out of 5 stars`}>
-                {Array.from({ length: t.rating || 5 }).map((_, idx) => (
-                  <Star key={idx} size={14} fill="currentColor" aria-hidden />
-                ))}
-              </div>
-              <footer>
-                <strong>{t.name}</strong>
-                {t.role && <span>{t.role}</span>}
-              </footer>
-            </motion.blockquote>
-          </AnimatePresence>
+          {/* key remount replays the CSS quoteIn entrance on each slide. */}
+          <blockquote
+            key={t._id || i}
+            className={styles.quote}
+            style={{ animation: "quoteIn 0.4s ease both" }}
+          >
+            <span className={styles.mark}>“</span>
+            <p>{t.message}</p>
+            <div className={styles.stars} role="img" aria-label={`${t.rating || 5} out of 5 stars`}>
+              {Array.from({ length: t.rating || 5 }).map((_, idx) => (
+                <Star key={idx} size={14} fill="currentColor" aria-hidden />
+              ))}
+            </div>
+            <footer>
+              <strong>{t.name}</strong>
+              {t.role && <span>{t.role}</span>}
+            </footer>
+          </blockquote>
           <button className={styles.nav} onClick={() => go(1)} aria-label="Next"><ChevronRight size={22} aria-hidden /></button>
         </div>
         <div className={styles.dots}>
